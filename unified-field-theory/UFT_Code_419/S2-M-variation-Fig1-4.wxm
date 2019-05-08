@@ -1,0 +1,263 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+imax: 7;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T: make_array(flonum, imax, 2)$ 
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+Rmax: make_array(flonum, imax, 2)$ 
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eps: make_array(flonum, imax, 2)$ 
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Dphi: make_array(flonum, imax, 2)$ 
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Exp: make_array(flonum, 1, 2)$ 
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Data
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Central mass values
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T[0,0]: 8.2$
+T[1,0]: 8.25$
+T[2,0]: 8.3$
+T[3,0]: 8.3627$
+T[4,0]: 8.4$
+T[5,0]: 8.572$
+T[6,0]: 8.7$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Orbit time
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T[0,1]: 28.95$
+T[1,1]: 23.51$
+T[2,1]: 19.60$
+T[3,1]: 16.07$
+T[4,1]: 14.46$
+T[5,1]: 9.65$
+T[6,1]: 7.60$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+Max. radius
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for i:0 thru 6 do Rmax[i,0]: T[i,0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Rmax[0,1]: 4.34$
+Rmax[1,1]: 3.77$
+Rmax[2,1]: 3.32$
+Rmax[3,1]: 2.90$
+Rmax[4,1]: 2.69$
+Rmax[5,1]: 2.03$
+Rmax[6,1]: 1.71$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Exp[0,0]: 8.572$
+Exp[0,1]: 16.05$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+epsilon
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for i:0 thru 6 do eps[i,0]: T[i,0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eps[0,1]: 0.921$
+eps[1,1]: 0.909$
+eps[2,1]: 0.897$
+eps[3,1]: 0.883$
+eps[4,1]: 0.875$
+eps[5,1]: 0.837$
+eps[6,1]: 0.810$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Delta phi (precession)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for i:0 thru 6 do Dphi[i,0]: T[i,0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Dphi[0,1]: 5.5486e-4$
+Dphi[1,1]: 5.6165e-4$
+Dphi[2,1]: 5.6848e-4$
+Dphi[3,1]: 5.7710e-4$
+Dphi[4,1]: 5.8226e-4$
+Dphi[5,1]: 6.0636e-4$
+Dphi[6,1]: 6.2460e-4$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Plots
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Exp[0,0]: 8.572$
+Exp[0,1]: 16.05$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(points_joined=true,
+    xlabel="M [10^{36} kg]",ylabel="",
+    key="T [y]",color=blue,points(T),
+    point_type    = filled_down_triangle,
+        point_size    = 2,
+    key="Exp",color=red,points(Exp));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(points_joined=true,
+    xlabel="M [10^{36} kg]",ylabel="",
+    key="T [y]",color=blue,points(T),
+    point_type    = filled_down_triangle,
+        point_size    = 2,
+    key="Exp",color=red,points(Exp),
+    user_preamble = 
+    "set terminal png linewidth 2 font 'Arial' 16 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/Paper419/Fig1.png'")$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Exp[0,0]: 8.572$
+Exp[0,1]: 0.88466$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(points_joined=true,
+    xlabel="M [10^{36} kg]",ylabel="",
+    key="epsilon",color=blue,points(eps),
+    point_type    = filled_down_triangle,
+        point_size    = 2,
+    key="Exp",color=red,points(Exp));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(points_joined=true,
+    xlabel="M [10^{36} kg]",ylabel="",
+    key="epsilon",color=blue,points(eps),
+    point_type    = filled_down_triangle,
+        point_size    = 2,
+    key="Exp",color=red,points(Exp),
+    user_preamble = 
+    "set terminal png linewidth 2 font 'Arial' 16 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/Paper419/Fig2.png'")$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Exp[0,1]: 2.735$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(points_joined=true,
+xlabel="M [10^{36} kg]",ylabel="",
+    key="r_{max} [10^{14} m]",color=blue,points(Rmax),
+        point_type    = filled_down_triangle,
+        point_size    = 2,
+    key="Exp",color=red,points(Exp));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(points_joined=true,
+xlabel="M [10^{36} kg]",ylabel="",
+    key="r_{max} [10^{14} m]",color=blue,points(Rmax),
+        point_type    = filled_down_triangle,
+        point_size    = 2,
+    key="Exp",color=red,points(Exp),
+    user_preamble = 
+    "set terminal png linewidth 2 font 'Arial' 16 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/Paper419/Fig3.png'")$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Exp[0,1]: 2.30$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(points_joined=true,
+xlabel="M [10^{36} kg]",ylabel="",
+    key="Dphi [rad]",color=blue,points(Dphi),
+user_preamble = "set format y '%6.2e';");
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(points_joined=true,
+xlabel="M [10^{36} kg]",ylabel="",
+    key="Dphi [rad]",color=blue,points(Dphi),
+user_preamble = 
+    "set format y '%6.2e';
+    set terminal png linewidth 2 font 'Arial' 16 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/Paper419/Fig4.png'")$    
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

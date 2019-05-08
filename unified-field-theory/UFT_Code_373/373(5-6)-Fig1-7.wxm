@@ -1,0 +1,440 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Relativistic orbit r(phi) (II)
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(c>0, r>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H_0: -m*M*G/(2*a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: m*sqrt(alpha*M*G);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+(dr/dphi(phi))^2
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon*cos(phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_N: epsilon^2*r^4/alpha^2*sin(phi)^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_rel: epsilon^2*r^4/alpha^2*sin(phi)^2-3/(m^2*c^2)*(H_0+m*M*G/r)^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_rel: ev(drdphi2_rel);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=90];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r1: ev(r, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr1: ev(diff(r,phi), str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([r1, dr1, dr1^2], [phi,0,2.5*%pi],
+[ylabel, ""], [legend, "r", "dr/dphi", "(dr/dphi)^2"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([r1, dr1, dr1^2], [phi,0,2.5*%pi],
+[ylabel, ""], [legend, "r", "dr/dphi", "(dr/dphi)^2"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dN: ev(drdphi2_N, str);
+drel: ev(drdphi2_rel, str);
+diff: drel-dN;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([dN, drel, diff], [phi,0,2.5*%pi],
+[ylabel, "(dr/dphi)^2"], [legend, "d_N", "d_{rel}", "d_{rel}-d_N"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([dN, drel, diff], [phi,0,2.5*%pi],
+[ylabel, "(dr/dphi)^2"], [legend, "d_N", "d_{rel}", "d_{rel}-d_N"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+(dr/dphi(r))^2
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+E20
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_N: epsilon^2*r^4/alpha^2*sin(phi)^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+E16
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_rel: c^2*(m*r^2/L)^2*(1-1/(1+1/(m*c^2)*(H_0+m*M*G/r))^2)-r^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+E27
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E27: sin(phi)^2 = 1-1/epsilon^2*(alpha/r-1)^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H_0: -m*M*G/(2*a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: sqrt(alpha*m*M*G);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_N: ratsubst(rhs(E27), sin(phi)^2, drdphi2_N);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2_rel: ev(drdphi2_rel, eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=10];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dN: ev(drdphi2_N, str);
+drel: ev(drdphi2_rel, str);
+diff: drel-dN;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([dN, drel, diff], [r,0,2.5], [y,-1,1],
+[ylabel, "(dr/dphi)^2"], [legend, "d_N", "d_{rel}", "d_{rel}-d_N"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([dN, drel, diff], [r,0,2.5], [y,-1,1],
+[ylabel, "(dr/dphi)^2"], [legend, "d_N", "d_{rel}", "d_{rel}-d_N"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=100];
+drel1: ev(drdphi2_rel, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=10];
+drel2: ev(drdphi2_rel, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=5];
+drel3: ev(drdphi2_rel, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([drel1, drel2, drel3], [r,0,2.5], [y,-1,1],
+[ylabel, "(dr/dphi)^2"], [legend, "c=100", "c=10", "c=5"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([drel1, drel2, drel3], [r,0,2.5], [y,-1,1],
+[ylabel, "(dr/dphi)^2"], [legend, "c=100", "c=10", "c=5"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig4.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Comparison in note 373(6): (dr/dphi(r))^2
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r,v2,L,H_0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+E4
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E4: ((1-v2/c^2)^(-1/2)-1)*m*c^2-1/2*m*v2=(H_0-H);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4a: E4*sqrt(1-v2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4b: ratsimp(E4a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4c: ((E4b*2*c^(3/2)*sqrt(c^2-v2)))/sqrt(c);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4d: E4c-m*v2^2-c^2*m*v2+2*c^4*m;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4e: E4d/(2*c^3*m);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4f: E4e^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4g: solve(E4f, v2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4g[1];
+gfactor(E4g[4]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: v2 = (L/(m*r))^2*(1+drdphi2^2/r^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E5a: solve(E5, drdphi2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2: rhs(E4g[4])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdphi2: rhs(second(E5a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H: -m*M*G/(2*a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: m*sqrt(alpha*M*G);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dp1: ev(drdphi2, eval)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=100];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(H, str);
+ev(dp1, str, [H_0=-3.75]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d1: ev(dp1, str, [H_0=-3.75]);
+d2: ev(dp1, str, [H_0=-3.70]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([realpart(d2),imagpart(d2)], [r,0,3],  
+[ylabel, "(dr/dphi)^2"], [legend, "real part", "imag part", "d_{rel}-d_N"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([realpart(d2),imagpart(d2)], [r,0,3],  
+[ylabel, "(dr/dphi)^2"], [legend, "real part", "imag part", "d_{rel}-d_N"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig5.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=100];
+d1: realpart(ev(dp1, str, [H_0=-3.70]))$
+d2: realpart(ev(dp1, str, [H_0=-3.60]))$
+d3: realpart(ev(dp1, str, [H_0=-3.50]))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([d1,d2,d3], [r,0,3],  
+[ylabel, "(dr/dphi)^2"], [legend, "H_0 = -3.7", "H_0 = -3.6", "H_0 = -3.5"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([d1,d2,d3], [r,0,3],  
+[ylabel, "(dr/dphi)^2"], [legend, "H_0 = -3.7", "H_0 = -3.6", "H_0 = -3.5"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Alternative: Compute v2 from H0 and H
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r,v2,L,H_0,drdphi2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+H0
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E4: ((1-v2/c^2)^(-1/2)-1)*m*c^2+U(r)=H_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4a: (E4-U(r))*sqrt(1-v2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4b: expand(E4a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4c: E4b+m*c^2*sqrt(1-v2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4d: factor(E4c*c);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4e: E4d/(U(r)-c^2*m-H_0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4f: E4e^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4g: solve(E4f, v2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+H
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: v2 = (L/m*r)^2*(1+drdphi2/r^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Equate both v2
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E5a: rhs(first(E4g)) = rhs(E5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E5b: solve(E5a, drdphi2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H: -m*M*G/(2*a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: m*sqrt(alpha*M*G);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dp1: ev(rhs(first(E5b)), [U(r)=-m*M*G/r], eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [epsilon=0.5, alpha=1, G=1, m=1, M=10, c=100];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(H, str);
+ev(dp1, str, [H_0=-3.75]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d1: ev(dp1, str, [H_0=-3.75]);
+d2: ev(dp1, str, [H_0=-2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([d1,d2], [r,0.,3],  [y,-10,10],
+[ylabel, "(dr/dphi)^2"], [legend, "H_0=H", "H_0>H", "d_{rel}-d_N"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([d1,d2], [r,0.,3],  [y,-10,10],
+[ylabel, "(dr/dphi)^2"], [legend, "H_0=H", "H_0>H", "d_{rel}-d_N"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper373/Fig7.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

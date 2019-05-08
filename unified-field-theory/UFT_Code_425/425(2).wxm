@@ -1,0 +1,220 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends([p,v],t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(26)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-v^2/c^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+p: gamma*m*v;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(p,v);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Test
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+1/gamma^2+v^2/c^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(28)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H: m*c^2*gamma-m*M*G/r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(H,v);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(60)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma_1: (m(r1)-(r1_d^2+r1^2*phi_d^2)/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E60: diff(1/gamma_1,r1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(61)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E61: diff(gamma_1,r1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(66)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+from (57):
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57: gamma_1*diff(m(r1),r1) + m(r1)*diff(gamma_1,r1) = diff(1/gamma_1,r1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Re-insert gamma_1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57a: ratsubst(Gamma_1, gamma_1, E57);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57b: solve(E57a, diff(m(r1),r1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57c: factor(E57b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(70)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E68: L = 'gamma_1*m*r1^2*phi_d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E69: E68^2/('gamma_1^2*r1^3*m^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(ratsubst(lhs(E69), r1*phi_d^2, E57b));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Strategies for solving Eq.(66/67)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57d: first(E57c)*c^2*(Gamma_1^2*m(r1)-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57e: ode2(E57d, m(r1), r1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57f: solve(E57e, m(r1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Alternatively:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57g: solve(E57d, m(r1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E57h: solve(E57d, diff(m(r1),r1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Constant m(r1)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m(r1) := 1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(E57e);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%, Gamma_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E67i: ev(E57g);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%, Gamma_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(E57h);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%, Gamma_1);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

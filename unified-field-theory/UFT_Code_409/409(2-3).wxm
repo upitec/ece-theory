@@ -1,0 +1,42 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+omega = dphi/dt;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v^2 = (dr/dt)^2 + r^2*(dphi+omega*dt)/dt^2;
+v^2 = (dr/dt)^2 + r^2*(dphi/dt)^2 + 2*r^2*omega*(dphi/dt);
+v^2 = (dr/dt)^2 + 3*omega^2*r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v^2 = v_N^2+v_T^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v_N^2 = (dr/dt)^2 + omega^2*r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v_T^2 = 2*omega^2*r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ds^2 = (1-v^2/c^2)*(c^2*dt^2-2*r^2*Omega*dphi*dt)-(dr^2+r^2*dphi^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ds^2 = (1-v^2/c^2)*(c^2*dt^2)-(dr^2+r^2*dphi^2) -v_T^2*dt^2;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

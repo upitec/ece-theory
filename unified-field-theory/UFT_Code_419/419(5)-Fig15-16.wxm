@@ -1,0 +1,244 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Analytical solutions
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phi: c_1*m(r)/r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Exponential
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phie:ev(phi, [m(r)=2-exp(log(2)*exp(-r/R))]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+integrate(phie,r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Schwarzschild
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phi1:ev(phi, [m(r)=1-a/r]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1: integrate(phi1,r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f11: ev(f1,[a=1, c_1=1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([-1/r,f11], [r,0,8],[y,-1.2,1.2])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: phi = f1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sqrt(E1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: solve((E1),r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rphi1: rhs(first(E2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rphi2: rhs(second(E2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rphi1a: ev(rphi1,[a=1,c_1=1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rphi2a: ev(rphi2,[a=1,c_1=1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble = "set grid polar; set size square;",
+             nticks        = 1000,
+             line_width    = 2,
+             xrange        = [-0.8,1.2],
+             yrange        = [-1,1],
+             /*title         = "m function",*/
+key           = "-1/r",
+color         = blue,
+polar(-1/phi, phi, 0., 6*%pi),
+key           = "Schwarzschild_1",
+color         = red,
+polar(rphi1a, phi, 0., 6*%pi),
+key           = "Schwarzschild_2",
+color         = green,
+polar(rphi2a, phi, 0., 6*%pi));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(user_preamble = "set grid polar; set size square;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper419/Fig15.png'",
+             nticks        = 1000,
+             line_width    = 2,
+             xrange        = [-0.8,1.2],
+             yrange        = [-1,1],
+            /*title         = "m function",*/
+key           = "-1/r",
+color         = blue,
+polar(-1/phi, phi, 0., 6*%pi),
+key           = "Schwarzschild_1",
+color         = red,
+polar(rphi1a, phi, 0., 6*%pi),
+key           = "Schwarzschild_2",
+color         = green,
+polar(rphi2a, phi, 0., 6*%pi))$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Numerical integration
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Spiral test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+P: []$
+block([i,ph,x,y],
+for i:1 thru 10 step 0.1 do (
+    ph: 20/i,
+    x: i*cos(ph),
+    y: i*sin(ph),
+    P: append(P, [[x,y]])
+    /*print(i,(ph))*/
+))$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+P1: points(P)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, P]],
+    /*[x,-24.e13*1.4,4.e13*1.4], [y,-14.e13,14.e13],*/
+    [gnuplot_preamble,"set grid polar; "],
+    [legend, "r orbit", "r_1 orbit"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble="set grid polar; set size square; ",
+    xrange=[-7,4], yrange=[-6,10],
+    line_width=2, points_joined = true, point_size=0, P1)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Exponential
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phie;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phie1: ev(phie, [c_1=1, R=.5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+P: Phyp: []$
+block([i,ph,x,y],
+for i:.002 thru .5 step 0.002 do (
+    ph: first(quad_qags(phie1,r,1e-3,i)),
+    x: i*cos(ph),
+    y: i*sin(ph),
+    P: append(P, [[x,y]]),
+    x: i*cos(.1/i),
+    y: i*sin(.1/i),
+    Phyp: append(Phyp, [[x,y]]),
+    if equal(i,.01) or equal(i, .5) then print(i,ph)
+))$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+P1: points(P)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, P]],
+    [x,-.35*1.4,.15*1.4], [y,-.1,.4],
+    [gnuplot_preamble,"set grid polar; "],
+    [legend, "r orbit", "r_1 orbit"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble="set grid polar; set size square; ",
+    xrange=[-.35,.15], yrange=[-.1,.4],
+    line_width=2, points_joined = true, point_size=0, P1)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([[discrete, P]],
+    [x,-.35*1.4,.15*1.4], [y,-.1,.4],
+    [gnuplot_preamble,"set grid polar; "],
+    [legend, "exponential"],[xlabel, "x"], [ylabel, "y"], 
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper419/Fig16.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

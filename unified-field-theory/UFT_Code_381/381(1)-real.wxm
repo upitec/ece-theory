@@ -1,0 +1,254 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) :=  [a[2]*b[3] - a[3]*b[2],
+                a[3]*b[1] - a[1]*b[3],
+                a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(a) := [diff(a[3],y) - diff(a[2],z), 
+              diff(a[1],z) - diff(a[3],x), 
+              diff(a[2],x) - diff(a[1],y)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+grad(psi) := [diff(psi,x), diff(psi,y), diff(psi,z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],x) + diff(a[2],y) + diff(a[3],z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([omega_0,omega_x,omega_y,omega_z,A_x,A_y,A_z,phi], [x,y,z,t]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: [omega_x, omega_y, omega_z];
+A: [A_x, A_y, A_z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Case 1A: Faraday and Gauss law, fields with A and omega_0
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: %beta*t-kappa_z*z;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: realpart(E_0/sqrt(2)*[1, -%i, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B: realpart(B_0/sqrt(2)*[%i, 1, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Homogeneous field equations
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E13: div(B) = 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E15: curl(E) + diff(B,t) = [0, 0, 0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+E_0*kappa_z = B_0*beta
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E_0*kappa_z = B_0*%beta;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Inhomogeneous field equations
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E14: div(E) = 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E16: curl(B) - 1/c^2*diff(E,t) = [0, 0, 0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+B_0*kappa_z = E_0*beta/c^2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Ea: B_0*kappa_z = E_0*%beta/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kappa: %beta*E_0/(B_0*c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(Ea);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(%, B_0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Special case: plane wave
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(kappa_z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: %beta*t-kappa_z*z;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: realpart(E_0/sqrt(2)*[1, -%i, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B: realpart(B_0/sqrt(2)*[%i, 1, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E13);
+ev(E14);
+ev(E15);
+ev(E16);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E16, [c=E_0/B_0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Computing E and B from A and omega
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+A: realpart(A_0/sqrt(2)*[%i, 1, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: realpart(omega_0/sqrt(2)*[1, -%i, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega0 : 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: -diff(A,t) - omega0*A;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B1: curl(A) - cross(omega,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+trigsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Check of antisymmetry laws
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(kappa_z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: %beta*t-kappa_z*z;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: realpart(A_0/sqrt(2)*[%i, 1, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: realpart(omega_0/sqrt(2)*[%i, -1, 0]*exp(%i*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E19: diff(A[3],y) - omega[2]*A[3] = -(diff(A[2],z) - omega[3]*A[2]);
+E20: diff(A[1],z) - omega[3]*A[1] = -(diff(A[3],x) - omega[1]*A[3]);
+E21: diff(A[2],x) - omega[1]*A[2] = -(diff(A[1],y) - omega[2]*A[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+-omega[1]/omega[2] = A[1]/A[2];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Further tests
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+A: A_0/sqrt(2)*[%i, 1, 0]*exp(%i*phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: omega_0/sqrt(2)*[-%i, 1, 0]*exp(-%i*phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*omega: [%i*kappa_z,%i*kappa_z,%i*kappa_z];*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega0: 0;
+/*omega_0: 0;*/kill(omega_0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: -diff(A,t) - omega0*A;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B1: curl(A) - cross(omega,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E19: diff(A[3],y) - omega[2]*A[3] = -(diff(A[2],z) - omega[3]*A[2]);
+E20: diff(A[1],z) - omega[3]*A[1] = -(diff(A[3],x) - omega[1]*A[3]);
+E21: diff(A[2],x) - omega[1]*A[2] = -(diff(A[1],y) - omega[2]*A[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E19);
+ev(E20);
+ev(E21);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(A[1],z)/A[1];diff(A[2],z)/A[2];diff(A[3],z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+realpart(E19);
+realpart(E20);
+realpart(E21);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+-omega[1]/omega[2] = A[1]/A[2];
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

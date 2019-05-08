@@ -1,0 +1,93 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eqs.(30/40)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: 1/5*omega[E]*v*r/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(2*m[E]*G*(1/r-1/(2*a))-m[E]*G/r^2*b^2/a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: ev(Delta_phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Numerical values
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G: 6.67384e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[E]: 5.97219e24;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[E]: 6.371009e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega[E]:  7.292115e−5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[E]: omega[E]*r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha_1: 7.0274e5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: alpha_1+r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.0014;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_1: alpha_1/(1-epsilon^2)+r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b_1: alpha_1/(sqrt(1-epsilon^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b: alpha/(sqrt(1-epsilon^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: alpha;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2: sqrt(m[E]*G/alpha_1*(1-b_1^2/(alpha_1*a_1)));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

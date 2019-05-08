@@ -1,0 +1,307 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Demo calculations
+in Cartesian coordinates X, Y
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([x,y,x_d,y_d,v],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(c>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Minkowski equations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: diff(x,t,2)=-G*M*x*(1-((diff(y,t,1))^2+(diff(x,t,1))^2)/c^2)^(4/2)
+/(y^2+x^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Y equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: diff(y,t,2) = -M*G*y*(1-(diff(x,t)^2+diff(y,t)^2)/c^2)^(4/2)
+/(x^2+y^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: first(factor(ratsimp(solve([(E11),(E21)], 
+    [diff(x,t,2), diff(y,t,2)]))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*GC[1]: first(E11);
+GC[2]: first(E21);*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(x_d, diff(x,t), Eq),
+    A: ratsubst(x_dd, diff(x,t,2), A),
+    A: ratsubst(y_d, diff(y,t), A),
+    A: ratsubst(y_dd, diff(y,t,2), A)
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: (ev(transform(GC[1]),diff));
+G2: (ev(transform(GC[2]),diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+/*str: [M=7.956*10^36, G=6.67384e-11, c=2.99792458e8];*/;
+/*kill(c); str: [M=1, G=1, c=5]*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [m=1, M=1, G=1, c=30];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Equation of motion
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: factor(ev(rhs(G1), str, eval,diff));
+Eq2: factor(ev(rhs(G2), str, eval,diff));
+Eq3: x_d;
+Eq4: y_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Initial conditions
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: H = 1/2*m*v^2-m*M*G/sqrt(x^2+y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E22: L = m*(-vx*y+vy*x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E22a: solve(E22, vx); 
+solve(E22, vy);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H1: rhs(E21);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21a: expand(solve(E21, v^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E23: vx^2+vy^2 = rhs(first(E21a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E24: factor(solve([first(E22a), E23], [vx, vy]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x: -kappa_x/(kappa_x^2+kappa_y^2);
+y: -kappa_y/(kappa_x^2+kappa_y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vx0: ev(rhs(first(first(E24))));
+vy0: ev(rhs(second(first(E24))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(x,y,x_d,y_d);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Initial conditions
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+simulation 1
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+str2: [H=-.5, L=1., kappa_y=-1, kappa_x=0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x0: ev(-kappa_x/(kappa_y^2+kappa_x^2),str2),numer;
+y0: ev(-kappa_y/(kappa_y^2+kappa_x^2),str2),numer;
+vx01: ev(vx0, str, str2), numer;
+vy01: ev(vy0, str, str2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sr1: rk([Eq1, Eq2, Eq3, Eq4],
+    [x_d, y_d, x, y],
+    [vx01, vy01,  x0, y0], [t,0,15,1.e-2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+ simulation 2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+str2: [H=-.75, L=.75, kappa_y=-1.5, kappa_x=0.0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x0: ev(-kappa_x/(kappa_y^2+kappa_x^2),str2),numer;
+y0: ev(-kappa_y/(kappa_y^2+kappa_x^2),str2),numer;
+vx01: ev(vx0, str, str2), numer;
+vy01: ev(vy0, str, str2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sr2: rk([Eq1, Eq2, Eq3, Eq4],
+    [x_d, y_d, x, y],
+    [vx01, vy01,  x0, y0], [t,0,15,1.e-2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+simulation 3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+str2: [H=-1., L=.5, kappa_y=-2., kappa_x=0.0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x0: ev(-kappa_x/(kappa_y^2+kappa_x^2),str2),numer;
+y0: ev(-kappa_y/(kappa_y^2+kappa_x^2),str2),numer;
+vx01: ev(vx0, str, str2), numer;
+vy01: ev(vy0, str, str2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sr3: rk([Eq1, Eq2, Eq3, Eq4],
+    [x_d, y_d, x, y],
+    [vx01, vy01,  x0, y0], [t,0,15,1.e-2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c11: makelist([p[1],p[2]],p,sr1)$
+c12: makelist([p[1],p[3]],p,sr1)$
+c13: makelist([p[1],p[4]],p,sr1)$
+c14: makelist([p[1],p[5]],p,sr1)$
+c21: makelist([p[1],p[2]],p,sr2)$
+c22: makelist([p[1],p[3]],p,sr2)$
+c23: makelist([p[1],p[4]],p,sr2)$
+c24: makelist([p[1],p[5]],p,sr2)$
+c31: makelist([p[1],p[2]],p,sr3)$
+c32: makelist([p[1],p[3]],p,sr3)$
+c33: makelist([p[1],p[4]],p,sr3)$
+c34: makelist([p[1],p[5]],p,sr3)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot X, Y
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c11], [discrete, c12]], 
+[xlabel, "time"],
+[legend, "X^{dot}", "Y^{dot}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c13], [discrete, c14]],
+[xlabel, "time [yr]"],
+[legend, "X", "Y"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot space curve of centre of mass (3 times)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transf() := ( 
+    block([i,t,r,theta,phi,x,y,z],
+    cl1: [],
+    for i:1 thru length(c11) step 1 do (
+        [t,x,y]: [c11[i][1],c13[i][2],c14[i][2]],
+        z: 0,    
+        cl1: append(cl1, [[x,y,z]])
+    ),
+    cl2: [],
+    for i:1 thru length(c11) step 1 do (
+        [t,x,y]: [c22[i][1],c23[i][2],c24[i][2]],
+        z: 0,      
+        cl2: append(cl2, [[x,y,z]])
+    ),
+    cl3: [],
+    for i:1 thru length(c11) step 1 do (
+        [t,x,y]: [c31[i][1],c33[i][2],c34[i][2]],
+        z: 0,      
+        cl3: append(cl3, [[x,y,z]])
+    )
+))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transf()$
+cr1: points(cl1)$
+cr2: points(cl2)$
+cr3: points(cl3)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble="set ticslevel 0; set xzeroaxis; set yzeroaxis",
+    xrange=[-1.25,1.25],yrange=[-1.05,1.05], 
+    points_joined = true, point_size=0, view=[0, 0], 
+    color=blue,  cr1,     
+    color=red,   cr2, 
+    color=green, cr3)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(user_preamble="set ticslevel 0; set xzeroaxis; set yzeroaxis;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper378/Fig2.png'",    
+    xrange=[-1.25,1.25],yrange=[-1.05,1.05], 
+    points_joined = true, point_size=0, line_width=1, view=[0, 0], 
+    color=blue,  cr1,     
+    color=red,   cr2, 
+    color=green, cr3)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

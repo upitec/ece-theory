@@ -1,0 +1,73 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Compute C_1
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: alpha/(-alpha*u^2+2*u-2*C_1) = L^2/(2*m*(H+m*M*G*u-L^2/(2*m)*u^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: m*sqrt(M*G*alpha);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: ev(1/E1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E2, C_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Evaluation of Delta phi
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+x: 2*omega_r*log(u)/(-alpha*u^2+2*u-2*C_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I_delta_phi: x/4*sqrt(alpha/(-alpha*u^2+2*u-2*C_1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I: omega_r*log(u)*sqrt(alpha)/(2*(-alpha*u^2+2*u-2*C_1)^(3/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+radcan(ratsimp(I-I_delta_phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d_phi: integrate(I,u);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I1: ev(I, [alpha=1, omega_r=1, C_1=-1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ir1: ev(I, [alpha=1, omega_r=1, C_1=-1, u=1/r]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([I1], [u,.1,2.7])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Ir1], [r,.4,2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+quad_qags(I1,u,.1,1);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

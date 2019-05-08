@@ -1,0 +1,97 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [X, Y, Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r2: r.r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(12)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Ex: -X/(r2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fac: e^2/(4*%pi*epsilon_0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DEx4: drdr^2*(35*X*(3*Z^4-3*Y^2*Z^2-5*X^2*Z^2+3*Y^4-5*X^2*Y^2+X^4))/(18*(Z^2+Y^2+X^2)^(11/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DEx6: drdr^3*(7*X*(8*Z^6-75*Y^2*Z^4-15*X^2*Z^4-75*Y^4*Z^2+300*X^2*Y^2*Z^2-21*X^4*Z^2+8*Y^6-15*X^2*Y^4-21*X^4*Y^2+2*X^6))/(9*(Z^2+Y^2+X^2)^(15/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(13)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E13_4: omega_x/sqrt(r2) = DEx4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13_6: omega_x/sqrt(r2) = DEx6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13_4a: solve(E13_4, omega_x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13_4b: factor(ratsimp(%));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omx4: rhs(first(E13_4b));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omx4: ev(omx4, [Y=0, Z=0, drdr=0.2^2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13_6a: factor(solve(E13_6, omega_x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omx6: rhs(first(E13_6a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omx6: ev(omx6, [Y=0, Z=0, drdr=0.2^2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ex: ev(Ex, [Y=0, Z=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([ex,omx4+omx6,omx4,omx6], [X,0.1,.4], [y,-60,60], 
+[legend, "E_X", "omega_X", "omega_X(4)", "omega_X(6)"]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([ex,omx4+omx6,omx4,omx6], [X,0.1,.4], [y,-60,60], 
+[legend, "E_X", "omega_X", "omega_X(4)", "omega_X(6)"],
+[gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper398/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

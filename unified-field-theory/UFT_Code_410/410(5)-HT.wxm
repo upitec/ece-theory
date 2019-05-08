@@ -1,0 +1,141 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Hulse-Taylor binary pulsar
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(6)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+m[1]: m[2]: 2.804e30;
+m[S]: 1.98855e30;
+alpha: 5.3671e8;
+epsilon: 0.6171334;
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Dphi: 4.226*%pi/180/(365.25*24*3600)*7.75*3600, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*Dphi: 6.526e-5*/;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+v^2 and v
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v2: c^2/(2*%pi)*Dphi, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v: sqrt(v2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(10/15)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vN2: k/mu*(2/r-1/a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k: m[1]*m[2]*G;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+mu: m[1]*m[2]/(m[1]+m[2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vN2a: ev(vN2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vNa: sqrt(vN2a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+v < vN, negative line element!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(17)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Vtheta2: v2-vN2a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Angular frequencies
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v_N: vNa;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omegap: sqrt(Dphi*c^2-2*%pi*v_N^2)/(sqrt(6)*sqrt(%pi)*r), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omegam: sqrt(2*%pi*v_N^2-Dphi*c^2)/(sqrt(2)*sqrt(%pi)*r), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega: v_N/r;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,184 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Check equations
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eq.(3), solution
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E3: 2*%pi/c^2*(v_N^2+r^2*(omega_1^2+2*omega*omega_1))=omega_1*T;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E3a: solve(E3, omega_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limit(E3a, v_N, 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(E3a, [v_N=c]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E3b: ratsubst(omega, v_N*r, E3a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+om1: ev(rhs(first(E3b)), [c=1, r=1, T=1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([om1], [omega,0,.05])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eq.(12)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E11: 2*%pi/c^2*(v_N^2+2*r^2*omega*omega_1) = omega_1*T;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E11a: solve(E11, omega_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E11b: ratsubst(omega/r, v_N, E11a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+om2: ev(rhs(first(E11b)), [c=1, r=1, T=1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([om1,om2], [omega,0,.05],
+[legend, "omega_1, exact", "omega_1, linear"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([om1,om2], [omega,0,.05],
+[legend, "omega_1, exact", "omega_1, linear"],
+[gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper412/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Check numerical values (Earth)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T: 365.25*24*3600;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r: 1.496e11;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v_N: 2.978e4;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.0167;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega: v_N/r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eqs.(18,19)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c^2*T/(2*%pi), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+2*r^2*omega;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eq.(22)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega_1: 2*%pi/T*v_N^2/c^2, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eqs.(25/26)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega: 2*%pi/T, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega_1: omega*v_N^2/c^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eq.(32)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Delta_pni: omega_1*T;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

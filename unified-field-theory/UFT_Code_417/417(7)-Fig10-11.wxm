@@ -1,0 +1,132 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Quartic equation (62)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E: 2*a*x^4-r*x^3=v^2*r*a/(M*G);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: solve(E, x)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+------------------------------------------------------------------------------------------------------------------------------------------------------
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ma: (rhs(first(E1)))^2$
+mb: (rhs(second(E1)))^2$
+mc: (rhs(third(E1)))^2$
+md: (rhs(fourth(E1)))^2$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+------------------------------------------------------------------------------------------------------------------------------------------------------
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+str: [M=10, G=1, a=1.5];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+m(r)=1, consistency test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v: sqrt(M*G*(2/r-1/a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m: 1.;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*ma1: ev(ev(ma), str), numer$
+mb1: ev(ev(mb), str), numer$*/
+mc1: ev(ev(mc), str), numer$
+md1: ev(ev(md), str), numer$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([mc1,md1,m], [r,.5,4],
+    [grid2d,true], [legend, "m_3", "m_4", "m_{in}"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([mc1,md1,m], [r,.5,4],
+    [grid2d,true], [legend, "m_3", "m_4", "m_{in}"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig10.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+m(r)=1, consistency test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(m,v);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v: sqrt(M*G*(2/r-1/a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v: sqrt(m^(3/2)*M*G*(2*m^(1/2)/r-1/a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m: 1.-0.2/r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*ma1: ev(ev(ma), str), numer$
+mb1: ev(ev(mb), str), numer$*/
+mc1: ev(ev(mc), str), numer$
+md1: ev(ev(md), str), numer$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([mc1,md1,m], [r,.5,4],
+[grid2d,true], [legend, "m_3", "m_4", "m_{in}"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([mc1,md1,m], [r,.5,4],
+    [grid2d,true], [legend, "m_3", "m_4", "m_{in}"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig11.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

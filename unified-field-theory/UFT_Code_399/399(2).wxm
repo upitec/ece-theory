@@ -1,0 +1,85 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Example for precedure defined by eqs.(20-26)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([phi,E,omega],x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E24: diff(phi,x,2)=-rho/epsilon_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Assumption for rho
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+rho: rho_0*cos(k*x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E24a: ev(E24);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+find phi
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E24b: ode2(E24a,phi,x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+find E_x
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: -diff(phi,x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: rhs(E24b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(E1,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+find omega_x, first method
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: E/phi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: trigreduce(ev(omega, [%k1=0, %k2=0]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+find omega_x, second method
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: diff(E,x,2)/diff(phi,x,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: trigreduce(ev(omega, [%k1=0, %k2=0]));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

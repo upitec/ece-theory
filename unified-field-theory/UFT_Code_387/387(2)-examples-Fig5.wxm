@@ -1,0 +1,533 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+dot(a,b) := a[1]*b[1] + a[2]*b[2] + a[3]*b[3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) :=  [a[2]*b[3] - a[3]*b[2],
+                a[3]*b[1] - a[1]*b[3],
+                a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],x) + diff(a[2],y) + diff(a[3],z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+grad(psi) := [diff(psi,x), diff(psi,y), diff(psi,z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(a) := [diff(a[3],y) - diff(a[2],z), 
+              diff(a[1],z) - diff(a[3],x), 
+              diff(a[2],x) - diff(a[1],y)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(a) := [diff(a[3],y) - diff(a[2],z), 
+              diff(a[1],z) - diff(a[3],x), 
+              diff(a[2],x) - diff(a[1],y)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+grad_s(psi) := [diff(psi,r), 1/r*diff(psi,theta), 1/(r*sin(theta))*diff(psi,phi)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl_s(a) := [1/(r*sin(theta))*(diff(sin(theta)*a[3],theta) - diff(a[2],phi)), 
+              1/(r*sin(theta))*diff(a[1],phi) - 1/r*diff(r*a[3],r), 
+              1/r*(diff(r*a[2],r) - diff(a[1],theta))];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* transform vector from spherical to cartesian coordinates */
+Transform_s_c(V) := block([S_s_cart,r,theta,phi,VT],
+    S_s_cart: matrix([sin(theta)*cos(phi), cos(theta)*cos(phi), -sin(phi)],
+[sin(theta)*sin(phi), cos(theta)*sin(phi), cos(phi)],
+[cos(theta), -sin(theta), 0]),
+    r: sqrt(x^2+y^2+z^2),
+    phi: atan2(y,x),
+    theta: acos(z/sqrt(x^2+y^2+z^2)),
+    VT: (factor(ev(S_s_cart.V))),
+    [VT[1,1], VT[2,1], VT[3,1]]
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Antisymm eq.
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([A,omega_0,omega],[x,y,z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E6: diff(A[3],y)-omega[2]*A[3] = -(diff(A[2],z)-omega[3]*A[2]);
+E7: diff(A[1],z)-omega[3]*A[1] = -(diff(A[3],x)-omega[1]*A[3]);
+E8: diff(A[2],x)-omega[1]*A[2] = -(diff(A[1],y)-omega[2]*A[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eqs.(18,19)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E18: omega_0*curl(A) + cross(A,grad(omega_0)) = 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E19: omega_0*div(A) + dot(grad(omega_0),A) = -rho/epsilon_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Trial with omega_0 undefined
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+A: a*[1/x^2,1/y^2,c/a];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E18a: ev(E18,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E19a: ev(E19,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from E18:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E18b: first(lhs(E18a))=0;
+E18c: second(lhs(E18a))=0;
+E18d: third(lhs(E18a))=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [omega_0 = b*1/x^(0)*1/y^(0)*1/z^(0)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E18b,str,diff));
+ratsimp(ev(E18c,str,diff));
+ratsimp(ev(E18d,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from E19:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+rho1: factor(ratsimp(ev(E19,str,diff)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+electric field:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(-omega_0*A, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(div(E));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(E);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ESa: solve([E6,E7,E8],[omega[1], omega[2], omega[3]]), diff;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Plot
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [z=0, a=1, b=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A1: ev(A[1], str);
+A2: ev(A[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 1 A(x,y)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([A1,A2],[x,y])$;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [y=0, a=1, b=1, c=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A1: ev(E[1], str);
+A3: ev(A[3], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 2 A(x,z)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([A1,A3],[x,z])$;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [z=1, a=1, b=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: ev(E[1], str);
+E2: ev(E[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. E(x,y)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plotdf([E1,E2],[x,y])$;*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [y=1, a=1, b=1, c=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: ev(E[1], str);
+E3: ev(E[3], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. E(x,z)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plotdf([E1,E3],[x,z])$;*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rho1a: ev(-lhs(rho1), [a=1, b=1, c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 3 (rho)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(rho1a, [x,-2.5,2.5], [y,-2.5,2.5], [z,-55,55],
+ [plot_format, gnuplot],
+ /*[gnuplot_pm3d, true],*/
+ [legend, ""],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set zlabel 'rho'; set hidden3d;"]
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+2nd trial with omega_0 undefined
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: sqrt(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: a/r^2*[x,y,z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E18a: ratsimp(ev(E18,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E19a: ratsimp(ev(E19,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from E18:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E18b: first(lhs(E18a))=0;
+E18c: second(lhs(E18a))=0;
+E18d: third(lhs(E18a))=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+1st solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [omega_0 = b/r^0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E18b,str,diff));
+ratsimp(ev(E18c,str,diff));
+ratsimp(ev(E18d,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from E19:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E19,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+electric field:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(-omega_0*A, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(div(E));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(E);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ESa: solve([E6,E7,E8],[omega[1], omega[2], omega[3]]), diff;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+2nd solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [omega_0 = b/r^1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E18b,str,diff));
+ratsimp(ev(E18c,str,diff));
+ratsimp(ev(E18d,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from E19:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E19,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+electric field:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(-omega_0*A, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(div(E));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(E);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(div(E));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ESa: solve([E6,E7,E8],[omega[1], omega[2], omega[3]]), diff;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Plot
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [z=0, a=1, b=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A1: ev(A[1], str);
+A2: ev(A[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 4
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([A1,A2],[x,y])$;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: ev(E[1], str);
+E2: ev(E[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 5
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([E1,E2],[x,y])$;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+3rd solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [omega_0 = b/r^2];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E18b,str,diff));
+ratsimp(ev(E18c,str,diff));
+ratsimp(ev(E18d,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+from E19:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(ev(E19,str,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+electric field:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(-omega_0*A, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(div(E));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(E);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+omega and B(secondary)
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ESa: solve([E6,E7,E8],[omega[1], omega[2], omega[3]]), diff;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: [rhs(first(first(ESa))),rhs(second(first(ESa))),rhs(third(first(ESa)))];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B1: curl(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B2: cross(omega,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Plot
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [z=0, a=1, b=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A1: ev(A[1], str);
+A2: ev(A[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. A(x,y)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plotdf([A1,A2],[x,y])$;*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: ev(E[1], str);
+E2: ev(E[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. E(x,y)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plotdf([E1,E2],[x,y])$;*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Plot omega
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+o1: ev(omega[1], str);
+o2: ev(omega[2], str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 6
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([o1,o2],[x,y])$;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

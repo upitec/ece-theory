@@ -1,0 +1,132 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eqs.(14-20)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+Delta_phi in milliarcsec per year
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_mas: 6601.8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Transform to radians per orbit
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi: D_phi_mas*4.848e-9/(365.25*24*60)*90;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2: c^2/%pi*D_phi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+m[E]: 5.97219e24;
+r: 7.0274e6;
+a: r;
+epsilon: 0.0023;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2: ev(v2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2_N: m[E]*G/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2/v2_N;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(v2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(27)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2_1: v2+2*v2_N;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2_1-2*v2_N;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_1: sqrt(v2_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Note 405(4), eq.(18)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v2: 6*m[E]*G/(a*(1-epsilon^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_g: %pi*v2/c^2, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(21)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+v (gravitational)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi: 1.19e-8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(c^2*D_phi/%pi), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+v (de Sitter)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi: 5.48e-9;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(c^2*D_phi/%pi), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+v (Lense-Thirring)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi: 3.25e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(c^2*D_phi/%pi), numer;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

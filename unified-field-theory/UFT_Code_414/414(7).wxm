@@ -1,0 +1,41 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: section start ]
+Check Eq.(12)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: (a1+a2+a3)^2-a1^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f2: (a2+a3)*(a2+a3+2*a1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(f1-f2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(17)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E17a: -m*M*G/r^2*(1+gamma^2*A)^(3/2) + m*gamma^3*c^2*A/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E17b: -m*M*G/r^2+m*Omega*(-M*G/r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E17a=E17b, Omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,67 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi_2: 2*M*G/c^2*((2/alpha-2*u)/((4/alpha^2+8*m*H/L^2)*u*sqrt(2/alpha+2*m*H/L^2-u)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi_21: ev(phi_2, [G=1,M=1,m=1,L=1,H=1,alpha=1,c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([phi_21], [u,0,4.5], [y,-10,10], [ylabel, "delta phi_2(u)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([phi_21], [u,0,4.5], [y,-10,10], [ylabel, "delta phi_2(u)"],
+ [axes, x],
+ [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+ [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper391/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+u1: (1+.2*cos(phi))/alpha;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+get_plot_option();
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi_22: ev(phi_21, [u=u1, alpha=1],eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([phi_22], [phi,0,7],[ylabel, "delta phi_2(phi)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+u2: 1/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi_22: ev(phi_21, [u=u2],eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([phi_22], [r,0,3],[ylabel, "delta phi_2(r)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([phi_22], [r,0,3],[ylabel, "delta phi_2(r)"],
+ [axes, x],
+ [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+ [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper391/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

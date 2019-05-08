@@ -1,0 +1,109 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: title   start ]
+Relativistic Newton equation
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([r,phi], t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Velocities
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v_r: diff(r,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_phi: r*diff(phi,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-(v_r^2+v_phi^2)/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Momenta
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+p_r: gamma*m*v_r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p_phi: gamma*m*r*v_phi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Force components
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+F_r
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+F_r: diff(p_r,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(%gamma, gamma, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+F_phi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+F_phi: diff(p_phi,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(%gamma, gamma, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Equations of motion
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: F_r = -m*M*G/r^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: F_phi = 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: solve([E1, E2], [diff(r,t,2), diff(phi,t,2)]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(%gamma, gamma, E3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

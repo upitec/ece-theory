@@ -1,0 +1,173 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Newtonian case N
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Acceleration bold a(theta)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+a_r: -M*G/r^2+Omega[1,0,1]*L*epsilon/alpha*sin(theta) + Omega[1,0,2]*L/(m*r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_th: Omega[2,0,1]*L*epsilon/alpha*sin(theta) + Omega[2,0,2]*L/(m*r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon*cos(theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rN1: ev(a_r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_thN1: ev(a_th);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str1: [G=1, M=1, L=1, m=1, alpha=1, epsilon=0.3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str2: [Omega[1,0,1]=0, Omega[1,0,2]=0, Omega[2,0,1]=0, Omega[2,0,2]=0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rN2th:  ev(a_rN1, str1, str2);
+a_thN2th: ev(a_thN1, str1, str2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a_rN2th, a_thN2th], [theta,0,2*%pi], [y,-2,0.2],
+[ylabel, "a"], [legend, "a_r", "a_{theta}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Acceleration bold a(r)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rN1: ratsubst(sqrt(1-1/epsilon*(alpha/r-1)), sin(theta), a_r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_thN1: ratsubst(sqrt(1-1/epsilon*(alpha/r-1)), sin(theta), a_th);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rN2r:  ev(a_rN1, str1, str2);
+a_thN2r: ev(a_thN1, str1, str2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a_rN2r, a_thN2r], [r,0,2], [y,-10,1],
+[ylabel, "a"], [legend, "a_r", "a_{theta}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Non-Newtonian case P
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Acceleration bold a(theta)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon*cos(theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rP1: ev(a_r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_thP1: ev(a_th);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str1: [G=1, M=1, L=1, m=1, alpha=1, epsilon=0.3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str2: [Omega[1,0,1]=.2, Omega[1,0,2]=-.2, Omega[2,0,1]=0.2, Omega[2,0,2]=-0.2];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rP2th:  ev(a_rP1, str1, str2);
+a_thP2th: ev(a_thP1, str1, str2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a_rP2th, a_thP2th], [theta,0,2*%pi], [y,-2,0.2],
+[ylabel, "a"], [legend, "a_r", "a_{theta}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Acceleration bold a(r)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rP1: ratsubst(sqrt(1-1/epsilon*(alpha/r-1)), sin(theta), a_r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_thP1: ratsubst(sqrt(1-1/epsilon*(alpha/r-1)), sin(theta), a_th);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_rP2r:  ev(a_rP1, str1, str2);
+a_thP2r: ev(a_thP1, str1, str2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a_rP2r, a_thP2r], [r,0,2], [y,-2,1],
+[ylabel, "a"], [legend, "a_r", "a_{theta}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Mixed graphs
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a_thN2r, a_thP2r,a_rN2r, a_rP2r], [r,0,2], [y,-4,.5],
+[ylabel, ""], [legend, "a_{thetaN}", "a_{thetaP}", "a_{rN}", "a_{rP}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([a_thN2r, a_thP2r,a_rN2r, a_rP2r], [r,0,2], [y,-4,1],
+[ylabel, ""], [legend, "a_{thetaN}", "a_{thetaP}", "a_{rN}", "a_{rP}"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper363/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a_thN2th, a_thP2th,a_rN2th, a_rP2th], [theta,0,2*%pi], [y,-2,0.2], 
+[ylabel, ""], [legend, "a_{thetaN}", "a_{thetaP}", "a_{rN}", "a_{rP}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([a_thN2th, a_thP2th,a_rN2th, a_rP2th], [theta,0,2*%pi], [y,-2,0.5], 
+[ylabel, ""], [legend, "a_{thetaN}", "a_{thetaP}", "a_{rN}", "a_{rP}"],
+    [gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper363/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

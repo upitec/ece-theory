@@ -1,0 +1,266 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Original E field
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E0: -1/r_1^3*(3*r*(p.r)/r_1^2-p);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [r_X, r_Y];
+p: [0, 1];
+r_1: sqrt( r_X^2+r_Y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: E00: ev(E0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 1
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_X,-2,2], [r_Y,-2,2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+E field with linear displacement
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r_1: sqrt( (r_X+dX)^2+(r_Y+dY)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: 1/r_1^3*(3*(r+dr)*(p.(r+dr))/r_1^2-p);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(E1, [dX=0.2, dY=-0.2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_X,-2,2], [r_Y,-2,2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+E field with constant shivering
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [r_X, r_Y];
+p: [0, 1];
+r_1: sqrt(r_X^2+r_Y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr2: dr.dr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: 1/r_1^3*(3*(r)*(p.(r))/r_1^2-p)
+-1/r_1^5*dr2*(35*r*(p.r)/(2*r_1^2)-5/2*p)
+-5/2*1/r_1^7*dr2^2*p;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(E2, [dX=0.2, dY=-0.2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_X,-10,10], [r_Y,-10,10])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 4
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_Y,-1.5,1.5], [r_X,-1.5,1.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+E field with variable shivering
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [r_X, r_Y];
+p: [0, 1];
+r_1: sqrt(r_X^2+r_Y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr2: a^2/r_1^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: 1/r_1^3*(3*(r)*(p.(r))/r_1^2-p)
+-1/r_1^5*dr2*(35*r*(p.r)/(2*r_1^2)-5/2*p)
+-5/2*1/r_1^7*dr2^2*p;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(E2, [a=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_X,-10,10], [r_Y,-10,10])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 5
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_Y,-2,2], [r_X,-2,2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 6
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_Y,1.64,1.68], [r_X,-.02,.02])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+E field 4th order
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [r_X, r_Y];
+p: [0, 1];
+r_1: sqrt(r_X^2+r_Y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr2: a^2/r_1^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: 1/r_1^3*(3*(r)*(p.(r))/r_1^2-p)
++1/r_1^7*dr2^2*(1435*r*(p.r)/(24*r_1^2)+35/24*p
+    -35/(3*r_1^2)*[r_X^2*p[1], r_Y^2*p[2]])
+    +1/r_1^9*dr2^3*35/8*p;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(E2, [a=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 7
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_X,-10,10], [r_Y,-10,10])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 8
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_Y,-2,2], [r_X,-2,2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Div E of sect. 5
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],r_X) + diff(a[2],r_Y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+divE0: div(E00);
+divE:  div(E);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ /*plot3d (log (x^2*y^2), [x, -2, 2], [y, -2, 2],[grid, 29, 29],
+       [palette, [gradient, blue, red, yellow]],
+       color_bar, [xtics, 1], [ytics, 1], [ztics, 4],
+       [color_bar_tics, 4])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 9
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ plot3d ([divE, [r_X, .7, 1.1], [r_Y, -.2, .2]], [z, -300, 300], 
+       [palette, [gradient, blue, red, green, yellow]],
+       [grid, 40, 40],[mesh_lines_color,false],
+       [legend,false], [elevation,33], [azimuth,352], color_bar)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Curl E of sect. 5
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+curl2(a) := diff(a[2],r_X) - diff(a[1],r_Y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curlE0:  ratsimp(curl2(E00));
+curlE:  (curl2(E));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ /*plot3d (log (x^2*y^2), [x, -2, 2], [y, -2, 2],[grid, 29, 29],
+       [palette, [gradient, blue, red, yellow]],
+       color_bar, [xtics, 1], [ytics, 1], [ztics, 4],
+       [color_bar_tics, 4])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 10
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ plot3d ([curlE, [r_X, -2, 2], [r_Y, -2, 2]], [z, -30, 30], 
+       [palette, [gradient, blue, red, green, yellow]],
+       [grid, 40, 40],[mesh_lines_color,false],
+       [legend,false], [elevation,64], [azimuth,349], color_bar)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

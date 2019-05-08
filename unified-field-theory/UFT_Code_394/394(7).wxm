@@ -1,0 +1,55 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Cartesian coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+grad(psi) := [diff(psi,x), diff(psi,y), diff(psi,z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],x) + diff(a[2],y) + diff(a[3],z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(a) := [diff(a[3],y) - diff(a[2],z), 
+              diff(a[1],z) - diff(a[3],x), 
+              diff(a[2],x) - diff(a[1],y)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta(psi) := diff(psi,x,2) + diff(psi,y,2) + diff(psi,z,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Delta function calculations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: sqrt(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: 1/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+grad(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d2f: Delta(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(d2f);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

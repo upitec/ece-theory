@@ -1,0 +1,251 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+417(1)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F1 : -m*c^2/2*%gamma*diff(m(r),r)-m*M*G/r1^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Phi: -m*M*G/r1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E14: F1 = -diff(Phi,r1)+Omega*Phi;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E17: solve(E14, Omega);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Omega: rhs(first(E17));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E17: Fvac: Omega*Phi;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E19: diff(r/sqrt(m(r)),r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20: Fvac: -m*c^2/2*%gamma*diff(m(r),r)/E19;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20a: ratsimp(E20);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+417(3)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Check eq.(3)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(r/m(r)^(1/2),r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Check eq.(10)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E10: -m*c^2/2*%gamma*(m(r))^(1/2)*diff(m(r),r)/(1-1/2*r*diff(m(r),r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(ratsimp(E10-E20a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Maximized vacuum force
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: r*('diff(m(r),r,1))-2*m(r)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+first example
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m(r):= 1-r_0/r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(E1, diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%,r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+second example
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m(r):= 1-r_0/r-alpha/r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(E1, diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%,r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Schwarzschild-like function
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1: ev(m(r), [r_0=1, alpha=0]);
+m2: ev(m(r), [r_0=1, alpha=0.1]);
+m1d: diff(m1,r);
+m2d: diff(m2,r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F1: m1^(3/2)*m1d/(r*m1d-2*m1);
+F2: m2^(3/2)*m2d/(r*m2d-2*m2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(F1, [r=.01]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m1,m2], [r,0,5], [y,-10,3])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m1d,m2d], [r,0,5], [y,0,10])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([F1,F2], [r,0,5], [y,-5,5],
+[legend, "F(vac), alpha=0", "F(vac), alpha=0.1"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([F1,F2], [r,0,5], [y,-5,5],
+    [legend, "F(vac), alpha=0", "F(vac), alpha=0.1"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m(r):= 2-exp(log(2)*exp(-r/R));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1: ev(m(r), [R=1]);
+m2: ev(m(r), [R=0.2]);
+m1d: diff(m1,r);
+m2d: diff(m2,r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F1: m1^(3/2)*m1d/(r*m1d-2*m1);
+F2: m2^(3/2)*m2d/(r*m2d-2*m2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(F2, [r=.01]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m1,m2], [r,0,5], [y,0,1.2])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m1d,m2d], [r,0,5], [y,0,4])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(F1,[r=0.3]),numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([F1,F2], [r,0,4], [y,-2.5,0.5],
+[legend, "F(vac), R=1", "F(vac), R=0.2"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([F1,F2], [r,0,4], [y,-2.5,0.5],
+    [legend, "F(vac), R=1", "F(vac), R=0.2"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig4.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

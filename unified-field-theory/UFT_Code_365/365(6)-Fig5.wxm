@@ -1,0 +1,199 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(r>0, alpha>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([r],[theta,t],Omega,[theta,t],r1,r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Binet equation
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: (1+Omega)*diff(1/r,theta,2)+1/r = -m*r^2/L^2*F_r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: first(solve(E1, F_r));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: ev(E2, [Omega=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tex(''%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Newtonian force law
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: R0: alpha/(1+epsilon*cos(theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: ev(E2,[Omega=0],diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(r0, r, E3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(r0/alpha, r/alpha, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F0: rhs(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+General force law
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+f=1/sqrt(1+Omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+1/%;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon*cos(f(theta)*theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: ev(E2,[Omega=1/(f(theta)^2-1)],diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(r1, r, E3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gfactor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(alpha/r1, (1+epsilon*cos(f(theta)*theta)), %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F: rhs(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Special cases of f(theta)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+f(theta)=1-A
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f(theta):=1-A;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: R1: alpha/(1+epsilon*cos(f(theta)*theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F1: ev(F,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gfactor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tex(''%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+f(theta) as in note approach of note 1
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f(theta):=1.0+A/2*(sin((1+3*A)*theta)-2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: R2: alpha/(1+epsilon*cos(f(theta)*theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F2: ev(F,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plots
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega_0: 0;
+Omega_1: 1/(1-A)^2-1;
+Omega_2: 1/f(theta)^2-1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega_01: ev(Omega_0, [A=0.05]);
+Omega_11: ev(Omega_1, [A=0.05]);
+Omega_21: ev(Omega_2, [A=0.05]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Omega_01, Omega_11, Omega_21], [theta,0,6*%pi], [y,-0.01,0.2],
+[ylabel, "Omega(theta)"], [legend, "Omega_0", "Omega_1", "Omega_2"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plot2d([Omega_01, Omega_11, Omega_21], [theta,0,6*%pi], [y,-0.01,0.2],
+[ylabel, "Omega(theta)"], [legend, "\Omega_0", "Omega_1", "Omega_2"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper365/Fig5.png"])$*/$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R0;R1;R2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F01: ev(F0, [r0=R0, L=1, alpha=1, m=1, epsilon=0.3],eval);
+F11: ev(F1, [r1=R1, L=1, alpha=1, m=1, epsilon=0.3, A=0.05],eval);
+F21: ev(F2, [r1=R2, L=1, alpha=1, m=1, epsilon=0.3, A=0.05],eval)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([F01, F11, F21], [theta,0,6*%pi], [y,-2.1,-0.2],
+[ylabel, "F(theta)"], [legend, "F_0", "F_1", "F_2"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([F01, F11, F21], [theta,0,6*%pi], [y,-2.1,-0.2],
+[ylabel, "F(theta)"], [legend, "F_0", "F_1", "F_2"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper365/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

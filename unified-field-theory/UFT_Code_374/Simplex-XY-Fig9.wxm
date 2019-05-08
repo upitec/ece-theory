@@ -1,0 +1,248 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Simplified model with fluid velocity v
+for cartesian coordinates X, Y
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([x,y,x_d,y_d],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+U(r):= -m*G*M/r(x,y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r(x,y):=sqrt(x^2+y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+L: m/2*((diff(x,t)+vf_x(x,y,t))^2+(diff(y,t)+vf_y(x,y,t))^2)-U(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: diff(L, diff(x,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: expand(diff(D1,t) = diff(L,x) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: expand(solve(E1, diff(x,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Y equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: diff(L, diff(y,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: expand(diff(D2,t) = diff(L,y) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: expand(solve(E2, diff(y,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+/*GC: factor(ratsimp(solve([first(E11),first(E21)], 
+    [diff(x,t,2), diff(y,t,2)])));*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GC[1]: first(E11);
+GC[2]: first(E21);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(x_d, diff(x,t), Eq),
+    A: ratsubst(x_dd, diff(x,t,2), A),
+    A: ratsubst(y_d, diff(y,t), A),
+    A: ratsubst(y_dd, diff(y,t,2), A)
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vf_x(x,y,t):=a0*x^2;
+vf_y(x,y,t):=a0*y^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: expand(ev(transform(GC[1]),diff));
+G2: expand(ev(transform(GC[2]),diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [m=1, M=10, G=1, a0=0.005];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: factor(ev(rhs(G1), str, eval,diff));
+Eq2: factor(ev(rhs(G2), str, eval,diff));
+Eq3: x_d;
+Eq4: y_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sr: rk([Eq1, Eq2, Eq3, Eq4],
+    [x_d, y_d, x, y],
+    [0, 0.8,  10, 0], [t,0,200,0.1])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c1: makelist([p[1],p[2]],p,sr)$
+c2: makelist([p[1],p[3]],p,sr)$
+c3: makelist([p[1],p[4]],p,sr)$
+c4: makelist([p[1],p[5]],p,sr)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot theta, phi, psi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c1], [discrete, c2]], 
+[xlabel, "time"],
+[legend, "x^{dot}", "y^{dot}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plot2d([[discrete, c1], [discrete, c2]], 
+[xlabel, "time"],
+[legend, "theta^{dot}", "phi^{dot}"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper374/Fig1.png"])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c3], [discrete, c4]],
+[xlabel, "time"],
+[legend, "x", "y"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plot2d([[discrete, c3], [discrete, c6]],
+[xlabel, "time"],
+[legend, "r^{dot}", "r"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper374/Fig2.png"])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot space curve of centre of mass
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transf() := ( 
+    block([i,t,r,theta,phi,x,y,z],
+    cl1: [],
+    for i:1 thru length(c1) step 4 do (
+        [t,x,y]: [c1[i][1],c3[i][2],c4[i][2]],
+        z: 0,      
+        cl1: append(cl1, [[x,y,z]])
+    )))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transf()$
+cr1: points(cl1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d(user_preamble="set ticslevel 0;",
+    xrange=[-12.,12.],yrange=[-10.,10.], line_width=2, points_joined = true, point_size=0,
+    view=[101, 11], cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d(user_preamble="set ticslevel 0;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper374/Fig9.png'",    
+    xrange=[-12.,12.],yrange=[-10.,10.],
+    line_width=2, points_joined = true, point_size=0,
+     view=[0, 0], cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot angular momentum
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transfc() := ( 
+    block([i,t,r,x,y,x_d,y_d,z,m,L,L_phi],
+    cl1: [],
+    m: 1,
+    for i:1 thru length(c1) step 4 do (
+        [t,x,y,x_d,y_d]: [c1[i][1],
+            c3[i][2],c4[i][2],
+            c1[i][2],c2[i][2]],
+        L: m*(-x_d*y+y_d*x),
+        cl1: append(cl1, [[t,L]])
+)))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transfc()$
+cr1: points(cl1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([discrete, cl1],
+[xlabel, "time"],[ylabel, "L"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plot2d([[discrete, cl1], [discrete, cl2]],
+[xlabel, "time"],[ylabel, "L"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper374/Fig3.png"])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

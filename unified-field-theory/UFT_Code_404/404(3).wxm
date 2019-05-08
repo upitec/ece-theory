@@ -1,0 +1,57 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(15)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E14: 2/3*drdr/r[E]^3=2/5*omega[E]*v[E]/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E15: solve(E14, drdr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr: rhs(first(E15));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Numerical values
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[E]: 6.371009e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega[E]:  7.292115e−5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[E]: omega[E]*r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: ev(sqrt(drdr));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr/r[E];
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

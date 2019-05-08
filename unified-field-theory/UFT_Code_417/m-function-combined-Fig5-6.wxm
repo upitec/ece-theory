@@ -1,0 +1,321 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: section start ]
+Continuation of r^2 with 1/r type
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(r):= c2/(r+c3)+1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(f(r),r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: f(a)=1/2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1a: solve(E1,c3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: ev(diff(f(r),r), [r=a]) = 1/a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c3: rhs(first(E1a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(ev(E2),c2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c2: rhs(first(%));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c3: ev(c3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1: 1/(2*a^2)*r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m2: f(r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1;
+m2;
+d1: diff(m1,r);
+d2: diff(m2,r);
+ev(diff(m1,r), [a=1/2]);
+ev(diff(m2,r), [a=1/2]);
+ev((m1), [r=a]);
+ev((m2), [r=a]);
+ev(d1, [r=a]);
+ev(d2, [r=a]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m11: ev(m1, [a=1/2]);
+m21: ev(m2, [a=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m11: if r < 1/2 then ev(m1, [a=1/2]);
+m21: if r > 1/2 then ev(m2, [a=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m11,m21], [r,0,5], [y,0,1.1])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1: ev(diff(r^2*2,r),diff);
+f2: ev(diff(1-1/(8*(r-1/4)),r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(f1, [r=1/2]);
+ev(f2, [r=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Continuation of r^2 with 1/r^2 type
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+assume(a>0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(r):= -c2/(r-c3)^2+1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(f(r),r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: f(a)=1/2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1a: solve(E1,c3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: ev(diff(f(r),r), [r=a]) = 1/a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c3: rhs(first(E1a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(E2^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E3: solve(ev(E2^2),c2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c2: rhs(first(%));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c3: ev(c3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1: 1/(2*a^2)*r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m2: f(r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m11: ev(m1, [a=1/2]);
+m21: ev(m2, [a=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m11: if r < 1/2 then ev(m1, [a=1/2]);
+m21: if r > 1/2 then ev(m2, [a=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m11,m21], [r,0,5], [y,0,1.2],
+[legend, "m(r<a)", "m(r>a)", "asymptote"],
+[grid2d, true])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([m11,m21], [r,0,5], [y,0,1.2],
+    [legend, "m(r<a)", "m(r>a)", "asymptote"], [grid2d, true],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig5.png"])$    
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Continuity of derivatives
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1: ev(diff(r^2/(2*a^2),r),diff);
+f2: ev(diff(1-a^2/(2*r^2),r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(f1, [r=a]);
+ev(f2, [r=a]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1;
+m2;
+dm1: diff(m1,r);
+dm2: diff(m2,r);
+ev(diff(m1,r), [a=1/2]);
+ev(diff(m2,r), [a=1/2]);
+ev((m1), [r=a]);
+ev((m2), [r=a]);
+ev(dm1, [r=a]);
+ev(dm2, [r=a]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Diff. Eq. of energy from spacetime
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: r*('diff(m(r),r,1))-2*m(r)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(E1,m(r),r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Edenom: r*'diff(f(r),r)-2*f(r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ed1: ev(Edenom,diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(Ed1, [r=11*a]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ed1a: if(r<a) then 0 else Ed1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ed11: ev(Ed1a, [a=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvac: m2^(3/2)*dm2/(r*dm2-2*m2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvaca: if(r<a) then -100 else Fvac;
+Fvac1: ev (Fvaca, [a=1/2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Ed11,Fvac1], [r,0,3], [y,-10,2],
+[legend, "Denom.", "F(vac)", "asymptote"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([Ed11,Fvac1], [r,0,3], [y,-10,2],
+    [legend, "Denom.", "F(vac)", "asymptote"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

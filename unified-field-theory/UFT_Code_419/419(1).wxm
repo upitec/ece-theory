@@ -1,0 +1,132 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: section start ]
+External data
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+md: ((sqrt((sqrt(3)*r^3)/(8*a^2*sqrt((48*G*M*a^2*((r*v^2*
+    sqrt((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)
+    -(r^3*v^2)/(16*G*M*a^2))^(2/3)+3*G*M*r^2*((r*v^2
+    *sqrt((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)
+    -(r^3*v^2)/(16*G*M*a^2))^(1/3)-32*a^2*r*v^2)/(G*M*((r*v^2
+    *sqrt((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)
+    -(r^3*v^2)/(16*G*M*a^2))^(1/3))))-((r*v^2*sqrt
+    ((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)
+    -(r^3*v^2)/(16*G*M*a^2))^(1/3)+(2*r*v^2)/(3*G*M*((r*v^2
+    *sqrt((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)
+    -(r^3*v^2)/(16*G*M*a^2))^(1/3))+r^2/(8*a^2)))/(2)
+    +(sqrt((48*G*M*a^2*((r*v^2*sqrt((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))
+    /(16*3^(3/2)*G*M*a^2)-(r^3*v^2)/(16*G*M*a^2))^(2/3)+3*G*M*r^2*
+    ((r*v^2*sqrt((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)
+    -(r^3*v^2)/(16*G*M*a^2))^(1/3)-32*a^2*r*v^2)/(G*M*((r*v^2*sqrt
+    ((r*(2048*a^4*v^2+27*G*M*r^3))/(G*M)))/(16*3^(3/2)*G*M*a^2)-(r^3*v^2)
+    /(16*G*M*a^2))^(1/3))))/(8*sqrt(3)*a)+r/(8*a))^2$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Exp. data of S2 star
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+M: 8.572e36;
+a: 1.451e14;
+epsilon: 0.88466;
+r[min]: 1.7952e13;
+v_e: 7.650e6;
+Ty: 16.0518;
+T: Ty*(365.25*24*3600);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Einstein precession
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+Einstein precession per orbit (rad, °)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Dphi_E1: 6*%pi*M*G/(a*(1-epsilon^2)*c^2), numer; /*radians*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dphi_E2: Dphi_E1*180/%pi, numer; /*degrees*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Einstein precession per earth year (° and '')
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Dphi_E2/Ty;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dphi_E2/Ty*3600;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Velocities at r[min]
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v_e;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_N: sqrt(M*G*(2/r[min]-1/a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_e/v_N;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_e/c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+m theory
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(md, [v=v_N,r=r[min]]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(md, [v=v_e,r=r[min]]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Einstein theory
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r0: 2*M*G/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+mE(r):=1-r0/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[min];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(mE(r[min]));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

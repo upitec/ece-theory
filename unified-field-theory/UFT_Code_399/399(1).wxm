@@ -1,0 +1,93 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(13)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E13: diff(o_x(t),t,2)=o_1^2*o_x(t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(o_1>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E13,o_x(t),t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution 1
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+o_x(t):= o_0*exp((-o_1*t+k*r));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E13,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Solution 2
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+o_x(t):= o_0*exp(%i*(o_1*t+k*r));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E13,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(9)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+remfunction(o_x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E9: diff(phi_0(t),t,2)+2/o_x(t)*diff(o_x(t),t)*diff(phi_0(t),t) + 1/o_x(t)*diff(o_x(t),t,2)*phi_0(t) = A_x/o_x(t)*exp(-%i*o_0*t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+o_x(t):= o_0X*exp((-o_1*t+k*X));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E9a: ev(E9,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+exploding solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E9a, phi_0(t), t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution with simplified function omega_x
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+o_x(t):= o_0X*exp(-o_1*t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E9a: ev(E9,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E9a, phi_0(t), t);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

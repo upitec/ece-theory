@@ -1,0 +1,93 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+with variable omega(u)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([u,r],phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: diff(u,phi,2)+u=omega(u)/(1+epsilon*cos(phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E1,u,phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+with constant omega_u
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: diff(u,phi,2)+u=omega_u/(1+epsilon*cos(phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(epsilon^2-1<0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E1,u,phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: diff(u,phi,2)+u=1/alpha*(1+omega_u/u);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E2,u,phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Simplifying the integral
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Omitting the log function
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(1/sqrt((-alpha*u^2+2*u-2*%k1)/alpha),u);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Omitting the linear and quadratic u functions
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(1/sqrt((2*omega_u*log(u)-2*%k1)/alpha),u);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(5)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: diff(u,phi,2)+u=omega_u*(1-epsilon*cos(phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+res: ode2(E5,u,phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+res1: expand(ev(res,[phi=%pi/2, %k1=0]));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

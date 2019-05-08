@@ -1,0 +1,81 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20: drdt = -r/2*(2*omega_1/tau+t*omega_1/tau^2-2*L/(m*r^3)*drdt)
+/(omega+omega_1+t/tau*omega_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20a: solve(E20,drdt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Approximation 1/r^2 --> 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20b: drdt = -(2*m*omega_1*r^1*tau+m*omega_1*r^1*t)/(((2*m*omega_1+2*m*omega)*r^0)*tau^2+2*m*omega_1*r^0*t*tau);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: drdt = L*epsilon/(m*alpha)*sin(phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: ratsubst(sqrt(1-1/epsilon^2*(alpha/r-1)^2), sin(phi),E1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E3: rhs((E20b)) = rhs(E2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E4: E3^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E5: E4*((2*m*omega_1+2*m*omega)*tau^2+2*m*omega_1*t*tau)^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E6: ratsimp(E5*r^2*alpha^2*m^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A: ((2*m*omega_1+2*m*omega)*tau^2+2*m*omega_1*t*tau)^2/(alpha^2*m^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E6: ratsubst(B,A,E5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(E6*r^2,r);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

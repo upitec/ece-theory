@@ -1,0 +1,138 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: 7.29735257e-3;
+c: 2.99792458e8;
+G: 6.67384e-11;
+m[E]: 5.97219e24;
+r[E]: 6.371009e6;
+h[bar]: 6.62606957e-34/(2*%pi), numer;
+m[p]: 1.672621777e-27;
+m[e]: 9.10938215e-31;
+a[0]:  5.2917721092e-11;
+e: 1.602176565e-19;
+epsilon[0]:  8.854187817e-12;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x:(alpha)^2*m[e]*c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U_grav: 2*m[e]*m[E]*G/r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ry[J]: 4.35974394e-18/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+x: m[e]*m[E]*G/(alpha*h[bar]*c);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+2*x*alpha;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E_H: -1/2*alpha^2*m[e]*c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U_grav_1: 2*m[e]*m[E]*G/r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U_grav_2: 2/r[E]*x*alpha*h[bar]*c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x20a: U_grav_2/(alpha*h[bar]*c)*r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x_20b: U_grav_2/(alpha^2*m[e]*c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+U_e: -e^2/(4*%pi*epsilon[0]*a[0]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U_e2: -alpha^2*m[e]*c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E_kin: -U_e/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U_g: -m[e]*m[E]*G/r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+2*m[E]*G/r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E_so: h[bar]^2/(4*m[e]^2*c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+-13.605/6.24150974e18;
+1.e-5/6.24150974e18;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E_so1: e^2*h[bar]^2/(32*m[e]^2*c^2*a[0]^3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E_so1*6.24150974e18;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2_g: m[E]*G/r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2_e: e/(4*%pi*epsilon[0]*a[0]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Gamma(n):=1/sqrt(1-alpha^2/n^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Gamma(1)-1;
+Gamma(2)-1;
+Gamma(3)-1;
+Gamma(4)-1;
+Gamma(5)-1;
+Gamma(6)-1;
+Gamma(7)-1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Gamma(n)], [n,1,8], [ylabel, ""])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

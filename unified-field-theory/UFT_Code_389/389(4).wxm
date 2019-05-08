@@ -1,0 +1,105 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+x2: -M*G*(x/(x^2+y^2)^(3/2)+omega_x/(x^2+y^2)^(1/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x2_f: M*G/(%gamma*(x^2+y^2)^(3/2))*((xd*yd*y+x*xd^2)/c^2-x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x2_r: -M*G*x/(%gamma^3*(x^2+y^2)^(3/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solutions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Forward precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+S: solve(x2=x2_f, omega_x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+o_x: rhs(first(S));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(o_x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+corrected formula (13) from note
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+o_note: x/(x^2+y^2)*(1/%gamma-1)-(xd*yd*y+x*xd^2)/(%gamma*c^2*(x^2+y^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(o_x-o_note);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Retrograde precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+S: solve(x2=x2_r, omega_x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+o_x: rhs(first(S));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(o_x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+formula (15) from note
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+o_note: x/(x^2+y^2)*(1/%gamma^3-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(o_x-o_note);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Y component for forward precession
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+y2: -M*G*(y/(x^2+y^2)^(3/2)+omega_y/(x^2+y^2)^(1/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y2_f: M*G/(%gamma*(x^2+y^2)^(3/2))*((yd*xd*x+y*yd^2)/c^2-y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+S: solve(y2=y2_f, omega_y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+o_y: rhs(first(S));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,200 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Calculation of delta_phi
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(G>0, M>0, alpha>0, epsilon>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1+v^2/2/c^2+3/8*v^4/c^4+5/16*v^6/c^6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(M*G/alpha*(1+epsilon)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H_0: -m*M*G/(2*alpha)*(1-epsilon^2)+U;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H_r: (gamma-1)*m*c^2-m*M*G/alpha*(1+epsilon*cos(delta_phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: H_0=H_r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E1, cos(delta_phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cos_delta_phi: ev(rhs(first(%)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Parameters
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[S]: M: 1.98855e30;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[M]: m: 3.301e21;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G: 6.67384e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+semi-major axis (große Halbachse)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a: 57.909175e9;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.20563069;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+velocities
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v[min]: 38860;
+v[max]: 58980;
+v[av]:  47872.5;
+v[av_n]:(v[min]+v[max])/2.;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Delta_phi in arcsec
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+as_fac: 2*%pi/(360*3600);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Delta_phi for 100 earth years
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+T_sideral: 87.969*24*3600;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+T_earth: 365.256*24*3600;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+semi latus rectum
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: a*(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+perihelion and aphelion radius
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+r[p]: alpha/(1+epsilon);
+r[a]: alpha/(1-epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+vN calculated:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+vN2: m[S]*G*(2/r[p]-1/a);
+vN: sqrt(vN2);
+gamma:1/sqrt(1-vN2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Evaluation of delta_phi
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cos_delta_phi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(cos_delta_phi, [U=0]);
+cdp1: ev(cos_delta_phi-1, [U=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: acos(cdp1)-%pi/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_ey: Delta_phi/as_fac*T_earth/T_sideral*100;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Evaluation of delta_phi with U
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+f: -42.98141712844573/Delta_phi_ey;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cdp2: f*cdp1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: acos(cdp2)-%pi/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_ey: Delta_phi/as_fac*T_earth/T_sideral*100;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cdp2U: ev(cos_delta_phi-1, [U=U2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U1: solve(cdp2=cdp2U, U2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+printf(true, "~e", rhs(first(U1)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(H_0); ev(H_r,[delta_phi=0],eval);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

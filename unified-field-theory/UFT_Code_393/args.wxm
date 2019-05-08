@@ -1,0 +1,219 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Tests
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a: a1+a2-a3*(1+x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+args(a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+args(expand(a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b: E*(3+c) - (g+h)*b/c+(x+y)/(g+h)*f*(g-cc)-c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c: args(expand(b));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+args(args(c)[2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+coeff(2*x*y^3,y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+coeff(2*x*y*y*y,y^3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+coeff((2*x*y^3)/(z+x^2),x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) := [a[2]*b[3] - a[3]*b[2], a[1]*b[3] - a[3]*b[1], a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cross([1,0,0],[0,1,0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a:cross(omega,b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a[1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: [x_1=a[1], x_2=a[2], x_3=a[3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve (ev(E), [omega[1], omega[2], omega[3]]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: [x1,x2,0] = x3*cross(omega,[0,0,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([first(lhs(E1))=first(rhs(E1)),second(lhs(E1))=second(rhs(E1))], [omega[1], omega[2]]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+first(E1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Average value
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* averaging delta r terms in an expression */
+averageM(f, dr) := block([arglist, s0, den, i, j, res, l],
+/* make list of all summands in the formula */
+arglist: [],
+s0: string(0),
+arglist: args(expand(f)),
+/* check if dr[i] appears in any denominator */
+for j:1 thru length(arglist) do (
+    den: denom(arglist[j]),
+    /*print ("DEN:", den),*/
+    for i:1 thru length(dr) do (
+        if not freeof(dr[i],den) then print(i, "Denominator error!")
+)),
+/* remove all list elements containing occurences of dr[i], dr[i]^3, dr[i]^5 */ 
+for j:1 thru length(arglist) do (
+    for i:1 thru length(dr) do (
+        if not equal(string(coeff(arglist[j], dr[i], 1)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 3)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 5)), s0) 
+        then
+            arglist[j]: 0
+            /*print("L(", dr[i], ") ", arglist[j])*/
+)),
+res: 0,
+/* construct result expression */
+l: length(arglist),
+for j:1 thru l do (
+    el: pop(arglist),
+    res: res + el,
+    print(j,el,res)
+),
+print(res)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: a/(b+1) + b*dX*dY/(1+a+c*dY^2) - c*dX^2*dY^3 - X_1*dX^2 + X_2*dY^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+averageM(f, dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: g*h/c*(dX*dY^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: coeff(f, dr[2],1);
+f2: bothcoeff(f, dr[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: coeff(f, dr[1],2);
+f2: bothcoeff(f, dr[1]^1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+coeff(f, dr[1],3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s1: string(coeff(f, dr[1],1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s0: string(t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+not equal(string(coeff(f, dr[1], 1)), s0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t: f;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+if string(coeff(f, dr[1],1)*dX)=s0 then t;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+if is(notequal(coeff(f, dr[1],1),0)) then y:A;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+resultant(x * y^2,x*y,x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: expand ((x + 1)*((u + v)^2 + a*(w + z)^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factorsum(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+facsum(%, x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fullratsimp(f,u);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expandwrt(f,v);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

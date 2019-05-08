@@ -1,0 +1,271 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a_nabla_b(a,b) := [a[1]*diff(b[1],x) + a[2]*diff(b[1],y) + a[3]*diff(b[1],z),
+                   a[1]*diff(b[2],x) + a[2]*diff(b[2],y) + a[3]*diff(b[2],z),
+                   a[1]*diff(b[3],x) + a[2]*diff(b[3],y) + a[3]*diff(b[3],z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_nabla_s_b(a,b) :=[
+/* r component: */
+                    a[1]*diff(b[1],r) + a[2]/r*diff(b[1],theta) 
+                   + a[3]/(r*sin(theta))*diff(b[1],phi)
+                   - (a[2]*b[2]+a[3]*b[3])/r,
+/* theta component: */ 
+                   a[1]*diff(b[2],r) + a[2]/r*diff(b[2],theta)
+                   + a[3]/(r*sin(theta))*diff(b[2],phi)
+                   + a[2]*b[1]/r - a[3]*b[3]*cot(theta)/r,
+/* phi component: */ 
+                   a[1]*diff(b[3],r) + a[2]/r*diff(b[3],theta)
+                   + a[3]/(r*sin(theta))*diff(b[3],phi)
+                   + a[3]*b[1]/r + a[3]*b[2]*cot(theta)/r
+                    ]$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+General plane wave
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v: [v1,v2,v3]*exp(%i*(k[X]*x+k[Z]*z+k[Y]*y-omega*t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F3c: ratsimp(a_nabla_b(v,v));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F3: realpart(F3c)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plane wave in Z direction
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(F3, [k[X]=0, k[Y]=0, v1=0, v2=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wl: trigreduce(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vl: ev(v, [k[X]=0, k[Y]=0, v1=0, v2=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+realpart(vl);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Circularly polarized wave
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v: vt: [v1*cos(k[X]*x-omega*t),v2*sin(k[Y]*y-omega*t),0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F3c: ratsimp(a_nabla_b(v,v));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wt: trigreduce(realpart(F3c));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Spherical longitudinal wave
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v: vr: [v1,0,0]*exp(%i*(k[r]*r-omega*t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+realpart(v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F4c: ratsimp(a_nabla_s_b(v,v));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+F4: realpart(F4c);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wr: trigreduce(realpart(%));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Polynomial/exponential velocity
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v: vp: [0,0,v3*z^a];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wp: ratsimp(a_nabla_b(v,v));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: ve: [0,0,v3*exp(a*z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+we: ratsimp(a_nabla_b(v,v));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Graphics
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [v1=1, v2=1, v3=1, k[X]=1, k[Y]=1, k[Z]=1, k[r]=1, t=0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Oscillating v
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+vl1: realpart(ev(vl, str));
+wl1: ev(wl, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vt1: realpart(ev(vt, str));
+wt1: ev(wt, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vr1: realpart(ev(vr, str));
+wr1: ev(wr, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Polynomial v
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+vp11: realpart(ev(vp, str, [a=1]));
+wp11: ev(wp, str, [a=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vp12: realpart(ev(vp, str, [a=2]));
+wp12: ev(wp, str, [a=2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vp13: realpart(ev(vp, str, [a=.4]));
+wp13: ev(wp, str, [a=.4]);
+vp14: realpart(ev(vp, str, [a=.2]));
+wp14: ev(wp, str, [a=.2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Exponential v
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+ve1: realpart(ev(ve, str, [a=1]));
+we1: ev(we, str, [a=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphs
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vl1[3],wl1[3]], [z,-3,3],
+[legend, "v_3(Z)", "F_3(Z)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([vl1[3],wl1[3]], [z,-3,3],
+[legend, "v_3(Z)", "F_3(Z)"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper367/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vt1[1],wt1[1]], [x,-3,3],
+[legend, "v_1(Z)", "F_1(Z)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vt1[2],wt1[2]], [y,-3,3],
+[legend, "v_2(Z)", "F_2(Z)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vp11[3],wp11[3],vp12[3],wp12[3]], [z,-2,2],
+[legend, "v_3(a=1)", "F_3(a=1)", "v_3(a=2)", "F_3(a=2)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([vp11[3],wp11[3],vp12[3],wp12[3]], [z,-2,2],
+[legend, "v_3(a=1)", "F_3(a=1)", "v_3(a=2)", "F_3(a=2)"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper367/Fig4.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vp13[3],wp13[3],vp14[3],wp14[3]], [z,-2,2], [y,0,4],
+[legend, "v_3(a=0.4)", "F_3(a=0.4)", "v_3(a=0.2)", "F_3(a=0.2)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([vp13[3],wp13[3],vp14[3],wp14[3]], [z,-2,2], [y,0,4],
+[legend, "v_3(a=0.4)", "F_3(a=0.4)", "v_3(a=0.2)", "F_3(a=0.2)"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper367/Fig5.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([ve1[3],we1[3]], [z,-1,2],
+[legend, "v_3(Z)", "F_3(Z)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([ve1[3],we1[3]], [z,-1,2],
+[legend, "v_3(Z)", "F_3(Z)"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper367/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vt1; wt1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+max: 4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([vt1[1],vt1[2]],[x,y],
+          [direction,forward],
+         [y,-max,max], [x,-max,max])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf([wt1[1],wt1[2]],[x,y],
+          [direction,forward],
+         [y,-max,max], [x,-max,max])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

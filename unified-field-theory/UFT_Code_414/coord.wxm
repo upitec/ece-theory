@@ -1,0 +1,142 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends([r,phi],t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Unit vectors
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T: matrix([cos(phi), -sin(phi)],[sin(phi), cos(phi)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T1: trigsimp(invert(T));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e_X: [T1[1,1], T1[2,1]];
+e_Y: [T1[1,2], T1[2,2]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Transformations
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+X: r*cos(phi);
+Y: r*sin(phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vx: diff(X,t);
+vy: diff(Y,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ax: diff(X,t,2);
+ay: diff(Y,t,2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v2: trigsimp(vx^2+vy^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a2: trigsimp(ax^2+ay^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Transform cartesian Lagrange equation
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vxXvyY: trigsimp(vx*X+vy*Y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: [ax, ay] = M*G/(%gamma*r^3)*([vx,vy]*(vxXvyY)/c^2-[X,Y]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: trigsimp(E1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Eq: [first(lhs(E2))=first(rhs(E2)),
+    second(lhs(E2))=second(rhs(E2))];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(Eq, [diff(r,t,2), diff(phi,t,2)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Transform cartesian Lagrange equation including unit vectors
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vxXvyY: trigsimp(vx*X+vy*Y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: ax*e_X + ay*e_Y = M*G/(%gamma*r^3)*
+((vx*e_X+vy*e_Y)*vxXvyY/c^2-(X*e_X+Y*e_Y));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: trigsimp(E1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Eq: [first(lhs(E2))=first(rhs(E2)),
+    second(lhs(E2))=second(rhs(E2))];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(Eq, [diff(r,t,2), diff(phi,t,2)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

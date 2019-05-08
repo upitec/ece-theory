@@ -1,0 +1,203 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+v, vN and gamma
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+gamma(vN)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: gamma = (1-vN^2/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma1: rhs(E5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13: 1/E5^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13a: solve(E13, vN);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v = gamma*vN;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+1 vN(gamma)
+2 vN(v)
+3 v(gamma)
+4 v(vN)
+5 gamma(vN)
+6 gamma(v)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(v>0, vN>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: gamma = (1-vN^2/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: vN=(c*sqrt(gamma^2-1))/gamma;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: v /*= gamma*vN*/ =gamma*rhs(E1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: vN = sqrt(v^2/(1+v^2/c^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4: v = sqrt(vN^2/(1-vN^2/c^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E6: %gamma /*= v/vN*/ = v/rhs(E2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: if v>1 then 5 else 0.;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+vN(gamma)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+vN1: ev(rhs(E1), [c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vN1], [gamma,0,5],
+        [xlabel, "gamma"], [ylabel, "v_N"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([vN1], [gamma,0,5],
+    [xlabel, "gamma"], [ylabel, "v_N"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper406/Fig5.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+vN(v)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+vN1: ev(rhs(E2), [c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vN1,f], [v,0,5], [legend, ""],
+    [xlabel, "v"], [ylabel, "v_N"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([vN1,f], [v,0,5], 
+    [xlabel, "v"], [ylabel, "v_N"], [legend, ""],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper406/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+v(gamma)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+v1: ev(rhs(E3), [c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([v1,1], [gamma,0,5], [y,0,5], [legend, ""],
+    [xlabel, "gamma"], [ylabel, "v"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([v1,1], [gamma,0,5], [y,0,5], [legend, ""],
+    [xlabel, "gamma"], [ylabel, "v"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper406/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+v(vN)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+v1: ev(rhs(E4), [c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([v1,1], [vN,0,1.], [y,0,5], [legend, ""],
+    [xlabel, "v_N"], [ylabel, "v"],
+    [gnuplot_preamble, "set lt 2 dashtype 2"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([v1,1], [vN,0,1.], [y,0,5], [legend, ""],
+    [xlabel, "v_N"], [ylabel, "v"],/*[style,lines,[dots, 12, 2] ],*/
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper406/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+gamma(vN)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma1: ev(rhs(E5), [c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([gamma1], [vN,0,1], [y,0,5], 
+    [xlabel, "v_N"], [ylabel, "gamma"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([gamma1], [vN,0,1], [y,0,5], 
+    [xlabel, "v_N"], [ylabel, "gamma"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper406/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+gamma(v)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma1: ev(rhs(E6), [c=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([gamma1,f], [v,0,5], [y,0,5], [legend, ""],
+    [xlabel, "v"], [ylabel, "gamma"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([gamma1,f], [v,0,5], [y,0,5], [legend, ""],
+    [xlabel, "v"], [ylabel, "gamma"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper406/Fig4.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

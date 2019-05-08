@@ -1,0 +1,169 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Table 2
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+omega+, omega-
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r[1]: 5.79e10$
+r[2]: 1.08e11$
+r[3]: 1.50e11$
+r[4]: 2.28e11$
+r[5]: 7.79e11$
+r[6]: 1.43e12$
+r[7]: 2.87e12$
+r[8]: 4.50e12$
+r[9]: 5.91e12$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega[1]: 2.39e-6$
+omega[2]: 5.45e-7$
+omega[3]: 2.99e-7$
+omega[4]: 2.90e-8$
+omega[5]: -1.19e-8$
+omega[6]: -5.75e-9$
+omega[7]: -2.28e-9$
+omega[8]: -1.18e-9$
+omega[9]: -7.85e-11$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+axp: []; for i:1 thru 4 do axp: append(axp, [r[i]]);
+ayp: []; for i:1 thru 4 do ayp: append(ayp, [omega[i]]);
+axm: []; for i:5 thru 9 do axm: append(axm, [r[i]]);
+aym: []; for i:5 thru 9 do aym: append(aym, [omega[i]]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, axp, ayp], [discrete, axm, aym]], [style, points],
+[legend, "omega+", "omega-"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, axp, ayp], [discrete, axm, abs(aym)]], [style, points],
+[legend, "omega+", "abs(omega-)"], [logy],
+[gnuplot_preamble, "set format y '%8.2e';"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, axp, ayp], [discrete, axm, abs(aym)]], [style, points],
+[legend, "omega+", "abs(omega-)"], [logy],[logx],
+[gnuplot_preamble, "set format y '%8.2e';"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+omega+(total)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega[1]: 1.62e-5$
+omega[2]: 9.00e-6$
+omega[3]: 1.53e-5$
+omega[4]: 1.20e-5$
+omega[5]: 2.20e-6$
+omega[6]: 2.10e-6$
+omega[7]: 4.32e-7$
+omega[8]: 9.04e-8$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+axp: []; for i:1 thru 8 do axp: append(axp, [r[i]]);
+ayp: []; for i:1 thru 8 do ayp: append(ayp, [omega[i]]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([discrete, axp, ayp], [style, points],
+[legend, "omega_{T}"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, axp, ayp]], [style, points],
+[legend, "omega_{T}"], [logy],
+[gnuplot_preamble, "set format y '%8.2e';"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([discrete, axp, ayp],  [style, points],
+[legend, "omega_{T}"], [logy],[logx],
+[gnuplot_preamble, "set format y '%8.2e';"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Velocities, excentricities
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vN[1]: 47.4e3$
+vN[2]: 35.0e3$
+vN[3]: 29.8e3$
+vN[4]: 24.1e3$
+vN[5]: 13.1e3$
+vN[6]: 9.7e3$
+vN[7]: 6.8e3$
+vN[8]: 5.4e3$
+vN[9]: 4.7e3$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eps[1]: 0.2056$
+eps[2]: 0.0068$
+eps[3]: 0.0167$
+eps[4]: 0.0937$
+eps[5]: 0.0483$
+eps[6]: 0.056$
+eps[7]: 0.0461$
+eps[8]: 0.01$
+eps[9]: 0.2484$
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+m[S]: 1.98855e30;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for i:1 thru 9 do (
+    Dphi_R[i]: 6*%pi*m[S]*G/(c^2*r[i]*(1-eps[i]^2)),
+    print(i, Dphi_R[i])
+), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Dphi_R[3]*2*%pi,numer;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

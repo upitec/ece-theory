@@ -1,0 +1,307 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Experimental quantities
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+velocity of light in vacuo [m/s]
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+gravitational constant [m^3 kg^-1 s^-2 = N (m/kg)^2]
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+G: 6.67384e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+sun mass [kg]
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m[S]: 1.98855e30;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+sun radius [m]
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+r[S]: 6.955e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+astronomical unit: 1 parsec [m]
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+au: 1.49597870700e11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Hulse Taylor binary pulsar
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+T: 7.751938773864*3600 /*sec*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[periastron]: 300e3 /*m/s*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[apastron]: 75e3 /*m/s*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[periastron]: 450e3 /*m/s*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[apastron]: 110e3 /*m/s*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.6171334;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[periastron]: 746600e3 /*m*/;
+r[apastron]: 3153600e3 /*m*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Semi major axis
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a: 1950100e3 /*m*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Semi latus rectum
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: a*(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+ rate of decrease of orbital period is 76.5 microseconds per year
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+rate of decrease of semimajor axis is 3.5 meters per year
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: section start ]
+Stanford data
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a: 8.6696e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: 5.3676e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[min]: 3.3192e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.617155;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+derived:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+r[min]: alpha/(1+epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[max]: alpha/(1-epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Derived quantities
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: a*(1-epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[NeutronStar]: 1.387*m[S];
+m[Pulsar]: 2.8283787*m[S]-m[NeutronStar];
+mu: m[NeutronStar]*m[Pulsar]/(m[NeutronStar]+m[Pulsar]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[NeutronStar]/m[S];
+m[Pulsar]/m[S];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[min]: alpha/(1+epsilon);
+r[max]: alpha/(1-epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+velocities derived from elliptic orbital parameters
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v2[max]: mu*G*(2 / r[min] - 1 / a);
+v2[min]: mu*G*(2 / r[max] - 1 / a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[min]: sqrt(v2[min]);
+v[max]: sqrt(v2[max]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+epsilon from ellipse equation
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: X^2*(1-epsilon^2)^2+Y^2*(1-epsilon^2)=alpha^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E1, epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Transformation of units
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+mass --> kg/1.98855e30; (solar masses)
+length --> m/1.e9       (giga-meters)
+time --> s/(24*3600)    (days)
+G --> m^3/(kg*s^2) *1.e-27*1.98855e30*86400^2
+L --> kg*m^2/s / 1.98855e30 / 1.e18 *(24*3600)
+
+r --> r/1.e9
+m --> m/1.98855e30
+t --> t/86400
+v --> m/s*86400/1.e9 = m/s*8.64e-5
+G --> 6.67384e-11*1.e-27*1.98855e30*86400^2 = 990.6946
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+24*3600; 1/(24*3600), numer; 24*3600*1.e-9; 1/ 1.98855e30 / 1.e18 *(24*3600); 1/8.64e-5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+6.67384e-11*1.e-27*1.98855e30*86400^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Factors
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f_r = 1.e-9;
+f_m = 5.0287898e-31;
+f_t = 1.1574074e-5;
+f_v = 8.64e-5;
+f_G = 990.69459;
+f_L = 4.3448744e-44;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Reduced mass factors
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m[p] : 2.866253613885e30;
+m[n] : 2.75811885e30;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[n]/(m[p]+m[n]);
+1/%;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+-m[p]/(m[p]+m[n]);
+1/%;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Interpolation of v0
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v1:484500;
+T1: 13.50556;
+v2:450000;
+T2:2.24722;
+T0: 7.75;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve((v2-v0)/(v2-v1)=(T2-T0)/(T2-T1), v0), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v1:466863;
+T1:7.174999;
+v2:450000;
+T2:2.24722;
+T0: 7.75;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve((v2-v0)/(v2-v1)=(T2-T0)/(T2-T1), v0), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v1:466863;
+T1:7.174999;
+v2:468831;
+T2:7.6;
+T0: 7.75;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve((v2-v0)/(v2-v1)=(T2-T0)/(T2-T1), v0), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+4.226*%pi/180/(365.25*24)*7.75, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Mass loss
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+7.35e24/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

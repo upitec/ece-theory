@@ -1,0 +1,223 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Spherical central motion
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([x,y,theta,phi,beta,r,theta_d,phi_d,beta_d,r_d,v,T,U,L,dphi,omega],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+U: -m*M*G/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+T: 1/2*m*((1+Omega)^2*diff(r,t)^2+r^2*diff(theta,t)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: ev(T-U);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+theta equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: diff(L, diff(theta,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: expand(ratsimp(diff(D1,t) = diff(L,theta) ));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: solve(E1, diff(theta,t,2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+r equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: diff(L, diff(r,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: ((diff(D2,t) = diff(L,r) ));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: solve(E2, diff(r,t,2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: (trigsimp(first(solve([first(E11),first(E21)], 
+    [diff(theta,t,2),  diff(r,t,2)]))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(phi_d, diff(phi,t), Eq),
+    A: ratsubst(phi_dd, diff(phi,t,2), A),
+    A: ratsubst(theta_d, diff(theta,t), A),
+    A: ratsubst(theta_dd, diff(theta,t,2), A),
+    A: ratsubst(beta_d, diff(beta,t), A),
+    A: ratsubst(r_d, diff(r,t), A),
+    ratsubst(r_dd, diff(r,t,2), A)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: transform(GC[1])$
+G2: transform(GC[2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [m=1, M=10, G=1, Omega=0.025];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: gfactor(ev(rhs(G1), str, eval));
+Eq2: gfactor(ev(rhs(G2), str, eval));
+Eq3: theta_d;
+Eq4: r_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s: rk([Eq1, Eq2, Eq3, Eq4],
+    [theta_d, r_d, theta,  r],
+    [0.05, 0., 0, 10], [t,0,90,0.025])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c1: makelist([p[1],p[2]],p,s)$
+c2: makelist([p[1],p[3]],p,s)$
+c3: makelist([p[1],p[4]],p,s)$
+c4: makelist([p[1],p[5]],p,s)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot theta, phi, psi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c1], [discrete, c2]], 
+[xlabel, "time"],
+[legend, "theta^{dot}", "r^{dot}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c3], [discrete, c4]],
+[xlabel, "time"],
+[legend, "theta", "r"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([[discrete, c3], [discrete, c4]],
+[xlabel, "time"],
+[legend, "theta", "r"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper363/Fig3.png"])$;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot space curve of centre of mass
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transf() := ( 
+    block([i,t,r,theta,phi,x,y,z],
+    cl1: [],
+    for i:1 thru length(c1) step 1 do (
+        [t,theta,r]: [c1[i][1],c3[i][2],c4[i][2]],
+        x: r*cos(theta),
+        y: r*sin(theta),
+        z: 0,      
+        cl1: append(cl1, [[x,y,z]])
+    )))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transf()$
+cr1: points(cl1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d(user_preamble="set ticslevel 0;",
+    /*zrange=[-0.4,0.4],*/line_width=2, points_joined = true, point_size=0,
+    view=[50, 22], cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d(user_preamble="set ticslevel 0;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper363/Fig4.png'",    
+    /*zrange=[-0.4,0.4],*/line_width=2, points_joined = true, point_size=0,
+     view=[50, 22], cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot constants of motion
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transf() := ( 
+    block([i,t,r,theta,phi,r_d,theta_d,phi_d,x,y,z,m,L,L_phi],
+    cl1: [],
+    m: 1,
+    for i:1 thru length(c1) step 4 do (
+        [t,theta,r,theta_d,r_d]: [c1[i][1],
+            c3[i][2],c4[i][2],
+            c1[i][2],c2[i][2]],
+        L: m*r^2*sqrt(theta_d^2),
+        cl1: append(cl1, [[t,L]])
+    )))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transf()$
+cr1: points(cl1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, cl1]], 
+[xlabel, "time"],
+[legend, "L", "L_{phi}"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

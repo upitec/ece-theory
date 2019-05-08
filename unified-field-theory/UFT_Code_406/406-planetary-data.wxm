@@ -1,0 +1,204 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Planetary astronomical data
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+name[1]: "Mercury";
+name[2]: "Venus";
+name[3]: "Earth";
+name[4]: "Mars";
+name[5]: "Jupiter";
+name[6]: "Saturn";
+name[7]: "Uranus";
+name[8]: "Neptune";
+name[9]: "Pluto";
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a[1]: 0.3871;
+a[2]: 0.7233;
+a[3]: 1.0000;
+a[4]: 1.5237;
+a[5]: 5.2028;
+a[6]: 9.5388;
+a[7]: 19.191;
+a[8]: 30.061;
+a[9]: 39.529;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+T[1]: 0.2408;
+T[2]: 0.6152;
+T[3]: 1.0000;
+T[4]: 1.8809;
+T[5]: 11.862;
+T[6]: 29.456;
+T[7]: 84.07;
+T[8]: 164.81;
+T[9]: 248.53;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon[1]: 0.2056;
+epsilon[2]: 0.0068;
+epsilon[3]: 0.0167;
+epsilon[4]: 0.0934;
+epsilon[5]: 0.0483;
+epsilon[6]: 0.0560;
+epsilon[7]: 0.0461;
+epsilon[8]: 0.0100;
+epsilon[9]: 0.2484;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_exp[1]: 43.11;
+D_phi_exp[2]: 8.4;
+D_phi_exp[3]: 5.0;
+D_phi_exp[4]: 
+D_phi_exp[5]: 
+D_phi_exp[6]: 
+D_phi_exp[7]: 
+D_phi_exp[8]: 
+D_phi_exp[9]: 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dev_D_phi[1]: 0.45;
+Dev_D_phi[2]: 4.8;
+Dev_D_phi[3]: 1.2;
+Dev_D_phi[4]: 
+Dev_D_phi[5]: 
+Dev_D_phi[6]: 
+Dev_D_phi[7]: 
+Dev_D_phi[8]: 
+Dev_D_phi[9]: 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_exp_tot[1]: 5.75;
+D_phi_exp_tot[2]: 2.05;
+D_phi_exp_tot[3]: 11.45;
+D_phi_exp_tot[4]: 16.28;
+D_phi_exp_tot[5]: 6.55;
+D_phi_exp_tot[6]: 19.50;
+D_phi_exp_tot[7]: 3.34;
+D_phi_exp_tot[8]: 0.36;
+D_phi_exp_tot[9]: 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Calculated precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+a_E: 1.495e11;
+a_En: 1;
+m[E]: 5.97219e24;
+m[S]: 1.98855e30;
+r[S]: 6.95508e8;
+omega[S]: 2*%pi/(27*24*3600), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: 6*%pi*m[S]*G/(c^2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(1-epsilon[1]^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_E: A/(a_E*(1-epsilon[3]^2)), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Check
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi[3]: D_phi_E/(a[3]*T[3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D: D_phi_E/(a[1]*T[1])*(1-epsilon[3]^2)/(1-epsilon[1]^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Transform to arc sec per century
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+arcsec: 4.84814e-6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(5*arcsec/100);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Print table of exp. data
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+for i: 1 thru 9 do (
+    if equal(i,1) then print("Nr. name        a         T         eps       D_phi(obs.) +/-Diff(obs.) D_phi_tot(obs.)"),
+    D: D_phi_E/(a[i]*T[i])*(1-epsilon[3]^2)/(1-epsilon[i]^2),
+    D_phi_exp2: D_phi_exp[i]*arcsec/100,
+    Diff_exp: Dev_D_phi[i]*arcsec/100,
+    D_phi_exp_tot2: D_phi_exp_tot[i]*arcsec,
+    printf(true, "~d  ~9s  ~8f  ~8f  ~8f  ~10,3e  ~10,3e  ~10,3e~%",
+         i, name[i], a[i], T[i], epsilon[i], D_phi_exp2, Diff_exp, D_phi_exp_tot2)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+All precessions
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_E: 6*%pi*m[S]*G/(c^2*a[3]*a_E*T[3]*(1-epsilon[3]^2)), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_E: 6*%pi*m[S]*G/(c^2*a[1]*a_E*T[1]*(1-epsilon[1]^2)), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*v2: m[S]*G/(a[1]*a_E);
+D_phi_g: 2*%pi*((1-1/c^2*(v2+2*m[S]*G/(a[1]*a_E)))^(-1/2)-1)
+            /T[1], numer;*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_g: 2*%pi*((1-1/c^2*(3*m[S]*G/(a[1]*a_E)))^(-1/2)-1)
+            /T[1], numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_LT: 1/5*m[S]*G*r[S]^2*omega[S]/(c^2*(a[1]*a_E)^3)*365.25*24*3600
+            /* /T[1] */;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for i: 1 thru 9 do (
+    if equal(i,1) then print("Nr. name       D_phi_E     D_phi_g    D_phi_LT     D_phi(tot)"),
+    D_phi_E: 6*%pi*m[S]*G/(c^2*a[i]*a_E*T[i]*(1-epsilon[i]^2)), numer,
+    D_phi_g: 2*%pi*((1-1/c^2*(3*m[S]*G/(a[i]*a_E)))^(-1/2)-1)/T[i], numer,
+    D_phi_LT: 1/5*m[S]*G*r[S]^2*omega[S]/(c^2*(a[i]*a_E)^3)*365.25*24*3600,
+    D_phi: D_phi_E + D_phi_g + D_phi_LT,
+    printf(true, "~d  ~9s ~10,3e  ~10,3e  ~10,3e  ~10,3e~%",
+         i, name[i], D_phi_E, D_phi_g, D_phi_LT, D_phi)
+);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

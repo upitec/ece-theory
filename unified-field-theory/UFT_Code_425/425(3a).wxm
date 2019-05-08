@@ -1,0 +1,153 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([gamma,Gamma,v1],r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq. (48)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E48: diff(gamma*m(r1), r1) = diff(1/gamma, r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: (m(r1)-v1^2/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E48);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48a: ev(E48, diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+re-insert gamma
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E48b: ratsubst(Gamma(r1), gamma, E48a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48c: expand(E48b/Gamma(r1)*2*c^4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Final form of (48) or (57), resp.
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E48d: expand(E48c/c^4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+General solution of (57) (transcendental eq.)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E48d, m(r1), r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution in plane polar coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v1: sqrt(r_d^2+r1^2*phi_d^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48e: ev(E48d, diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48f: ode2(E48e, m(r1), r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Inertial system
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v1: r1_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48e: factor(ev(E48d, diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E48e, m(r1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48f: ode2(E48e, m(r1), r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Alternatively
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+Gamma(r1):=ev(gamma);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48e: factor(ev(E48d, diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E48f: solve(E48e*(r1_d^2-c^2*m(r1)), diff(m(r1),r1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E48e,m(r1),r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Check eq.(66)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: -1/2*Gamma(r1)^2*m(r1)+1=-1/2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: expand(E1/Gamma(r1)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: solve(E2, m(r1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(100)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(v1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E100: 1+m(r1)*Gamma1(r1)^2=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Gamma1(r1):=(m(r1)-v1^2/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(ev(E100*Gamma1(r1)^2), m(r1));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

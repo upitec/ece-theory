@@ -1,0 +1,65 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: 4*f(r)-r*diff(f(r), r) = 3*r^2*Delta_phi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(E2, f(r), r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eqs.(11-13)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+v (gravitational)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v: 18450.97189295086;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdroverr2: 3/2*%pi*v^2/c^2, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+v (de Sitter)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v: 12520.91438117214;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdroverr2: 3/2*%pi*v^2/c^2, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+v (Lense-Thirring)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v: 964.2451143848896;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdroverr2: 3/2*%pi*v^2/c^2, numer;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

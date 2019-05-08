@@ -1,0 +1,77 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Constants
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: 5.3676e8;
+G: 6.67408e-11;
+c: 2.9979e8;
+m: 2.804e30;
+epsilon: 0.617155;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Binary pulsar precession
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+Einsteinian
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_E: 6*%pi*G/(alpha*c^2)*(m/2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+per earth year
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_E_earthyear: Delta_phi_E*24*365.25/7.75*57.296;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+experimental
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_ey: 4.226;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: Delta_phi_ey*7.75/(24*365.25*57.296);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Thomas velocity
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+solve((Delta_phi = %pi*v_T^2/c^2), v_T);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Newtonian velocity
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_N: sqrt(2*m*G/a);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

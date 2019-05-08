@@ -1,0 +1,172 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends([omega,omega_1],t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon*cos(phi+omega_1*t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+drdt: -r/2*diff(omega+omega_1+t*diff(omega_1,t),t)/(omega+omega_1+t*diff(omega_1,t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega: L/(m*r^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+alpha: 1;
+a: 1;
+omega_0: 1;
+epsilon:0.3;
+m: 1; L: 2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Model 1
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega_1: omega_0*exp(-a*t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+drdt;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+drdt1: ev(drdt,[phi=0],diff,eval);
+drdt2: ev(drdt,[phi=%pi],diff,eval);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([drdt1,drdt2], [t,0,3], 
+[legend, "phi=0", "phi=pi"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([drdt1,drdt2], [t,0,3], 
+[legend, "phi=0", "phi=pi"],
+[xlabel, "time"],
+[gnuplot_preamble, "unset yzeroaxis;"],
+[gnuplot_term, "png linewidth 2.5 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper413/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Model 2
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega_1: omega_0*exp(a*t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+drdt1: ev(drdt,[phi=0],diff,eval);
+drdt2: ev(drdt,[phi=%pi],diff,eval);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([drdt1,drdt2], [t,0,3], [y,-1.4,0.2],
+[legend, "phi=0", "phi=pi"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([drdt1,drdt2], [t,0,3], [y,-1.4,0.2],
+[legend, "phi=0", "phi=pi"],
+[xlabel, "time"],
+[gnuplot_preamble, "unset yzeroaxis;"],
+[gnuplot_term, "png linewidth 2.5 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper413/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Model 3
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega_1: omega_0/(t+1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+drdt1: ev(drdt,[phi=0],diff,eval);
+drdt2: ev(drdt,[phi=%pi],diff,eval);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([drdt1,drdt2], [t,0,3],
+[legend, "phi=0", "phi=pi"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([drdt1,drdt2], [t,0,3], 
+[legend, "phi=0", "phi=pi"],
+[xlabel, "time"],
+[gnuplot_preamble, "unset yzeroaxis;"],
+[gnuplot_term, "png linewidth 2.5 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper413/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Model 4
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+omega_1: omega_0*t;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+drdt1: ev(drdt,[phi=0],diff,eval);
+drdt2: ev(drdt,[phi=%pi],diff,eval);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([drdt1,drdt2], [t,0,3],
+[legend, "phi=0", "phi=pi"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([drdt1,drdt2], [t,0,3], 
+[legend, "phi=0", "phi=pi"],
+[xlabel, "time"],
+[gnuplot_preamble, "unset yzeroaxis;"],
+[gnuplot_term, "png linewidth 2.5 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper413/Fig4.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,425 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Relativistic calculation for
+S2 star
+with x factor correction
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([x,y,x_d,y_d,v],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(c>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+U(r):= -m*G*M/r(x,y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r(x,y):=sqrt(x^2+y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+L: -m*c^2*sqrt(1-((-vx(x,y)+diff(x,t))^2+(-vy(x,y)+diff(y,t))^2)/c^2)-U(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: diff(L, diff(x,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: expand(diff(D1,t) = diff(L,x) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: (solve(E1, diff(x,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Y equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: diff(L, diff(y,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: expand(diff(D2,t) = diff(L,y) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: (solve(E2, diff(y,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: first(factor(ratsimp(solve([first(E11),first(E21)], 
+    [diff(x,t,2), diff(y,t,2)]))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*GC[1]: first(E11);
+GC[2]: first(E21);*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(x_d, diff(x,t), Eq),
+    A: ratsubst(x_dd, diff(x,t,2), A),
+    A: ratsubst(y_d, diff(y,t), A),
+    A: ratsubst(y_dd, diff(y,t,2), A)
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vx(x,y):=a_0*y;
+vy(x,y):=-a_0*x;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: (ev(transform(GC[1]),diff));
+G2: (ev(transform(GC[2]),diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(c)$
+str: [a_0=1.e-11, a=1.4253e14, epsilon=0.8831, M=7.956*10^36, G=6.67384e-11, c=2.99792458e8];kill(c);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Equation of motion
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: factor(ev(rhs(G1), str, eval,diff));
+Eq2: factor(ev(rhs(G2), str, eval,diff));
+Eq3: x_d;
+Eq4: y_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Starting at periastron
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sr: rk([Eq1, Eq2, Eq3, Eq4],
+    [x_d, y_d, x, y],
+    [0, 7.7529648e6,  1.66618e13, 0], [t,0,12.e8,1.e5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Starting at apastron
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+/*sr: rk([Eq1, Eq2, Eq3, Eq4],
+    [x_d, y_d, x, y],
+    [0, 106718,  3.1536e9, 0], [t,0,60000,10])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Time in earth years
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+c1: makelist([p[1]/3.15576e7,p[2]],p,sr)$
+c2: makelist([p[1]/3.15576e7,p[3]],p,sr)$
+c3: makelist([p[1]/3.15576e7,p[4]],p,sr)$
+c4: makelist([p[1]/3.15576e7,p[5]],p,sr)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot r dot, r
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c1], [discrete, c2]], 
+[xlabel, "time [yr]"],
+[legend, "x^{dot}", "y^{dot}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plot2d([[discrete, c1], [discrete, c2]], 
+[xlabel, "time"],
+[legend, "theta^{dot}", "phi^{dot}"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper375/Fig1.png"])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c3], [discrete, c4]],
+[xlabel, "time"],
+[legend, "x", "y"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*plot2d([[discrete, c3], [discrete, c6]],
+[xlabel, "time"],
+[legend, "r^{dot}", "r"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper375/Fig2.png"])$*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot space curve of centre of mass
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transf() := ( 
+    block([i,t,r,theta,phi,x,y,z],
+    cl1: [],
+    for i:1 thru length(c1) step 4 do (
+        [t,x,y]: [c1[i][1],c3[i][2],c4[i][2]],
+        z: 0,      
+        cl1: append(cl1, [[x,y,z]])
+    )))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transf()$
+cr1: points(cl1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble="set ticslevel 0; set xzeroaxis; set yzeroaxis",
+    /*xrange=[-12.,12.],yrange=[-10.,10.],*/ line_width=1, points_joined = true, point_size=0,
+    view=[0, 0], cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(user_preamble="set ticslevel 0; set xzeroaxis; set yzeroaxis;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper375/Fig5.png'",    
+    line_width=1, points_joined = true, point_size=0,
+     view=[0, 0], cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot angular momentum
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transfc() := ( 
+    block([i,t,r,x,y,x_d,y_d,z,m,L,Lr,Lnr],
+    cl1: [],
+    cl2: [],
+    m: 2.982825e31, c: 2.99792458e8,
+    for i:1 thru length(c1) step 4 do (
+        [t,x,y,x_d,y_d]: [c1[i][1],
+            c3[i][2],c4[i][2],
+            c1[i][2],c2[i][2]],
+        Lnr: m*(-x_d*y+y_d*x),
+        Lr:  Lnr/sqrt(1-(x_d^2+y_d^2)/c^2),
+        cl1: append(cl1, [[t,Lr]]),
+        cl2: append(cl2, [[t,Lnr]])
+)))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transfc()$
+cr1: points(cl1)$
+cr2: points(cl2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, cl1],[discrete, cl2]], 
+[xlabel, "time"],[legend, "L_{rel}", "L_{non-rel}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([[discrete, cl1], [discrete, cl2]], [y, 3.83e51, 3.86e51],
+[xlabel, "time [yr]"],[legend, "L_{rel}", "L_{non-rel}"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper375/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot gamma factor
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transfg() := ( 
+    block([i,t,r,x,y,x_d,y_d,z,m,L,gam],
+    cl1: [],
+    c: 2.99792458e8,
+    for i:1 thru length(c1) step 4 do (
+        [t,x,y,x_d,y_d]: [c1[i][1],
+            c3[i][2],c4[i][2],
+            c1[i][2],c2[i][2]],
+        gam: sqrt(1-(x_d^2+y_d^2)/c^2),
+        cl1: append(cl1, [[t,gam]])
+)))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transfg()$
+cr1: points(cl1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, cl1]], 
+[xlabel, "time [yr]"],[ylabel, "gamma"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Extract orbit parameters
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+x_min: x_max: y_min: y_max: eps_1: eps_2: 0$
+for i:2 thru length(c1)-1 step 1 do (
+    block([t,r,x,y,x_d,y_d,z,m,L,gam],
+        [t,x,y]: [c1[i][1],c3[i][2],c4[i][2]],
+        x[1]: c3[i-1][2],
+        x[2]: c3[i][2],
+        x[3]: c3[i+1][2],
+        if (x[2]) > (x[1]) and (x[2]) > (x[3]) then (
+            print("x_max: ",x[1],x[2],x[3], "t: ",t),
+            x_max: x[2]
+        ),
+        if (x[2]) < (x[1]) and (x[2]) < (x[3]) then (
+            print("x_min: ",x[1],x[2],x[3], "t: ",t),
+            x_min: x[2]    
+        ),
+        y[1]: c4[i-1][2],
+        y[2]: c4[i][2],
+        y[3]: c4[i+1][2],
+        if (y[2]) > (y[1]) and (y[2]) > (y[3]) then (
+            print("y_max: ",y[1],y[2],y[3]),
+            y_max: y[2],
+            if abs(x_min)>0 and abs(x_max)>0 then (
+            eps_1: sqrt(1-y_max^2/(((abs(x_min)+abs(x_max))/2)^2)),
+            print("eps_1: ",eps_1)  
+            )),
+        if (y[2]) < (y[1]) and (y[2]) < (y[3]) then (
+            print("y_min: ",y[1],y[2],y[3]),
+            y_min: y[2],
+            if abs(x_min)>0 and abs(x_max)>0 then (
+            eps_2: sqrt(1-y_min^2/(((abs(x_min)+abs(x_max))/2)^2)),
+            print("eps_{1,2,a}: ",eps_1, eps_2, (eps_1+eps_2)/2) 
+            ))
+));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for i:2 thru length(c1)-1 step 1 do (
+    block([t,r,r2,x,y,x_d,y_d,z,m,L,gam],
+        [t,x,y]: [c1[i][1],c3[i][2],c4[i][2]],
+        r2[1]: c3[i-1][2]^2 + c4[i-1][2]^2,
+        r2[2]: c3[i  ][2]^2 + c4[i  ][2]^2,
+        r2[3]: c3[i+1][2]^2 + c4[i+1][2]^2,
+        if (r2[2]) > (r2[1]) and (r2[2]) > (r2[3]) then
+            print("r_max: ",sqrt(r2[2]), "t: ",t),
+        if (r2[2]) < (r2[1]) and (r2[2]) < (r2[3]) then
+            print("r_min: ",sqrt(r2[2]), "t: ",t)
+));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Calculate/interpolate maximum of radius
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ia: 0;
+for i:2 thru length(c1)-1 step 1 do (
+    block([t,r,x,y,x_d,y_d,z,m,L,alpha,alph,E1,E2,E3,s,c],
+        numer:true,
+        [t,x,y]: [c1[i][1],c3[i][2],c4[i][2]],
+        x[1]: c3[i-1][2],
+        x[2]: c3[i][2],
+        x[3]: c3[i+1][2],
+        y[1]: c4[i-1][2],
+        y[2]: c4[i][2],
+        y[3]: c4[i+1][2],
+        r[1]: sqrt(x[1]^2+y[1]^2),
+        r[2]: sqrt(x[2]^2+y[2]^2),
+        r[3]: sqrt(x[3]^2+y[3]^2),
+        if (r[2]) > (r[1]) and (r[2]) > (r[3]) then (
+            print("i: ",i),
+            print("r_max: ",r[1],r[2],r[3]),
+            print("x: ",x[1],x[2],x[3]),
+            print("y: ",y[1],y[2],y[3]),
+        /* interpolate */
+            /* parabola coefficients of c[1]*alpha[i]^2+c[2]*alpha[i]+c[3] = r[i] */
+            alpha[1]: atan(y[1]/x[1]),
+            alpha[2]: atan(y[2]/x[2]),
+            alpha[3]: atan(y[3]/x[3]),
+            kill(c),
+            E1: c[1]*alpha[1]^2+c[2]*alpha[1]+c[3] = r[1],
+            E2: c[1]*alpha[2]^2+c[2]*alpha[2]+c[3] = r[2],
+            E3: c[1]*alpha[3]^2+c[2]*alpha[3]+c[3] = r[3],
+            print("alpha[1,2,3]: ",alpha[1],alpha[2],alpha[3]),
+            s: solve([E1,E2,E3], [c[1],c[2],c[3]]),
+            print(s),
+            c[1]: rhs(first(first(s))),
+            c[2]: rhs(second(first(s))),
+            c[3]: rhs(third(first(s))),
+            /*print("c[1,2,3]: ",c[1],c[2],c[3]),*/
+            /* interpolated angle of maximum */
+            alpha[0]: -c[2]/(2*c[1]),
+            ia: ia+1,
+            alph[ia]: alpha[0],
+            print("alpha[0]: ",alpha[0],"=",alpha[0]*180/%pi,"°")
+)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+alph[0]: 0$
+for i:1 thru ia do (
+    print("alpha, delta_phi: ",alph[i], alph[i]-alph[i-1],
+        (alph[i]-alph[i-1])*180/%pi)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+5.9033e-4*180/%pi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+2*%pi/1.e-11/3.15576e7, numer;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

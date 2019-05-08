@@ -1,0 +1,116 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Forward precession, exact m(r)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E19: m(r)*c^2*dt^2-dr^2/m(r)=(c^2-3*v_phi^2)*dt^2-dr^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(E19*m(r), m(r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20: 3*v_phi^2/c^2=1-m(r)+1/c^2*(1/m(r)-1)*v_r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(E20, m(r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E24: expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Backward precession, exact m(r)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E20a: -v_phi^2/c^2=1-m(r)+1/c^2*(1/m(r)-1)*v_r^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(E20a, m(r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E25: expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Graphics
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+str: [c=1, v_r=0.2*v_phi];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m1a: ev(rhs(first(E24)), str);
+m1b: ev(rhs(second(E24)), str);
+m1c: ev(1-3*(v_phi/c)^2, str);
+m2a: ev(rhs(first(E25)), str);
+m2b: ev(rhs(second(E25)), str);
+m2c: ev(1+(v_phi/c)^2, str);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m1a,m1b,m1c], [v_phi,0,1.5],
+    [title, "m(v_{phi}), forward rotation"],
+    [xlabel, "v_{\{phi}}"],
+    [legend,"m_1", "m_2", "approx."])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([m2a,m2b,m2c], [v_phi,0,1.5],
+    [title, "m(v_{phi}), retrograde rotation"],
+    [xlabel, "v_{\{phi}}"],
+    [legend,"m_1", "m_2", "approx."])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([m1a,m1b,m1c], [v_phi,0,1.5], [y,-6,1.5],
+/*    [title, "m(v_{phi}), forward rotation"],*/
+    [xlabel, "v_{\{phi}}"],
+    [legend,"m_1", "m_2", "approx."],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig7.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([m2a,m2b,m2c], [v_phi,0,1.5],
+/*    [title, "m(v_{phi}), retrograde rotation"],*/
+    [xlabel, "v_{\{phi}}"],
+    [legend,"m_1", "m_2", "approx."],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig8.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

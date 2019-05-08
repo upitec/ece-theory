@@ -1,0 +1,37 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(23)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-v^2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+1/gamma^2+v^2/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(26)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-alpha^2/n^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: gamma^3*m*rdd = - alpha*h[bar]*c/r^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E, rdd);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,185 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+dH/dt=0 in r_1 space, cartesian coordiantes
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends([X,Y,r_1],t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: (m(r_1)-(diff(X,t)^2+diff(Y,t)^2)/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Note 420(3), eq.(24), r replaced by r_1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H: gamma*m(r_1)*m*c^2-m*M*G/sqrt(X^2+Y^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+dH/dt = 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E1: diff(H,t) = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Re-insert Gamma
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E2: ratsubst(Gamma, gamma, E1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Simplify
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E3: expand(E2/Gamma^3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Replace dm(r_1)/dt --> dr_1/dt * dm(r_1)/dr_1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E4: expand(ratsubst(diff(r_1,t)*diff(m(r_1),r_1), diff(m(r_1),t), E3));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Simplify
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E5: expand(ratsubst(rv, X*diff(X,t)+Y*diff(Y,t), E4));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+dL/dt=0 in r_1 space
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+L: m*gamma*(X*diff(Y,t)-Y*diff(X,t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E10: diff(L,t)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Re-insert gamma
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E11: ratsubst(Gamma, gamma, E10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Replace dm(r1)/dt --> dr1/dt * dm(r1)/dr1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E12: expand(ratsubst(diff(r_1,t)*diff(m(r_1),r_1), diff(m(r_1),t), E11));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Simplify
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E13: expand(solve(E12, diff(Y,t,2)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Combine dH/dt=0 and dL/dt=0 to obtain eqs. of motion
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E14: solve([first(E4),first(E12)], [diff(X,t,2),diff(Y,t,2)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Simplify
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E15: factor(E14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%)$ /* the full solution, very complicated */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E16: ev(E15,[diff(m(r_1),r_1)=0])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E17: ev(E16,[m(r_1)=1])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

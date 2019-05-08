@@ -1,0 +1,90 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+X: sqrt(alpha)*(epsilon/alpha*sin(theta)^2+1/r*cos(theta))
+/(2/r-1/a)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Y: sqrt(alpha)*(-epsilon/alpha*sin(theta)*cos(theta)+1/r*sin(theta))
+/(2/r-1/a)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: alpha/(1+epsilon*cos(theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plots 1
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+X1: ev(X, [alpha=1, epsilon=0.3], eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Y1: ev(Y, [alpha=1, epsilon=0.3], eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([X1,Y1], [theta,0,2*%pi],
+   [legend, "X(theta)", "Y(theta)"],
+   [plot_format,gnuplot],
+   [grid, 50, 50]
+  )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d ([X1,Y1], [theta,0,2*%pi],
+   [legend, "X(theta)", "Y(theta)"],
+   [gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper359/Fig11.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plots 2
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+X1: ev(X, [alpha=1, epsilon=0.3], eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Y1: ev(Y, [alpha=1, epsilon=0.3], eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot3d ([X1,Y1, [r,0,1], [theta,0,2*%pi]],
+   [legend, "Y(theta)", "X(theta)"],
+   [plot_format,gnuplot],
+   [grid, 50, 50]
+  )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d ([X1,Y1, [r,0,1], [theta,0,2*%pi]],
+   [legend, "Y(theta)", "X(theta)"],
+   [plot_format,gnuplot],
+   [grid, 50, 50]
+  )$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

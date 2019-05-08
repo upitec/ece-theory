@@ -1,0 +1,114 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Example for 2), (4), (6) order terms
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([phi,E,omega],x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E24: diff(phi,x,2)=-rho/epsilon_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Assumption for rho
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+rho: rho_0*cos(k*x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E24a: ev(E24);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+find phi
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E24b: ode2(E24a,phi,x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+find E_x
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: -diff(phi,x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: rhs(E24b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: ev(E1,diff);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+find omega_x, first method
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: E/phi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: trigreduce(ev(omega, [%k1=0, %k2=0]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+find omega_x, second method
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: diff(E,x,2)/diff(phi,x,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: trigreduce(ev(omega, [%k1=0, %k2=0]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+method with (2), (4), (6) terms
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f2: diff(E,x,2)/diff(phi,x,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f4: diff(E,x,4)/diff(phi,x,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f6: diff(E,x,6)/diff(phi,x,6);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(\delta_2*diff(E,x,2)+\delta_4*diff(E,x,4)+\delta_6*diff(E,x,6)) / 
+(\delta_2*diff(phi,x,2)+\delta_4*diff(phi,x,4)+\delta_6*diff(phi,x,6));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+trigreduce(ratsimp(%));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([sin(x),cos(x),tan(x)], [x,-5,5], [y,-5,5])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

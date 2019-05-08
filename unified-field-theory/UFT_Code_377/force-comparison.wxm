@@ -1,0 +1,305 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Comparison of relativistic forces
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([gamma,x,y,x_d,y_d,v],t,gamma,v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(c>0, M>0, m>0, G>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+U(r):= -m*G*M/r(x,y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r(x,y):=sqrt(x^2+y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-(diff(x,t)^2+diff(y,t)^2)/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+L: -m*c^2/gamma-U(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations with t
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: diff(L, diff(x,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: expand(diff(D1,t) = diff(L,x) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: (solve(E1, diff(x,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Y equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: diff(L, diff(y,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: expand(diff(D2,t) = diff(L,y) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: (solve(E2, diff(y,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Resolving for d2x/dt^2
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: first(factor(ratsimp(solve([first(E11),first(E21)], 
+    [diff(x,t,2), diff(y,t,2)]))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E12: [GC[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations with tau
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D3: diff(L, diff(x,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: expand(diff(D3,t)*gamma = diff(L,x) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E31: (solve(E3, diff(x,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Y equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D4: diff(L, diff(y,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4: expand(diff(D4,t)*gamma = diff(L,y) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E41: (solve(E4, diff(y,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Resolving for d2x/dt^2
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: first(factor(ratsimp(solve([first(E31),first(E41)], 
+    [diff(x,t,2), diff(y,t,2)]))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E32: [GC[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Minkowski force equation
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: diff(x,t,2)=-G*M*x/'%gamma^4
+/(y^2+x^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Relativistic Newton equation
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+X equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E6: diff(x,t,2)=-G*M*x/%gamma^3
+/(y^2+x^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Comparisons
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E5/E6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Rewrite Lagrange equations with t
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E12;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E12denom: c^3*(y^2+x^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E12num: G*M*(('diff(x,t,1))*y*('diff(y,t,1))+x*('diff(x,t,1))^2-c^2*x)*c/'gamma;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Result for d^2x/dt^2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E12a: [diff(x,t,2) = E12num/E12denom];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E12a)-ev(E12));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E12b: (expand(E12a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Rewrite Lagrange equations with tau
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E32;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E32denom: c^4*(y^2+x^2)^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E32num: G*M*(('diff(x,t,1))*y*('diff(y,t,1))+x*('diff(x,t,1))^2-c^2*x)*c^2/'gamma^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Result for d^2x/dt^2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E32a: [diff(x,t,2) = E32num/E32denom];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(ev(E32a)-ev(E32));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E32b: (expand(E32a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E12b;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Derivative of bold p
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(m>0, c>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([px,v],t,gamma,v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(gamma,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+px: gamma*m*v;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(px,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-v^2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dpdt: ev(diff(px,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dpdt: factor(dpdt);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dpdt1: c^3*m*'diff(v,t,1)/((c^2-v^2)^(3/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(dpdt-dpdt1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dpdt2: m*'diff(v,t,1)/((1-v^2/c^2)^(3/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(dpdt-dpdt2);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

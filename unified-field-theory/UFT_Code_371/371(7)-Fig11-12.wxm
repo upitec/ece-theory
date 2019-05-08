@@ -1,0 +1,151 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Radial Schrödinger equation
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([psi],r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(r>0, L>0, L_Z>0, h_bar>0, alpha>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations II
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+r equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: diff(psi,r,2)+2/r*diff(psi,r) = -L^2/(h_bar*alpha)*(2/r-1/a)*psi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: solve(E11, diff(psi,r,2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(psi_d, diff(psi,r), Eq),
+    ratsubst(psi_dd, diff(psi,r,2), A)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: transform(GC[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution 1
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [alpha=1, epsilon=0.5, h_bar=1, L=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: gfactor(ev(rhs(G1), str, eval));
+Eq2: psi_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s: rk([Eq1, Eq2],
+    [psi_d, psi],
+    [0., 1.], [r,0.001,6,0.01])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c1: makelist([p[1],p[2]],p,s)$
+c2: makelist([p[1],p[3]],p,s)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot psi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c1], [discrete, c2]], [y,-1,5],
+[xlabel, "Radius r"],
+[legend, "psi^{dot}", "psi"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([[discrete, c1], [discrete, c2]], [y,-1,5],
+[xlabel, "Radius r"],
+[legend, "psi^{dot}", "psi"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper371/Fig11.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution 2
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [alpha=1, epsilon=0.5, h_bar=1, L=5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: gfactor(ev(rhs(G1), str, eval));
+Eq2: psi_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s: rk([Eq1, Eq2],
+    [psi_d, psi],
+    [0., 1.], [r,0.001,5,0.01])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c1: makelist([p[1],p[2]],p,s)$
+c2: makelist([p[1],p[3]],p,s)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot psi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c1], [discrete, c2]],[y,-4, 1],
+[xlabel, "Radius r"],
+[legend, "psi^{dot}", "psi"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([[discrete, c1], [discrete, c2]],[y,-4, 1],
+[xlabel, "Radius r"],
+[legend, "psi^{dot}", "psi"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper371/Fig12.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

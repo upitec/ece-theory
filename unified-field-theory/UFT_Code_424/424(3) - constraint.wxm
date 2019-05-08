@@ -1,0 +1,105 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Constraint for Lagrangian in (r,phi) space with m(r)
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends([phi,r,omega,T,U,L,gamma],t,[Phi],r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+assume(c>0, Gamma>0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Rel. counterpart of kinetic part
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T: m(r)*gamma*m*c^2*(m(r)-1) - m(r)*m*c^2/gamma;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v2: (diff(r,t)^2+r^2*diff(phi,t)^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(m(r)-v2/(m(r)*c^2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Phi: -sqrt(m(r))*M*G/r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Lagrangian
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+La: ev(T)-Ustd;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Constraint Eq.(19)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+GC: diff(La,diff(phi,t)) = gamma*m*r^2*diff(phi,t)/m(r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Re-insert gamma
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+GC1: ratsubst(c^2/Gamma^2, c^2/gamma^2,GC);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+GC2: factor(ratsimp(GC1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Solving for m(r)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(GC1*m(r), m(r));
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,44 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Eq.(43) of paper 417
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(m-vc^2/m);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma1: ev(gamma, [vc=0.1]);
+gamma2: ev(gamma, [vc=0.5]);
+gamma3: ev(gamma, [vc=0.9]);
+gamma4: ev(gamma, [vc=1.5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([gamma1,gamma2,gamma3,gamma4,1], [m,0,3], [y,0,6],
+[grid2d,true], [xlabel, "m(r)"], [ylabel, "gamma"],
+[legend, "v/c=0.1", "v/c=0.5", "v/c=0.9", "v/c=1.5", "classical limit"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d([gamma1,gamma2,gamma3,gamma4,1], [m,0,3], [y,0,6],
+[grid2d,true], [xlabel, "m(r)"], [ylabel, "gamma"],
+[legend, "v/c=0.1", "v/c=0.5", "v/c=0.9", "v/c=1.5", "classical limit"],
+[gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper417/Fig9.png"])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,149 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eqs.(2,3)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vN2: M*G*(2/r[min]-1/a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+MN: v_e^2/(G*(2/r[min]-1/a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Exp. data of S2 star
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+M: 8.572e36;
+a: 1.451e14;
+epsilon: 0.88466;
+r[min]: 1.7952e13;
+r[max]: a*(1+epsilon);
+v_e: 7.650e6;
+Ty: 16.0518;
+T_e: Ty*(365.25*24*3600);
+G: 6.67408e-11;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Ratio of M_N/M and v_N/v
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(MN);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(MN)/M;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(sqrt(vN2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(sqrt(vN2))/v_e;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Kepler's third law
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+with exp. value of M
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T2: 4*%pi^2*a^3/(M*G), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T: sqrt(T2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T/3.15576e7; /*years*/
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+with Newtonian value of M
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T2:4*%pi^2*a^3/(MN*G), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+TN: sqrt(T2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+TN/3.15576e7; /*years*/
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+experimental
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T_e/3.15576e7; /*years*/
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T/T_e;
+TN/T_e;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Newtonian mass
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+MN: 4*%pi^2*a^3/(T^2*G), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Comparison with best fit:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sqrt(8.3627e36/MN);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

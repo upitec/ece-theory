@@ -1,0 +1,109 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Full cylindrical coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a_nabla_c_b(a,b) :=[a[1]*diff(b[1],r) + a[2]/r*diff(b[1],theta) + a[3]*diff(b[1],z)
+                        -a[2]*b[2]/r,
+                   a[1]*diff(b[2],r) + a[2]/r*diff(b[2],theta) + a[3]*diff(b[2],z)
+                        +a[2]*b[1]/r,
+                   a[1]*diff(b[3],r) + a[2]/r*diff(b[3],theta) + a[3]*diff(b[3],z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([thdot,zdot,rdot,r,z],[theta]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: [rdot, r*thdot, zdot];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Compute a3 = (v*grad)v
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+[a3[1], a3[2], a3[3]]: a_nabla_c_b(v,v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Add partial derivatives: a4 = a3 + partial v/partial t
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a4: [a3[1]+rdotdot, a3[2]+rdot*thdot+r*thdotdot, a3[3]+zdotdot];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Torkado model
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: .05+cos(1/10*theta)^2;
+z: 2*sin(1/5*theta);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Time dependence, simplified by omega=L0/(m*r^2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: diff(r,theta);
+d2r: diff(dr,theta);
+dz: diff(z,theta);
+d2z: diff(dz,theta);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+thdot: L0/(m*r^2);
+rdot: dr*thdot;
+zdot: dz*thdot;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+thdotdot: -2*rdot*L0/(m*r^3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rdotdot: d2r*thdot^2 + dr*thdotdot;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [L0=1, m=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Acceleration
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a[r]: ev(2*rdotdot-r*thdot^2, str);
+a[theta]: ev(2*r*thdotdot+4*rdot*thdot, str);
+a[z]: ev(d2z*thdot^2 + (dz+d2z)*thdotdot, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot curves
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a[r],a[theta],a[z]/10], [theta,0,20*%pi],
+[legend, "a_r", "a_theta", "a_Z*0.1"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([a[r],a[theta],a[z]/10], [theta,0,20*%pi],
+[legend, "a_r", "a_theta", "a_Z*0.1"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper361/Fig7.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,49 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(v>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E42: Dpsi = m(r)^(3/2)*2*M*G/(R_0*v_N^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E45: v_N = sqrt(v^2*m(r)*(1-v_N^2/(m(r)^2*c^2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E46: solve(E45^2, v_N^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E46a: [v_N^2=m(r)*v^2/(1+v^2/(m(r)*c^2))];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(E46-E46a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v_N: sqrt(rhs(first(E46a)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E46: ev(E42);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E47: factor(limit(E46,v,c));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E49: ev(E47, [m(r)=1]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

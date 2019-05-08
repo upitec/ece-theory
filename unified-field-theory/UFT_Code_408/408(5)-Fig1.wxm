@@ -1,0 +1,130 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ds2: c^2*dt^2-dr^2-r^2*dphi_1^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dphi_1: dphi+omega*dt;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(4)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ds2_a: ev(ds2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(6)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ds2_b: (1-v^2/c^2)*(c^2*dt^2-2*r^2*Omega*dphi*dt)-(dr^2+r^2*dphi^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega: omega*(1-v^2/c^2)^-1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(ds2_b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d: ratsimp(ev(ds2_a)-ev(ds2_b));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+with definition of omega from (8):
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(d, [v=omega*r]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Einstein Metrics
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: 2*%pi*(1/sqrt(m(r,t)-v^2/c^2)-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 1; v:0.5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Flat space
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r,t):=1;
+D_phi_1: ev(Delta_phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Schwarzschild
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r,t):=1-1/r;
+D_phi_2: ev(Delta_phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Kerr-Newman and Reissner-Nordstrom
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r,t):=1-1/r+1/r^2;
+D_phi_3: ev(Delta_phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Einstein-Rosen, Reissner-Weyl
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r,t):=1-1/r-1/r^2;
+D_phi_4: ev(Delta_phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Static de-Sitter
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r,t):=1-0.05*r^2;
+D_phi_5: ev(Delta_phi);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([D_phi_1,D_phi_2,D_phi_3,D_phi_4,D_phi_5], [r,0.,9], [y,0,15],
+[legend, "Flat Space", "Schwarzschild", 
+    "Kerr-Newman/Reissner-Nordstrom", "Einstein-Rosen/Reissner-Weyl",
+    "Static de-Sitter"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([D_phi_1,D_phi_2,D_phi_3,D_phi_4,D_phi_5], [r,0.,9], [y,0,15],
+[legend, "Flat Space", "Schwarzschild", 
+    "Kerr-Newman/Reissner-Nordstrom", "Einstein-Rosen/Reissner-Weyl",
+    "Static de-Sitter"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper408/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

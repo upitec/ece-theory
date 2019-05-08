@@ -1,0 +1,192 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(9)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(drdr, r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: 2/3*drdr/r^3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: r^2/2*(omega/r-diff(omega,r));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(40)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(r>0, L>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: 1/r^3*sqrt(L^2*r^2-L_r^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega_0: -r*v/(2*m[E]*c^2)*'diff(f,r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega_1: ev(omega_0, [L_r=0]), diff;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(42)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega_2: ev(omega_1, [L=2/5*m[E]*r[E]^2*omega[E]]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(48)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([omega,v],r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: r^2/2*(omega_1/r-diff(omega,r));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: -v*L/(m[E]*c^2*r^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(omega,r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(ev(Delta_phi,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_1: factor(ev(Delta_phi,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+alternative
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: v*L/(m[E]*c^2*r^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(omega,r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(ev(Delta_phi,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_1a: factor(ev(Delta_phi,diff));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(51)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_2: ev(Delta_phi_1a, [diff(v,r)=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega,v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: 2/5*m[E]*r[E]^2*omega[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi_3: expand(ev(Delta_phi_2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Numerical evaluation
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+v1: omega[E]*r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v2: sqrt(m[E]*G/r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Evaluation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[E]: 6.371009e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G: 6.67384e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[E]: 5.97219e24;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega[E]:  7.292115e−5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Oribtal radius of Gravity Probe B
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+r: 7.02e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(L);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v1: ev(v1);
+v2: ev(v2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(omega_2, [v=v1]);
+ev(omega_2, [v=v2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(Delta_phi_3, [v=v1]);
+ev(Delta_phi_3, [v=v2]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

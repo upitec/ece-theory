@@ -1,0 +1,357 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.0 ] */
+
+/* [wxMaxima: title   start ]
+Spinning top - represented by dumbbell
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([x,y,z,X,Y,Z,theta,phi,theta_1,phi_1,r,T,U,L],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+h_1: h*[sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+h_2: h*[sin(%pi-theta)*cos(phi+%pi), sin(%pi-theta)*sin(phi+%pi), cos(%pi-theta)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R: r*[sin(theta_1)*cos(phi_1), sin(theta_1)*sin(phi_1), cos(theta_1)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r_1: R+h_1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r_2: R+h_2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Kinetic energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+T[1]: m/2*(diff(r_1[1],t)^2+diff(r_1[2],t)^2+diff(r_1[3],t)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+T[2]:  m/2*(diff(r_2[1],t)^2+diff(r_2[2],t)^2+diff(r_2[3],t)^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+T: factor(trigsimp(ratsimp(T[1]+T[2])));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+/*U[1]: trigsimp(-M*m*G/(r_1[1]^2+r_1[2]^2+r_1[3]));
+U[2]: trigsimp(-M*m*G/(r_1[1]^2+r_1[2]^2+r_1[3]));*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U[1]: trigsimp(-M*m*G/r);
+U[2]: trigsimp(-M*m*G/r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U: gfactor(trigsimp(U[1] + U[2]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+T;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: T - U;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations II
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+theta equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: diff(L, diff(theta,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: expand(ratsimp(diff(D1,t) - diff(L,theta) = 0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: trigsimp(solve(E1, diff(theta,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+phi equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: diff(L, diff(phi,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: trigsimp(ratsimp(diff(D2,t) - diff(L,phi) = 0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: trigsimp(solve(E2, diff(phi,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+theta_1 equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D3: diff(L, diff(theta_1,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: expand(ratsimp(diff(D3,t) - diff(L,theta_1) = 0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E31: trigsimp(solve(E3, diff(theta_1,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+phi_1 equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D4: diff(L, diff(phi_1,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E4: expand(ratsimp(diff(D4,t) - diff(L,phi_1) = 0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E41: trigsimp(solve(E4, diff(phi_1,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+r equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D5: diff(L, diff(r,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: expand(ratsimp(diff(D5,t) - diff(L,r) = 0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E51: trigsimp(solve(E5, diff(r,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: trigsimp(first(solve([first(E11),first(E21),first(E31),first(E41),first(E51)], 
+    [diff(theta,t,2), diff(phi,t,2), diff(theta_1,t,2), diff(phi_1,t,2), diff(r,t,2)])));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(phi_d, diff(phi,t), Eq),
+    A: ratsubst(phi_dd, diff(phi,t,2), A),
+    A: ratsubst(theta_d, diff(theta,t), A),
+    A: ratsubst(theta_dd, diff(theta,t,2), A),
+    A: ratsubst(phi_1d, diff(phi_1,t), A),
+    A: ratsubst(phi_1dd, diff(phi_1,t,2), A),
+    A: ratsubst(theta_1d, diff(theta_1,t), A),
+    A: ratsubst(theta_1dd, diff(theta_1,t,2), A),
+    A: ratsubst(r_d, diff(r,t), A),
+    ratsubst(r_dd, diff(r,t,2), A)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: transform(GC[1])$
+G2: transform(GC[2])$
+G3: transform(GC[3])$
+G4: transform(GC[4])$
+G5: transform(GC[5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Solution
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [h=0.25, m=1, G=1, M=10];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Eq1: gfactor(ev(rhs(G1), str, eval))$
+Eq2: gfactor(ev(rhs(G2), str, eval))$
+Eq3: gfactor(ev(rhs(G3), str, eval))$
+Eq4: gfactor(ev(rhs(G4), str, eval))$
+Eq5: gfactor(ev(rhs(G5), str, eval))$
+Eq6: theta_d;
+Eq7: phi_d;
+Eq8: theta_1d;
+Eq9: phi_1d;
+Eq10: r_d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s: rk([Eq1, Eq2, Eq3, Eq4, Eq5, Eq6, Eq7, Eq8, Eq9, Eq10],
+    [theta_d, phi_d, theta_1d, phi_1d, r_d, theta, phi, theta_1, phi_1, r],
+    [.145, .16, 0.0, 0.06, 0.,    %pi/2, %pi/2, %pi/2, 0, 12], [t,0,100,0.05])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Graphics
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c1: makelist([p[1],p[2]],p,s)$
+c2: makelist([p[1],p[3]],p,s)$
+c3: makelist([p[1],p[4]],p,s)$
+c4: makelist([p[1],p[5]],p,s)$
+c5: makelist([p[1],p[6]],p,s)$
+c6: makelist([p[1],p[7]],p,s)$
+c7: makelist([p[1],p[8]],p,s)$
+c8: makelist([p[1],p[9]],p,s)$
+c9: makelist([p[1],p[10]],p,s)$
+c10:makelist([p[1],p[11]],p,s)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot theta, phi, psi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+/*c1;c2;c3;c4;c5;c6;*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c1], [discrete, c2]], 
+[xlabel, "time"],
+[legend, "theta^{dot}", "phi^{dot}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c3], [discrete, c4]],[y,-0.05, 0.3],
+[xlabel, "time"],
+[legend, "theta_1^{dot}", "phi_1^{dot}"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c5], [discrete, c6]],
+[xlabel, "time"],
+[legend, "r^{dot}", "theta"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c7], [discrete, c8]],
+[xlabel, "time"],
+[legend, "phi", "theta_1"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([[discrete, c9], [discrete, c10]],
+[xlabel, "time"],
+[legend, "phi_1", "r"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([ [discrete, c6], [discrete, c7]],
+[xlabel, "time"],
+[legend, "theta", "phi"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper370/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([ [discrete, c8], [discrete, c9], [discrete, c10]],
+[xlabel, "time"],
+[legend, "theta_1", "phi_1", "r"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper370/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot space curve of centre of mass
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+transf() := ( 
+    block([i,t,h,r,theta,phi,x,y,z,x1,y1,z1],
+    h: 0.25,
+    cl1: [], cl2: [],
+    for i:1 thru length(c1) step 4 do (
+        [t,theta,phi]: [c1[i][1],c6[i][2],c7[i][2]],
+        x: h*sin(theta)*cos(phi),
+        y: h*sin(theta)*sin(phi),
+        z: h*cos(theta),
+        /*print(t,x,y,z),*/
+       [theta,phi,r]: [c8[i][2],c9[i][2],c10[i][2]],
+        x1: r*sin(theta)*cos(phi),
+        y1: r*sin(theta)*sin(phi),
+        z1: r*cos(theta),
+        /*print(t,x,y,z),*/
+        cl2: append(cl2, [[x1,y1,z1]]),
+        cl1: append(cl1, [[x+x1,y+y1,z+z1]])
+    )/*,
+    return(cl1,cl2)*/))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+transf()$
+cr1: points(cl1)$
+cr2: points(cl2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d(user_preamble="set ticslevel 0",  zrange=[-0.4,0.4],line_width=2,
+    view=[64, 26], cr2, color=red, cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d(user_preamble="set ticslevel 0;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper370/Fig4.png'",    
+    zrange=[-0.4,0.4],line_width=2,
+    view=[64, 26], cr2, color=red, cr1)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

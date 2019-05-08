@@ -1,0 +1,280 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Eq.(42)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+L: m*r*(1-v_phi^2/c^2)^(-1/2)*v_phi;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E42a: diff(L,v_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+E42b: ratsubst(%gamma, (1-v_phi^2/c^2)^(-1/2), E42a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Alternatively
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: (1-v_phi^2/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H: 'gamma*m*c^2-m*M*G/r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H1: expand(ratsubst(p_r/r_d, 'gamma*m, H));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'H1 = H1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H2: expand(ratsubst(p_phi/(r^2*phi_d), 'gamma*m, H));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'H2 = H2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+First Hamilton equation
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r_d = diff(H1,p_r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phi_d = diff(H2,p_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Non-relativistic Hamilton equations
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H: 1/2*m*(r_d^2+r^2*phi_d^2)-m*M*G/r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Variables
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/*q_r: r;
+q_phi: phi;
+p_r: m*r_d;
+p_phi: m*r^2*phi_d;*/;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Inverse variables
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r: q_r;
+phi: q_phi;
+r_d: p_r/m;
+phi_d: p_phi/(m*r^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H1: ratsubst(q_r, 'r, H);
+H2: ratsubst(q_phi, 'phi, H1);
+H3: ratsubst(r_d, 'r_d, H2);
+H4: ratsubst(phi_d, 'phi_d, H3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+First Hamilton equations
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+q_rd = diff(H4,p_r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+q_phid = diff(H4,p_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Second Hamilton equations
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+p_rd = expand(-diff(H4,q_r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+p_phid = -diff(H4,q_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Relativistic Hamilton equations I
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: (1-(q_rd^2+q_r^2*q_phid^2)/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H: 1/'gamma*((p_r^2+p_phi^2)*c^2/(m*c^2)+m*c^2)-m*M*G/q_r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+First Hamilton equations
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H1: q_rd = diff(H,p_r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H2: q_phid = diff(H,p_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Second Hamilton equations
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H3: p_rd = (-diff(H,q_r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H4: p_phid = -diff(H,q_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Re-insert gamma
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsubst(%gamma, gamma, H1);
+ratsubst(%gamma, gamma, H2);
+expand(ratsubst(%gamma, gamma, H3));
+ratsubst(%gamma, gamma, H4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Relativistic Hamilton equations II
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gamma: (1-((p_r/(%gamma*m))^2+q_r^2*(p_phi/(%gamma*m*q_r^2))^2)/c^2)^(-1/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H: 1/gamma*((p_r^2+p_phi^2)*c^2/(m*c^2)+m*c^2)-m*M*G/q_r;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+First Hamilton equations
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H1: q_rd = diff(H,p_r);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H2: q_phid = diff(H,p_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Second Hamilton equations
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H3: p_rd = (-diff(H,q_r));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+H4: p_phid = -diff(H,q_phi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Re-insert gamma
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsubst(%gamma, gamma, H1);
+ratsubst(%gamma, gamma, H2);
+expand(ratsubst(%gamma, gamma, H3));
+ratsubst(%gamma, gamma, H4);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

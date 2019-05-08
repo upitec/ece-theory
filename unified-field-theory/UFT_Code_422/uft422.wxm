@@ -1,0 +1,232 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt: 4*%pi*Omega/(m(r)*omega^2-Omega^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Model system
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega: 1;
+omega: 1000;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 1-10/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt1: ev(Dt);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Dt1], [r,0,100], [y,-.0001,.0001])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([Dt1], [r,0,100], [y,-.0001,.0001],
+ [xlabel, "r"],[ylabel, "Delta t"],
+ [gnuplot_term, "png linewidth 2.5 font 'Arial' 16 size 800,600"],
+ [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper422/Fig1.png"]
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega: 2*%pi*10000/60;
+omega: 1.e15;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G: 6.67408e-11;
+m[E]: 5.97219e24;
+m[S]: 1.98855e30;
+m[GC]: 8.36e36;
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Earth
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+rs: 2*G*m[E]/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 1-rs/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Check for m(rs)=0
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+r0: solve(m(r)=0, r), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt1: ev(Dt);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(Dt1, [r=6.371009e6]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Sun
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+rs: 2*G*m[S]/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 1-rs/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt1: ev(ev(Dt));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(Dt1, [r=6.95508e8]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Dt], [r,0,10000])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Galactic centre
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+rs: 2*G*m[GC]/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 1-rs/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt1: ev(Dt);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(Dt1,[r=1.24e11]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Dt], [r,0,5.e11])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Earth with omega=1.e6
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+omega:1.e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rs: 2*G*m[E]/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 1-rs/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt1: ev(Dt);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(Dt1, [r=6.371009e6]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Curve Delta t(omega) at earth surface
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Schwarzschild radius
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+rs: 2*G*m[E]/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 1-rs/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt1: ev(Dt, [r= 6.371009e6]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Dt1], [omega,100,1.e9], [logx], [logy],
+    [xlabel, "omega [1/s]"],[ylabel, "Delta t [s]"],
+[gnuplot_preamble, "set format y '%8.1e';"]
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Exponential m function
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+R: 1.e7;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m(r) := 2-exp(log(2)*exp(-r/R));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dt2: ev(Dt, [r= 6.371009e6]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Dt1,Dt2], [omega,100,1.e9], [logx], [logy],
+    [xlabel, "omega [1/s]"],[ylabel, "Delta t [s]"],
+    [legend, "Schwarzschild function", "exponential function"],
+[gnuplot_preamble, "set format y '%8.1e';"]
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([Dt1,Dt2], [omega,100,1.e9], [logx], [logy],
+    [xlabel, "omega [1/s]"],[ylabel, "Delta t [s]"],
+    [legend, "Schwarzschild m function", "exponential m function"],
+ [gnuplot_preamble, "set format y '%8.1e';"],
+ [gnuplot_term, "png linewidth 2.5 font 'Arial' 16 size 800,600"],
+ [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper422/Fig2.png"]
+)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,430 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) :=  [a[2]*b[3] - a[3]*b[2],
+                a[3]*b[1] - a[1]*b[3],
+                a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Components of Eq.(14)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla1(psi) := dX*diff(psi,X) + dY*diff(psi,Y) + dZ*diff(psi,Z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla2(psi) := (block [fh], fh: dr_nabla1(psi),
+    dX*diff(fh,X) + dY*diff(fh,Y) + dZ*diff(fh,Z)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla3(psi) := (block [fh], fh: dr_nabla2(psi),
+    dX*diff(fh,X) + dY*diff(fh,Y) + dZ*diff(fh,Z)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla4(psi) := (block [fh], fh: dr_nabla3(psi),
+    dX*diff(fh,X) + dY*diff(fh,Y) + dZ*diff(fh,Z)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla5(psi) := (block [fh], fh: dr_nabla4(psi),
+    dX*diff(fh,X) + dY*diff(fh,Y) + dZ*diff(fh,Z)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla6(psi) := (block [fh], fh: dr_nabla5(psi),
+    dX*diff(fh,X) + dY*diff(fh,Y) + dZ*diff(fh,Z)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Averaging functions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for averaging delta r terms in an expression */
+averageMZ(f, dr) := 
+block([arglist, s0, den, i, j, res, l, el],
+/* make list of all summands in the formula */
+arglist: [],
+s0: string(0),
+arglist: args(expand(f)),
+/* check if dr[i] appears in any denominator */
+for j:1 thru length(arglist) do (
+    den: denom(arglist[j]),
+    /*print ("DEN:", den),*/
+    for i:1 thru length(dr) do (
+        if not freeof(dr[i],den) then print(i, "Denominator error!")
+)),
+/* remove all list elements containing occurences of dr[i], dr[i]^3, dr[i]^5 */ 
+for j:1 thru length(arglist) do (
+    for i:1 thru length(dr) do (
+        if not equal(string(coeff(arglist[j], dr[i], 1)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 3)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 5)), s0) 
+        then
+            arglist[j]: 0
+            /*print("L(", dr[i], ") ", arglist[j])*/
+)),
+res: 0,
+/* construct result expression */
+l: length(arglist),
+for j:1 thru l do (
+    el: pop(arglist),
+    res: res + el
+    /*print(j,el,res)*/
+),
+res
+/*print(res)*/
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for replacing deltaX^2 etc. to delta r^2 terms 
+    in cartesian coordinates */
+replaceR(f,dri) := 
+    block([f1, i, dr, len],
+    f1: f,
+    len: length(dri),
+    for i:1 thru len do (
+        f1: ratsubst(1/len*dR[av]^2, dri[i]^2, f1)
+    ),
+    factorsum(f1)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+General formulas for Taylor expansion with averaging
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+1st order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(f, [X,Y,Z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr_nabla1(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(dr_nabla1(f), dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+2nd order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(f, [X,Y,Z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Df2: 1/2!*dr_nabla2(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(Df2, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+3rd order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(f, [X,Y,Z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Df3: 1/3!*dr_nabla3(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(Df3, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+4th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(f, [X,Y,Z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Df4: 1/4!*dr_nabla4(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(Df4, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+5th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(f, [X,Y,Z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Df5: 1/5!*dr_nabla5(f)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(Df5, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+6th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends(f, [X,Y,Z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Df6: 1/6!*dr_nabla6(f)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(Df6, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Vector potential of magnetic dipole
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+m: [m_X, m_Y, m_Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [X, Y, Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r2: r.r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: cross(m, r)/r2^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+[m_X, m_Y, m_Z]: [0,0,1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: ev(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DA, 2nd order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DA2X: 1/2!*dr_nabla2(A[1]);
+DA2Y: 1/2!*dr_nabla2(A[2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DA2X, dr));
+f2: replaceR(f1,dr);
+f1: ratsimp(averageMZ(DA2Y, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DA, 4th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DA4X: 1/4!*dr_nabla4(A[1])$
+DA4Y: 1/4!*dr_nabla4(A[2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DA4X, dr))$
+f2: DA4XRav: replaceR(f1,dr);
+f1: ratsimp(averageMZ(DA4Y, dr))$
+f2: DA4YRav: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DA, 6th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DA6X: 1/6!*dr_nabla6(A[1])$
+DA6Y: 1/6!*dr_nabla6(A[2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DA6X, dr))$
+f2: DA6XRav: replaceR(f1,dr);
+f1: ratsimp(averageMZ(DA6Y, dr))$
+f2: DA6YRav: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plots magnetic vector potential
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+A_XY: [ev(A[1], [Z=0]), ev(A[2], [Z=0])];
+DA4XY: [ev(DA4XRav/dR[av]^4*dra^4, [dra=.2, Z=0]), 
+        ev(DA4YRav/dR[av]^4*dra^4, [dra=.2, Z=0])];
+DA6XY: [ev(DA6XRav/dR[av]^6*dra^6, [dra=.2, Z=0]), 
+        ev(DA6YRav/dR[av]^6*dra^6, [dra=.2, Z=0])];
+Atot: [ev(A_XY[1]+DA4XY[1]+DA6XY[1]), ev(A_XY[2]+DA4XY[2]+DA6XY[2])]$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(A_XY, [X,Y], [X,-.5,.5], [Y,-.5,.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(DA4XY, [X,Y], [X,-.5,.5], [Y,-.5,.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(DA6XY, [X,Y], [X,-.5,.5], [Y,-.5,.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(Atot, [X,Y], [X,-.5,.5], [Y,-.5,.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coulomb potential (scalar)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [X, Y, Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r2: r.r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U: -1/sqrt(r2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DU, 2nd order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DU2: 1/2!*dr_nabla2(U);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DU2, dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DU, 4th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DU4: 1/4!*dr_nabla4(U)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DU4, dr));
+f2: DU4Rav: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DU, 6th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DU6: 1/6!*dr_nabla6(U)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DU6, dr))$
+f2: DU6Rav: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plots Coulomb potential
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(X>0,Y>0,Z>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+UX: ev(U, [Y=0, Z=0]);
+DU4X: ev(DU4Rav/dR[av]^4*dra^4, [dra=.2, Y=0, Z=0]);
+DU6X: ev(DU6Rav/dR[av]^6*dra^6, [dra=.2, Y=0, Z=0]);
+Utot: UX+DU4X+DU6X;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([UX,DU4X,DU6X], [X,0,1], [y,-30,30],
+[legend, "UX", "D4UX", "D6UX"]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([UX,DU4X,DU6X], [X,0,1], [y,-30,30],
+[legend, "UX", "D4UX", "D6UX"],
+[gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper396/Fig5.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([UX,Utot], [X,0,1], [y,-30,0],
+[legend, "UX", "U_{tot}"]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([UX,Utot], [X,0,1], [y,-30,0],
+[legend, "UX", "U_{tot}"],
+[gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper396/Fig6.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

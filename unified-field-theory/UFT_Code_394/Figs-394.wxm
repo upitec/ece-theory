@@ -1,0 +1,176 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Original B field (from UFT 393)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E0: -1/r_1^3*(3*r*(p.r)/r_1^2-p);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [r_X, r_Y];
+p: [0, 1];
+r_1: sqrt( r_X^2+r_Y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: E00: ev(E0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(E,[r_X,r_Y], [r_X,-2,2], [r_Y,-2,2])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+B fields with contact terms (2nd and 4th order)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [r_X, r_Y];
+p: [0, 1];
+r_1: sqrt(r_X^2+r_Y^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr2: a^2/r_1^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+B field dipole with 2nd and 4th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+B2: 1/r_1^3*(3*(r)*(p.(r))/r_1^2-p)
+-1/r_1^5*dr2*(35*r*(p.r)/(2*r_1^2)-5/2*p)
+-5/2*1/r_1^7*dr2^2*p;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B4: 1/r_1^3*(3*(r)*(p.(r))/r_1^2-p)
++1/r_1^7*dr2^2*(1435*r*(p.r)/(24*r_1^2)+35/24*p
+    -35/(3*r_1^2)*[r_X^2*p[1], r_Y^2*p[2]])
+    +1/r_1^9*dr2^3*35/8*p;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+B field contact term with 2nd / 4th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+BC2: (-1)*-p*(10*dr2)/r_1^5-(15*dr2^2)/(2*r_1^7);
+BC4: (-1)*p*(105*dr2^2)/(2*r_1^7)+(105*dr2^3)/(8*r_1^9);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B2: ev(B2, [a=1]);
+B4: ev(B4, [a=1]);
+BCa: ev(BC2, [a=1]);
+BCb: ev(BC4, [a=1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 1
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(B2,[r_X,r_Y], [r_X,-10,10], [r_Y,-10,10])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(B4,[r_X,r_Y], [r_X,-10,10], [r_Y,-10,10])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(BCa,[r_X,r_Y], [r_X,-3,3], [r_Y,-3,3])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 4
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(BCb,[r_X,r_Y], [r_X,-3,3], [r_Y,-3,3])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 5
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(B2+BCa,[r_X,r_Y], [r_X,-3,3], [r_Y,-3,3])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 6
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(B4+BCb,[r_X,r_Y], [r_X,-3,3], [r_Y,-3,3])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Div B
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],r_X) + diff(a[2],r_Y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+divB4: div(B4+BCb);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 7
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ plot3d ([divB4, [r_X, -2, 2], [r_Y, -2, 2]], [z, -300, 300], 
+       [palette, [gradient, blue, red, green, yellow]],
+       [grid, 40, 40],[mesh_lines_color,false],
+       [legend,false], [elevation,48], [azimuth,332], color_bar)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Curl B
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+curl2(a) := diff(a[2],r_X) - diff(a[1],r_Y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curlB:  (curl2(B4+BCb));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Fig. 8
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ plot3d ([curlB, [r_X, -2, 2], [r_Y, -2, 2]], [z, -30, 30], 
+       [palette, [gradient, blue, red, green, yellow]],
+       [grid, 40, 40],[mesh_lines_color,false],
+       [legend,false], [elevation,48], [azimuth,351], color_bar)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

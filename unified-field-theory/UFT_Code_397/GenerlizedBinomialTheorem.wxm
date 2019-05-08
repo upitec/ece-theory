@@ -1,0 +1,39 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: section start ]
+Newton's Generalized Binomial Theorem
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GenBin(x,y,r,degree) := (
+    sum(binomial(r,k)*x^(r-k)*y^k, k, 0, degree)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Tests
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+binomial(11,7);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GenBin(1,y,3/2,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Application
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GenBin(1,-v^2/c^2,3/2,8);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([(1-x)^(3/2),1-3/2*x^1], [x,0,1])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

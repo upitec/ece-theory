@@ -1,0 +1,63 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Gravity Probe B data
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: 7.0274e6;
+c: 2.99792458e8;
+G: 6.67384e-11;
+a: r;
+epsilon: 0.0014;
+m[E]: 5.97219e24;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Theretical values
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Eq.(12)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_g_t: 3*%pi*m[E]*G/(c^2*a), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Eq.(13/14)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_E_t: 6*%pi*m[E]*G/(c^2*a*(1-epsilon^2)), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_LT_t: 4.10e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_g_t+D_phi_E_t+D_phi_LT_t;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Experimental values
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_g_exp: 5.48e-9;
+D_phi_LT_exp: 3.25e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_g_exp + D_phi_LT_exp;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

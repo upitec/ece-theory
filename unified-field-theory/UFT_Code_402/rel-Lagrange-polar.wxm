@@ -1,0 +1,138 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: title   start ]
+Relativistic Lagrange equatrions
+for conic sections
+in plain polar coordinates r, phi
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Coordinates
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([r,phi,r_d,phi_d,r_dd, phi_dd],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(c>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Potential energy
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+U(r):= -m*G*M/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma1: 1/sqrt(1-(('diff(r,t,1))^2+('diff(phi,t,1))^2*r^2)/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: -m*c^2/gamma1-U(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Lagrange equations
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+r equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: diff(L, diff(r,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: expand(diff(D1,t) = diff(L,r) )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E11: (solve(E1, diff(r,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(1/%gamma^2, -('diff(r,t,1))^2/c^2-(('diff(phi,t,1))^2*r^2)/c^2+1, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+phi equation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: diff(L, diff(phi,t));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: (diff(D2,t) = diff(L,phi) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E21: (solve(E2, diff(phi,t,2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Constant of motion
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+D2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+GC: first(factor(ratsimp(solve([first(E11),first(E21)], 
+    [diff(r,t,2), diff(phi,t,2)]))));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+GCa: ratsubst(c/%gamma, sqrt(-('diff(r,t,1))^2-('diff(phi,t,1))^2*r^2+c^2), GC);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*GC[1]: first(E11);
+GC[2]: first(E21);*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Prepare solution (2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+transform(Eq) := (A: ratsubst(r_d, diff(r,t), Eq),
+    A: ratsubst(r_dd, diff(r,t,2), A),
+    A: ratsubst(phi_d, diff(phi,t), A),
+    A: ratsubst(phi_dd, diff(phi,t,2), A)
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G1: (ev(transform(GC[1]),diff));
+G2: (ev(transform(GC[2]),diff));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

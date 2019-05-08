@@ -1,0 +1,326 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Dipole vector potential and dipole field
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+General form
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+n: [x,y,z]/R;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for i:1 thru 3 do (
+    B[i]: (3*n[i]*(n[1]*m[1]+n[2]*m[2]+n[3]*m[3])-m[i])/R^3
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(B[1]); ratsimp(B[2]); ratsimp(B[3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Explicit form for plot
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+R: sqrt(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+n: [x,y,z]/R;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: [(m[2]*z-m[3]*y)/(z^2+y^2+x^2)^(3/2),(m[3]*x-m[1]*z)/(z^2+y^2+x^2)^(3/2),(m[1]*y-m[2]*x)/(z^2+y^2+x^2)^(3/2)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for i:1 thru 3 do (
+    D[i]: (3*n[i]*(n[1]*m[1]+n[2]*m[2]+n[3]*m[3])-m[i])/R^3
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D[1];D[2];D[3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plot B field
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+D1: ev(D[1], [m[1]=0, m[2]=0, m[3]=1, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D2: ev(D[2], [m[1]=0, m[2]=0, m[3]=1, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D3: ev(D[3], [m[1]=0, m[2]=0, m[3]=1, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fmax: 10;
+pmax: 1.;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dpi(D) := if D<-fmax then -fmax else if D>fmax then fmax else D;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dp1: Dpi(D1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dp3: Dpi(D3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dpa: Dpi(sqrt(D1^2+D2^2+D3^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Dp1, [x, -pmax, pmax], [z, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "D_x"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Dp3, [x, -pmax, pmax], [z, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "D_z"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Dpa, [x, -pmax, pmax], [z, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "D_abs"],
+ [grid, 90, 91],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plot A field
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+ma: [mx,my,mz];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A1: ev(A[1], [m=ma]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A2: ev(A[2], [m=ma]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A3: ev(A[3], [m=ma]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fmax: 10;
+pmax: 1.;
+[mx,my,mz]: [0,0,1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dpi(D) := if D<-fmax then -fmax else if D>fmax then fmax else D;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ap1: Dpi(ev(A1, [z=0]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ap2: Dpi(ev(A2, [z=0]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ap3: Dpi(ev(A3, [z=0]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Apa: sqrt(Ap1^2+Ap2^2+Ap3^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Ap1, [x, -pmax, pmax], [y, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "A_x"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Ap2, [x, -pmax, pmax], [y, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "A_y"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Ap3, [x, -pmax, pmax], [y, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "A_z"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Apa, [x, -pmax, pmax], [y, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "A_abs"],
+ [grid, 90, 91],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Double dipole
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+D11: ev(D[1], [m[1]=0, m[2]=0, m[3]=5, z=z+dz, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D12: ev(D[1], [m[1]=0, m[2]=0, m[3]=5, z=z-dz, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D21: ev(D[2], [m[1]=0, m[2]=0, m[3]=5, z=z+dz, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D22: ev(D[2], [m[1]=0, m[2]=0, m[3]=5, z=z-dz, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D31: ev(D[3], [m[1]=0, m[2]=0, m[3]=5, z=z+dz, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D32: ev(D[3], [m[1]=0, m[2]=0, m[3]=5, z=z-dz, y=0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fmax: 800;
+pmax: .7;
+dz: 0.1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dpi(D) := if D<-fmax then -fmax else if D>fmax then fmax else D;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dp1: Dpi(D11+D12);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dp3: Dpi(D31+D32);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Dpa: Dpi(sqrt((D11+D12)^2+(D21+D22)^2+(D31+D32)^2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Dp1, [x, -pmax, pmax], [z, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "D_x"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Dp3, [x, -pmax, pmax], [z, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "D_z"],
+ [grid, 60, 61],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d(Dpa, [x, -pmax, pmax], [z, -pmax, pmax],
+ [plot_format, gnuplot],
+ [gnuplot_pm3d, true],
+ [legend, "D_abs"],
+ [grid, 90, 91],
+ [gnuplot_preamble, 
+ "set view 52, 35; set xlabel 'r(vac)'; set ylabel 'r'; set contour; set hidden3d"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Torque
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+R;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load ("vect");
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+declare([mm,BB],nonscalar);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+mm[x]: m[1]: mx;
+mm[y]: m[2]: my;
+mm[z]: m[3]: mz;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+BB[x]: ev(B[1]);
+BB[y]: ev(B[2]);
+BB[z]: ev(B[3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+mxB: ratsimp(express(ev(mm)~(BB)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fortran(mxB);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

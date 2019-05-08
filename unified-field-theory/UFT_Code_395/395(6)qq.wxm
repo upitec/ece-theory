@@ -1,0 +1,210 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) :=  [a[2]*b[3] - a[3]*b[2],
+                a[3]*b[1] - a[1]*b[3],
+                a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nabla2(psi) := diff(psi,X,2) + diff(psi,Y,2) + diff(psi,Z,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*nabla4(psi) := diff(psi,X,4) + diff(psi,Y,4) + diff(psi,Z,4);*/;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nabla4(psi) := (fh: nabla2(psi),
+    diff(fh,X,2) + diff(fh,Y,2) + diff(fh,Z,2)
+    );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nabla6(psi) := ( h: nabla4(psi),
+    diff(psi,X,2) + diff(psi,Y,2) + diff(psi,Z,2)
+    );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Averaging function
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for averaging delta r terms in an expression */
+averageMZ(f, dr) := 
+block([arglist, s0, den, i, j, res, l, el],
+/* make list of all summands in the formula */
+arglist: [],
+s0: string(0),
+arglist: args(expand(f)),
+/* check if dr[i] appears in any denominator */
+for j:1 thru length(arglist) do (
+    den: denom(arglist[j]),
+    /*print ("DEN:", den),*/
+    for i:1 thru length(dr) do (
+        if not freeof(dr[i],den) then print(i, "Denominator error!")
+)),
+/* remove all list elements containing occurences of dr[i], dr[i]^3, dr[i]^5 */ 
+for j:1 thru length(arglist) do (
+    for i:1 thru length(dr) do (
+        if not equal(string(coeff(arglist[j], dr[i], 1)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 3)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 5)), s0) 
+        then
+            arglist[j]: 0
+            /*print("L(", dr[i], ") ", arglist[j])*/
+)),
+res: 0,
+/* construct result expression */
+l: length(arglist),
+for j:1 thru l do (
+    el: pop(arglist),
+    res: res + el
+    /*print(j,el,res)*/
+),
+res
+/*print(res)*/
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for replacing deltaX^2 etc. to delta r^2 terms 
+    in cartesian coordinates */
+replaceR(f,dri) := 
+    block([f1, i, dr, len],
+    f1: f,
+    len: length(dri),
+    for i:1 thru len do (
+        f1: ratsubst(1/len*dR[av]^2, dri[i]^2, f1)
+    ),
+    factorsum(f1)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Vector potential of magnetic dipole
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+m: [m_X, m_Y, m_Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [X, Y, Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r2: r.r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: cross(m, r)/r2^(3/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+[m_X, m_Y, m_Z]: [0,0,1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: ev(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DA, 2nd order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DA: [1/6*(dr.dr)*nabla2(A[1]),
+    1/6*(dr.dr)*nabla2(A[2]),
+    1/6*(dr.dr)*nabla2(A[3])];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr.dr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DA[1], dr));
+f2: replaceR(f1,dr);
+f1: ratsimp(averageMZ(DA[2], dr));
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DA, 4th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DA: [1/6*(dr.dr)*nabla2(A[1])+1/(9*4!)*(dr.dr)^2*nabla4(A[1]),
+    1/6*(dr.dr)*nabla2(A[2])+1/(9*4!)*(dr.dr)^2*nabla4(A[2]),
+    1/6*(dr.dr)*nabla2(A[3])+1/(9*4!)*(dr.dr)^2*nabla4(A[3])];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DA[1], dr));
+f2: DA4[1]: replaceR(f1,dr);
+f1: ratsimp(averageMZ(DA[2], dr));
+f2: DA4[2]: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+DA, 6th order
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+DA: [1/6*(dr.dr)*nabla2(A[1])+1/(9*4!)*(dr.dr)^2*nabla4(A[1])
+        +1/(81*6!)*(dr.dr)^3*nabla6(A[1]),
+1/6*(dr.dr)*nabla2(A[2])+1/(9*4!)*(dr.dr)^2*nabla4(A[2])
+        +1/(81*6!)*(dr.dr)^3*nabla6(A[2]),
+1/6*(dr.dr)*nabla2(A[3])+1/(9*4!)*(dr.dr)^2*nabla4(A[3])
+        +1/(81*6!)*(dr.dr)^3*nabla6(A[3])
+];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: ratsimp(averageMZ(DA[1], dr))$
+f2: DA6[1]: replaceR(f1,dr)$
+f3: facsum(f2,dR[av]);
+f4: expandwrt(f3, dR[av]);
+f1: ratsimp(averageMZ(DA[2], dr))$
+f2: DA6[2]: replaceR(f1,dr)$
+f3: facsum(f2,dR[av]);
+f4: expandwrt(f3, dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Plots
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+A_XY: [ev(A[1], [Z=0]), ev(A[2], [Z=0])];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(A_XY, [X,Y], [X,-3,3], [Y,-3,3])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A_XZ: [ev(A[1], [Y=1]), ev(A[3], [Y=1])];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plotdf(A_XZ, [X,Z], [X,-3,3], [Z,-3,3])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,52 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+405(2), Eq.(6)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E3: 1/sqrt(1-v^2/c^2) = 3*M*G/(a*c^2*(1-epsilon));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E6a: 1/E3^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E6a, v);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+m[E]: 5.97219e24;
+r: 7.0274e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+approx. v
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(6*m[E]*G/r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+405(1)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+Eq.(15)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: %pi*m[E]*G/(r*c^2), numer;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

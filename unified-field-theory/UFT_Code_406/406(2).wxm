@@ -1,0 +1,42 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Earth data
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+arcsec: 4.84814e-6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+0.05*arcsec;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+G: 6.67384e-11;
+a: 1.495e11;
+m[E]: 5.97219e24;
+m[S]: 1.98855e30;
+epsilon: 0.0167;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r_S: 2*m[S]*G/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi_E: 3*%pi*r_S/(a*(1-epsilon^2)), numer;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

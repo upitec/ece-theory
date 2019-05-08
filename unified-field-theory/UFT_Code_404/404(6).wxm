@@ -1,0 +1,133 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(18)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: a/(1+epsilon); kill(r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Delta_phi: 1/5*omega[E]*v*r/c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega: 2/5*m[E]*G*r[E]^2*omega[E]/(c^2*r^3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Numerical values
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+c: 2.99792458e8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+G: 6.67384e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m[E]: 5.97219e24;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r[E]: 6.371009e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega[E]:  7.292115e−5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v[E]: omega[E]*r[E];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.0014;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: 7.0274e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b: 7.02739e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: 7.02e6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Omega in rad/s
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega1: ev(Omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Omega in rad/year
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega2: Omega1 * (3600*24*365.25);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Omega in arc sec/year
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+Omega3: Omega2 / %pi*648000, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(22)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+D_phi: 0.0372*%pi/648000, numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eqs.(27-33)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: a/(1+epsilon);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E37: D_phi = 4/3*drdr/r*(1/r-1/a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E37a: solve(E37, drdr), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr: rhs(first(E37a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr/a^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sqrt(drdr/a^2);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

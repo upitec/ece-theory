@@ -1,0 +1,158 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(r>0, v>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Eq.(6)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+r1: [X,Y,Z];
+omega: [omega_1,omega_2,omega_3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E6: -m*M*G*r1/(%gamma^3*r^3) = -m*M*G*r1/r^3-omega*m*M*G/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(first(lhs(E6))=first(rhs(E6)), omega_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega,r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Eq.(12)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: 1/sqrt(1-v^2/c^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega : 1/r*(1-(1-v^2/c^2)^(3/2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+v: sqrt(M*G*(2/r-1/a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [G=1, M=1, c=2, alpha=1, epsilon=0.3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+om1: ev(ev(omega),eval, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ro: alpha/(1+epsilon*cos(phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ro1: ev(ro, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vc1: ev(ev(v/c), eval, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gam1: ev(ev(gamma), eval, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr1: 3/2*r^3*om1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr1: sqrt(drdr1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Om02: ev(2/3*M*G/r^4*dr1, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Om01: sqrt(Om02);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([ro1], [phi,0,2*%pi])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vc1], [r,0.7,1.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([gam1], [r,0.7,1.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([om1], [r,0.7,1.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([dr1], [r,0.7,1.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Om01], [r,0.7,1.5])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Final Graphics
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([ro1], [phi,0,2*%pi],
+    [ylabel, "r(phi)"],[legend, "r(phi)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([ro1], [phi,0,2*%pi],
+    [ylabel, "r(phi)"],[legend, "r(phi)"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper402/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([vc1,gam1], [r,0.7,1.5],
+[ylabel, "v/c, gamma"],[legend, "v/c", "gamma"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([vc1,gam1], [r,0.7,1.5],
+[ylabel, "v/c, gamma"],[legend, "v/c", "gamma"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper402/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([om1,dr1,Om01], [r,0.7,1.5],
+[ylabel, "omega, dr1, Omega_0"], [legend, "omega", "<dr>", "Omega_0"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([om1,dr1,Om01], [r,0.7,1.5],
+[ylabel, "omega, dr1, Omega_0"], [legend, "omega", "<dr>", "Omega_0"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper402/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

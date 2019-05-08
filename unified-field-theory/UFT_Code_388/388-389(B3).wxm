@@ -1,0 +1,406 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Definitions
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+dot(a,b) := a[1]*b[1] + a[2]*b[2] + a[3]*b[3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) :=  [a[2]*b[3] - a[3]*b[2],
+                a[3]*b[1] - a[1]*b[3],
+                a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],x) + diff(a[2],y) + diff(a[3],z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+grad(psi) := [diff(psi,x), diff(psi,y), diff(psi,z)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(a) := [diff(a[3],y) - diff(a[2],z), 
+              diff(a[1],z) - diff(a[3],x), 
+              diff(a[2],x) - diff(a[1],y)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(a) := [diff(a[3],y) - diff(a[2],z), 
+              diff(a[1],z) - diff(a[3],x), 
+              diff(a[2],x) - diff(a[1],y)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+grad_s(psi) := [diff(psi,r), 1/r*diff(psi,theta), 1/(r*sin(theta))*diff(psi,phi)];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl_s(a) := [1/(r*sin(theta))*(diff(sin(theta)*a[3],theta) - diff(a[2],phi)), 
+              1/(r*sin(theta))*diff(a[1],phi) - 1/r*diff(r*a[3],r), 
+              1/r*(diff(r*a[2],r) - diff(a[1],theta))];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Antisymm-Eqs.(6-8)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([A], [x,y,z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E6: diff(A[3],y)-omega[2]*A[3] = -(diff(A[2],z)-omega[3]*A[2]);
+E7: diff(A[1],z)-omega[3]*A[1] = -(diff(A[3],x)-omega[1]*A[3]);
+E8: diff(A[2],x)-omega[1]*A[2] = -(diff(A[1],y)-omega[2]*A[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Cirlularly pol. e-m wave, B(3)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A1: A_0/sqrt(2)*[exp(%i*(omega_t*t-k_z*z)),-%i*exp(%i*(omega_t*t-k_z*z)),0];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: A2: conjugate(A1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A3: 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(A1,A2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B3: -%i*kappa/A_0*cross(A1,A2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: omega_0/A_0*A1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B3: -cross(omega,A2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+realpart(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E6a: ev(E6),diff;
+E7a: ev(E7),diff;
+E8a: ev(E8),diff;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+S: solve([E6a,E7a,E8a], [omega[1],omega[2],omega[3]]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: trigsimp([rhs(first(first(S))),
+rhs(second(first(S))),
+rhs(third(first(S)))]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Def. omega
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega[1]:     k_z/sqrt(2)*%e^(%i*(omega_t*t-k_z*z));
+omega[2]: -%i*k_z/sqrt(2)*%e^(%i*(omega_t*t-k_z*z));
+omega[3]:  %i*k_z;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Check
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(ev(E6, diff),eval);
+ev(ev(E7, diff),eval);
+ev(ev(E8, diff),eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: [omega[1], omega[2], omega[3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(omega,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(div(A));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+curl(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B1: trigsimp(factor(curl(A)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B2: trigsimp(factor(-cross(omega,A)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B: trigsimp(factor(B1+B2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: -diff(A,t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E2: -omega_0*A;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E: trigsimp(factor(E1+E2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omega_0: omega_t;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: factor(ev(E1));
+E2: factor(ev(E2));
+B1: factor(ev(B1));
+B2: factor(ev(B2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Jm2: factor(trigsimp(curl(E2)+diff(B2,t)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+J2: factor(trigsimp(curl(B2)-1/c^2*diff(E2,t)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Maxwell equations (real parts)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+realpart(factor(trigsimp(div(B))));
+realpart(factor(trigsimp(curl(E1)+diff(B1,t))));
+Jm2r: realpart(Jm2);
+realpart(factor(trigsimp(div(E))));
+realpart(factor(trigsimp(curl(B1)-1/c^2*diff(E1,t))));
+J2r: realpart(J2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Lindstrom constraint
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+phi=0
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+(ratsimp(div(A)-dot(omega,A)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+phi/=0 (1)
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: conjugate(phi_0*exp(-%i*(omega_t*t-k_z*z)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: 1/c^2*(diff(phi,t)+omega_0*phi) = div(A)-dot(omega,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+realpart(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+phi/=0 (2)
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: phi_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L: 1/c^2*(diff(phi,t)+omega_0*phi) = div(A)-dot(omega,A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(L, phi_0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Real parts of A, E, B, omega
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+Ar: realpart(A);
+E1r: realpart(E1);
+E2r: realpart(E2);
+B1r: realpart(B1);
+B2r: realpart(B2);
+omr: realpart(omega);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Graphics
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [A_0=1, omega_t=1, k_z=1, t=0, c=5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ar1: ev(Ar, str);
+Er1: ev(ev(E1r), str);
+Er2: ev(ev(E2r), str);
+Br1: ev(B1r, str);
+Br2: ev(B2r, str);
+omr1:ev(omr, str);
+Jm2r1:ev(Jm2r, str);
+J2r1: ev(J2r, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+vAlist: []$ vE1list: []$ vB1list: []$ vE2list: []$ vB2list: []$ vOlist: []$
+vJ2list: []$ vJm2list: []$
+for z:0 thru 1*%pi step 0.3 do (
+    vA:  vector([0,0,z], [ev(Ar1[1]), ev(Ar1[2]), ev(Ar1[3])]),
+    vE1: vector([0,0,z], [ev(Er1[1]), ev(Er1[2]), ev(Er1[3])]),
+    vE2: vector([0,0,z], [ev(Er2[1]), ev(Er2[2]), ev(Er2[3])]),
+    vB1: vector([0,0,z], [ev(Br1[1]), ev(Br1[2]), ev(Br1[3])]),
+    vB2: vector([0,0,z], [ev(Br2[1]), ev(Br2[2]), ev(Br2[3])]),
+    vO:  vector([0,0,z], [ev(omr1[1]), ev(omr1[2]), ev(omr1[3])]),
+    vJm2:vector([0,0,z], [ev(Jm2r1[1]), ev(Jm2r1[2]), ev(Jm2r1[3])]),
+    vJ2: vector([0,0,z], [ev(J2r1[1]), ev(J2r1[2]), ev(J2r1[3])]),
+    vAlist: append(vAlist, [vA]),
+    vE1list: append(vE1list, [vE1]),
+    vE2list: append(vE2list, [vE2]),
+    vB1list: append(vB1list, [vB1]),
+    vB2list: append(vB2list, [vB2]),
+    vOlist: append(vOlist, [vO]),
+    vJm2list: append(vJm2list, [vJm2]),
+    vJ2list: append(vJ2list, [vJ2])
+    );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d (title="E1 (red), B1=A=omega (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    color=red, vE1list, 
+    color=green, vB1list, 
+    /*color=brown, vOlist,
+    color=red, vAlist,*/
+    view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d (title="E1 (red), B1=A=omega (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    user_preamble="set ticslevel 0; set noxzeroaxis; set yzeroaxis;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper388/Fig1.png'",    
+    color=red, vE1list, 
+    color=green, vB1list, 
+    /*color=brown, vOlist,
+    color=red, vAlist,*/
+    view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d (title="E2=B2 (red), A=omega (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    color=red, vE2list, 
+    /*color=green, vB2list, 
+    color=brown, vOlist,*/
+    color=green, vAlist,
+     view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d (title="E2=B2 (red), A=omega (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    user_preamble="set ticslevel 0; set noxzeroaxis; set yzeroaxis;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper388/Fig2.png'",    
+    color=red, vE2list, 
+    /*color=green, vB2list, 
+    color=brown, vOlist,*/
+    color=green, vAlist,
+    view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d (title="Jm2 (red), J2 (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    color=red, vJ2list, 
+    color=green, vJm2list,
+     view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d (title="J2 (red), Jm2 (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    color=red, vJ2list, 
+    color=green, vJm2list,
+     view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d (title="J2 (red), Jm2 (green)", head_length=0.01, color=light-grey, vector([0,0,0], [0,0,3]),
+    head_length=.05, xrange=[-1.2,1.2], yrange=[-1.2,1.2],
+    user_preamble="set ticslevel 0; set noxzeroaxis; set yzeroaxis;
+    set terminal png linewidth 1 font 'Arial' 14 size 800,600;
+    set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper388/Fig3.png'",    
+    color=red, vJ2list, 
+    color=green, vJm2list,
+    view=[48,37], xyplane=0
+    )$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

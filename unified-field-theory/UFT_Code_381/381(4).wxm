@@ -1,0 +1,63 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eqs.(7-9)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: c1 = oy*Az-oz*Ay;
+E2: c2 = oz*Ax-ox*Az;
+E3: c3 = ox*Ay-oy*Ax;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([E1,E2,E3], [Ax, Ay, Az]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([E1,E2,E3], [ox, oy, oz]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Comparison
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+cross(a,b) :=  [a[2]*b[3] - a[3]*b[2],
+                a[3]*b[1] - a[1]*b[3],
+                a[1]*b[2] - a[2]*b[1]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D: -cross([o1,o2,o3], [B1,B2,B3])=[J1,J2,J3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: (D.[1,0,0]);
+E2: (D.[0,1,0]);
+E3: (D.[0,0,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([E1,E2,E3], [B1, B2, B3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Test of (32,33)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+o: -c/sqrt(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(o,x);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

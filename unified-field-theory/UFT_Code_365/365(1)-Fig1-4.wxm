@@ -1,0 +1,128 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.12.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A: 0.05;
+alpha: 1;
+epsilon: 0.3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(theta):= 1.0+A/2*(sin((1+3*A)*theta)-2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r0(theta):= alpha/(1+epsilon*cos(theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r1(theta):= alpha/(1+epsilon*cos((1-A)*theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r2(theta):= alpha/(1+epsilon*cos(f(theta)*theta));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([1-A,f(theta)], [theta,0,6*%pi],
+[legend, "1-A", "f(theta)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([1-A,f(theta)], [theta,0,6*%pi],
+[legend, "1-A", "f(theta)"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper365/Fig1.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([r0(theta), r1(theta), r2(theta)], [theta,0,6*%pi], [y,0.7,1.6],
+[ylabel, "r(theta)"], [legend, "r_0", "r_1", "r_2"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([r0(theta), r1(theta), r2(theta)], [theta,0,6*%pi], [y,0.7,1.6],
+[ylabel, "r(theta)"], [legend, "r_0", "r_1", "r_2"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper365/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble = "set grid polar; set size square;",
+             nticks        = 1000,
+             line_width    = 2,
+             xrange        = [-2.,1],
+             yrange        = [-1.5,1.5],
+             title         = "Precessing ellipses",
+key           = "r_0",
+color         = blue,
+polar(abs(r0(theta)), theta, 0., 4*%pi),
+key           = "r_1",
+color         = red,
+polar(abs(r1(theta)), theta, 0., 4*%pi)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(
+user_preamble = "set terminal png linewidth 2 font 'Arial' 16 size 800,600;
+set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper365/Fig3.png';
+set grid polar; set size square;",
+             nticks        = 1000,
+             line_width    = 2,
+             xrange        = [-2.,1],
+             yrange        = [-1.5,1.5],
+             title         = "",
+key           = "r_0",
+color         = blue,
+polar(abs(r0(theta)), theta, 0., 4*%pi),
+key           = "r_1",
+color         = red,
+polar(abs(r1(theta)), theta, 0., 4*%pi)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(user_preamble = "set grid polar; set size square;",
+             nticks        = 1000,
+             line_width    = 2,
+             xrange        = [-2.,1],
+             yrange        = [-1.5,1.5],
+             title         = "Precessing ellipses",
+key           = "r_0",
+color         = blue,
+polar(abs(r0(theta)), theta, 0., 4*%pi),
+key           = "r_2",
+color         = red,
+polar(abs(r2(theta)), theta, 0., 4*%pi)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(user_preamble = "set terminal png linewidth 2 font 'Arial' 16 size 800,600;
+set output 'D:/Doc/Artikel-Eck/ECE-Theorie/paper365/Fig4.png';
+set grid polar; set size square;",
+             nticks        = 1000,
+             line_width    = 2,
+             xrange        = [-2.,1],
+             yrange        = [-1.5,1.5],
+             title         = "",
+key           = "r_0",
+color         = blue,
+polar(abs(r0(theta)), theta, 0., 4*%pi),
+key           = "r_2",
+color         = red,
+polar(abs(r2(theta)), theta, 0., 4*%pi)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

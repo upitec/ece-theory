@@ -1,0 +1,169 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Torkado model
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+Define Torkado 3D curve r(theta), Z(theta)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+/*r: .1+cos(1/4*theta)^3;
+z: 2*sin(1/2*theta);*/nil;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r: .05+cos(1/10*theta)^2;
+z: 2*sin(1/5*theta);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Transform to cartesian coordinates
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+x: r*cos(theta);
+y: r*sin(theta);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Plot curve
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+torkado: ev(parametric(x,y,z,theta,0,12*%pi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load(draw);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxdraw3d(nticks=400,surface_hide=true, 
+line_width=2,color=blue,torkado)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw3d(nticks=400,xtics=none,ytics=none,ztics=none,
+line_width=3,color=blue,torkado);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Time dependence, simplified by omega=L0/(m*r^2)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(theta,y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+depends([theta],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r;z;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: diff(r,theta);
+dz: diff(z,theta);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+thdot: L0/(m*r^2);
+rdot: dr*thdot;
+zdot: dz*thdot;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [L0=1, m=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rdot1: ev(rdot, str, eval);
+thdot1: ev(thdot, str);
+zdot1: ev(zdot, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([r,z,dr,dz], [theta,0,20*%pi],
+[legend, "r", "Z", "dr/dtheta", "dZ/dtheta"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([r,z,dr,dz], [theta,0,20*%pi],
+[legend, "r", "Z", "dr/dtheta", "dZ/dtheta"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper361/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([rdot1,thdot1/20,zdot1/10], [theta,0,20*%pi],
+[legend, "dr/dt", "dtheta/dt*0.05", "dZ/dt*0.1"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([rdot1,thdot1/20,zdot1/10], [theta,0,20*%pi],
+[legend, "dr/dt", "dtheta/dt*0.05", "dZ/dt*0.1"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper361/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Acceleration a
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+thdotdot: ev(-2*rdot1*L0/(m*r^3), str);
+rdotdot: diff(r, theta,2)*thdot1^2 + dr*thdotdot;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a[r]: ev(rdotdot - r*thdot^2, str);
+a[theta]: ev(r*thdotdot + 2*rdot*thdot, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Acceleration a1
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+a1[r]: 2*rdotdot;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a1[theta]: r*thdotdot + rdot1*thdot1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a[r],a1[r],a[r]+a1[r]], [theta,0,20*%pi],
+[legend, "a_r", "a1_r", "a_r,total"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([a[r],a1[r],a[r]+a1[r]], [theta,0,20*%pi],
+[legend, "a_r", "a1_r", "a_r,total"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper361/Fig4.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([a[theta],a1[theta]], [theta,0,20*%pi],
+[legend, "a_theta", "a1_theta"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([a[theta],a1[theta]], [theta,0,20*%pi],
+[legend, "a_theta", "a1_theta"],
+[gnuplot_term, "png linewidth 3 font 'Arial' 16 size 800,600"],
+[gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper361/Fig5.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

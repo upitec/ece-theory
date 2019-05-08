@@ -1,0 +1,593 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: section start ]
+Average value calclation for Macroscopic Zitterbewegung (MZ)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for averaging delta r terms in an expression */
+averageMZ(f, dr) := 
+block([arglist, s0, den, i, j, res, l, el],
+/* make list of all summands in the formula */
+arglist: [],
+s0: string(0),
+arglist: args(expand(f)),
+/* check if dr[i] appears in any denominator */
+for j:1 thru length(arglist) do (
+    den: denom(arglist[j]),
+    /*print ("DEN:", den),*/
+    for i:1 thru length(dr) do (
+        if not freeof(dr[i],den) then print(i, "Denominator error!")
+)),
+/* remove all list elements containing occurences of dr[i], dr[i]^3, dr[i]^5 */ 
+for j:1 thru length(arglist) do (
+    for i:1 thru length(dr) do (
+        if not equal(string(coeff(arglist[j], dr[i], 1)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 3)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 5)), s0) 
+        then
+            arglist[j]: 0
+            /*print("L(", dr[i], ") ", arglist[j])*/
+)),
+res: 0,
+/* construct result expression */
+l: length(arglist),
+for j:1 thru l do (
+    el: pop(arglist),
+    res: res + el
+    /*print(j,el,res)*/
+),
+res
+/*print(res)*/
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for replacing deltaX^2 etc. to delta r^2 terms 
+    in cartesian coordinates */
+replaceR(f,dri) := 
+    block([f1, i, dr, len],
+    f1: f,
+    len: length(dri),
+    for i:1 thru len do (
+        f1: ratsubst(1/len*dR[av]^2, dri[i]^2, f1)
+    ),
+    factorsum(f1)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Tests
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: a/(b+1) + b*dX*dY/(1+a+c*dY^2) - c*dX^2*dY^3 - X_1*dX^2 + X_2*dY^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(f, dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expandwrt(f2,a);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expandwrt_factored(f2,b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: dr.[px,py];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(f, dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(p);
+f: dr.dr*p;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(f, dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(f, dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: [dX, dY, dZ];
+p: [pX, pY, pZ];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ([rx,ry,rz].p+(dr.p)^2, dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expandwrt(f2,rx, ry, rz);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+facsum(%,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Note 393(6)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+eq.(11)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [X, Y, Z];
+dr: [dX, dY, dZ];
+p: [p_X, p_Y, p_Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: (p.dr)*dr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(first(f), dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Terms of <E1>
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: r*(p.r)*2*r.dr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f1: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: r*(p.r)*dr.dr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f2: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: r*(p.dr)*(2*r.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f3: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: r*(p.dr)*(dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f4: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: (p.r)*dr*(dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f5: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: 2*(p.r)*dr*(r.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f6: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: dr*(p.dr)*2*(r.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f7: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: dr*(p.dr)*(dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fa: averageMZ(first(f), dr);
+f8: replaceR(fa,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Total result
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E1_X: f1+f2+f3+f4+f5+f6+f7+f8;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Note 393(6), Eq.(1) --- <E>=<E0>-<E1>
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+x: 1/r_1^2*(2*r.dr + dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E0: 1/(k*r_1^5)*(r+dr)*(p.(r+dr))*(1-5*x/2)$
+E1: p/(k*r_1^3)*(1-3*x/2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(first(E0), dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f3: facsum(f2,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f4: averageMZ(first(E1), dr);
+f5: replaceR(f4,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f6: factor(facsum(f5,dR[av]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Total sum E=E0-E1
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E: facsum(f3-f6,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Check
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+dr2: dR[av]^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E1: p/(k*r_1^3)*(1-3/2*dr2/r_1^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E0: 1/(k*r_1^5)*(r*(p.r)+(1/3*p*r_1^2-35/(6*r_1^2)*r*(p.r))*dr2/r_1^2
+-5/6*p*dr2^2/r_1^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Ec: facsum(ratsimp(first(E0)-first(E1)),dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(E-Ec);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+UFT 393, Eq.(31) --- <E> directly
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+p: [p_X, p_Y, p_Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x: 1/r_1^2*(2*r.dr + dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: 1/(k*r_1^5)*(r+dr)*(p.(r+dr))*(1-5*x/2)
+-1/(k*r_1^3)*p*(1-3*x/2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(first(f), dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Etot: facsum(%,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(Etot);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(E-Etot);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+All is ok!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Rewriting E (UFT 393, eq.38) and comparing with result from calculation
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+E393: 1/(k*r_1^3)*(r*(p.r)/r_1^2 - p)
+-5*dR[av]^2/(2*k*r_1^5)*(r*(p.r)/r_1^2-p);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(E-first(E393));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+facsum(%,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Correcting E393
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E393: 1/(k*r_1^3)*(r*(p.r)/r_1^2 - p)
+-1/(k*r_1^5)*dR[av]^2 * (35/6*r*(p.r)/r_1^2-11/6*p);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp((E-E393[1]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expandwrt(E393[1],dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Note 393(5), eq.(1) - <phi>
+Same as UFT 393, eq.(30)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+1st order in x
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: 1/(k*r_1^3)*((r+dr).p)*(1-3*x/2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(phi, dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f3: facsum(f2,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f4: expandwrt(f3, r_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+2nd order in x
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: 1/(k*r_1^3)*((r+dr).p)*(1-3*x/2-15/8*x^2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(phi, dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f3: facsum(f2,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f4: expandwrt(f3, dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f5: ratsubst(r_1^2, X^2+Y^2+Z^2, f4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f6: expandwrt(factor(f5), dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+E field with 2nd order in x, factor 3 corrected
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+f: 1/(k*r_1^5)*3*(r+dr)*(p.(r+dr))*(1-5*x/2+35/8*x^2)
+-1/(k*r_1^3)*p*(1-3*x/2+15/8*x^2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(first(f), dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Etot: facsum(%,dR[av],r_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Etot1: ratsubst(r_1^2, X^2+Y^2+Z^2, Etot);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+facsum(%,dR[av],r_1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t1: expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Rewriting the result
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t2: -p_X/(k*r_1^3)
++(3*X*Z*p_Z)/(k*r_1^5)
++(3*X*Y*p_Y)/(k*r_1^5)
++(3*X^2*p_X)/(k*r_1^5)
++(35*dR[av]^4*p_X)/(24*k*r_1^7)
++(1435*X*Z*dR[av]^4*p_Z)/(24*k*r_1^9)
++(1435*X*Y*dR[av]^4*p_Y)/(24*k*r_1^9)
++(35*dR[av]^6*p_X)/(8*k*r_1^9)
++(1435*X^2*dR[av]^4*p_X)/(24*k*r_1^9)
+-(35*X^2*dR[av]^4*p_X)/(3*k*r_1^9);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([1435/24 + t = 385/8],t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(t1-t2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+UFT 393, Eq.(31) --- <E> directly with correct factor 3
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+p: [p_X, p_Y, p_Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x: 1/r_1^2*(2*r.dr + dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: 1/(k*r_1^5)*3*(r+dr)*(p.(r+dr))*(1-5*x/2)
+-1/(k*r_1^3)*p*(1-3*x/2)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(first(f), dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Etot: facsum(%,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(Etot);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

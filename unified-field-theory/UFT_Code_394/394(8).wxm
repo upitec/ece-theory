@@ -1,0 +1,167 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: section start ]
+Average value calclation for Macroscopic Zitterbewegung (MZ)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for averaging delta r terms in an expression */
+averageMZ(f, dr) := 
+block([arglist, s0, den, i, j, res, l, el],
+/* make list of all summands in the formula */
+arglist: [],
+s0: string(0),
+arglist: args(expand(f)),
+/* check if dr[i] appears in any denominator */
+for j:1 thru length(arglist) do (
+    den: denom(arglist[j]),
+    /*print ("DEN:", den),*/
+    for i:1 thru length(dr) do (
+        if not freeof(dr[i],den) then print(i, "Denominator error!")
+)),
+/* remove all list elements containing occurences of dr[i], dr[i]^3, dr[i]^5 */ 
+for j:1 thru length(arglist) do (
+    for i:1 thru length(dr) do (
+        if not equal(string(coeff(arglist[j], dr[i], 1)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 3)), s0) 
+        or not equal(string(coeff(arglist[j], dr[i], 5)), s0) 
+        then
+            arglist[j]: 0
+            /*print("L(", dr[i], ") ", arglist[j])*/
+)),
+res: 0,
+/* construct result expression */
+l: length(arglist),
+for j:1 thru l do (
+    el: pop(arglist),
+    res: res + el
+    /*print(j,el,res)*/
+),
+res
+/*print(res)*/
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Function for replacing deltaX^2 etc. to delta r^2 terms 
+    in cartesian coordinates */
+replaceR(f,dri) := 
+    block([f1, i, dr, len],
+    f1: f,
+    len: length(dri),
+    for i:1 thru len do (
+        f1: ratsubst(1/len*dR[av]^2, dri[i]^2, f1)
+    ),
+    factorsum(f1)
+)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+<B> contact term
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+r: [X, Y, Z];
+dr: [dX, dY, dZ];
+r_1: sqrt(X^2+Y^2+Z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x: 1/r_1^2*(2*r.dr + dr.dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume (r_0>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+m: [m_X, m_Y, m_Z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+nabla^2(1/r), 1st order approximation in x
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: -3/r_1^3*(1-3*x/2)
++3/r_1^5*(r+dr).(r+dr)*(1-5*x/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ((f), dr);
+f2: replaceR(f1,dr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Bcontact: facsum(%,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(Bcontact);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f3: facsum(f2,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f4: ratsubst(r_0^2, X^2+Y^2+Z^2, f3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f5: expandwrt(f4, dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f6: box(expandwrt(factor(f5), dR[av]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+nabla^2(1/r), 2nd order approximation in x
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: -3/r_1^3*(1-3*x/2+15*x^2/8)
++3/r_1^5*(r+dr).(r+dr)*(1-5*x/2+35*x^2/8)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: averageMZ(f, dr)$
+f2: replaceR(f1,dr)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f3: facsum(f2,dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f4: ratsubst(r_0^2, X^2+Y^2+Z^2, f3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f5: expandwrt(f4, dR[av]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f6: box(expandwrt(factor(f5), dR[av]));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

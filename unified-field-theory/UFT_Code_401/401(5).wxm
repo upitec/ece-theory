@@ -1,0 +1,85 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(drdr>0, r>0, m>0,M>0,G>0, omega>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+eq.(4)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+F[vac]: 1/6*drdr*del2F;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+eq.(5)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E5: F[vac]^2 = m^2*Omega_0^4*drdr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E8: solve(E5, Omega_0^4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E9: Omega_0^2 = sqrt(rhs(first(E8)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+eqs.(10/9)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+del2F: 4*m*M*G/r^4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(E9);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+eq.(12)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+E12: omega^2*phi^2 = 1/36*drdr^2*del2F^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+eqs.(13/14)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+phi: -m*M*G/r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13: ev(E12);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E13a: solve(E13,omega^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E14: sqrt(first(E13a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+eq.(15)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(E14, drdr);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

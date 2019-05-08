@@ -1,0 +1,148 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume (u>0, alpha>0, a>0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Integration for phi, Eq.(53) of UFT 403
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+I_phi: -(alpha/(2*omega_r*log(u)-alpha*u^2+2*u-1/a))^(1/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Integration bounds
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+a: alpha/(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+umin: (1-epsilon)/alpha;
+umax: (1+epsilon)/alpha;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Integration
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+str: [alpha=1, epsilon=0.3];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I1: ev(I_phi, str, [omega_r=0], eval);
+I2: ev(I_phi, str, [omega_r=0.1], eval);
+I3: ev(I_phi, str, [omega_r=0.2], eval);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+u1: ev(umin, str);
+u2: ev(umax, str);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([I1,I2,I3], [u,u1, u2+0.3], [ylabel, "Integrand(u)"], [y,-50, 5],
+[legend, "omega_r=0", "omega_r=0.1", "omega_r=0.2"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([I1,I2,I3], [u,u1, u2+0.3], [ylabel, "Integrand(u)"], [y,-50, 6],
+[legend, "omega_r=0", "omega_r=0.1", "omega_r=0.2"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper403/Fig3.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+quad_qags(I1,u,u1,u2);
+quad_qags(I2,u,u1,u2);
+quad_qags(I3,u,u1,u2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Integral(umax)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+f1: []$ f2: []$ f3: []$
+for i:0 thru 40 do (
+    u1: ev(umin, str),
+    u2: ev(umin+(umax-umin)*i/40., str),
+    I1: ev(I_phi, str, [omega_r=0], eval),
+    I2: ev(I_phi, str, [omega_r=0.5], eval),
+    I3: ev(I_phi, str, [omega_r=1], eval),
+    Intres1: quad_qags(I1,u,u1,u2),
+    Intres2: quad_qags(I2,u,u1,u2),
+    Intres3: quad_qags(I3,u,u1,u2),
+    f1: append(f1, [[u2, first(Intres1)]]),
+    f2: append(f2, [[u2, first(Intres2)]]),
+    f3: append(f3, [[u2, first(Intres3)]]),
+    print(i,u2 ,Intres1, Intres2, Intres3)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d( [[discrete, f1],[discrete, f2],[discrete, f3]], 
+    [legend, "Integral", "Integral"],
+    [xlabel, "umax"],[ylabel, "phi"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d( [[discrete, f1, f2],[discrete, f2]], [y,0,0.012],
+    [legend, "Integral", "Integral*10"],
+    [xlabel, "epsilon"],[ylabel, "delta_{phi}/<dr*dr>"],
+    [gnuplot_term, "png linewidth 2 font 'Arial' 16 size 800,600"],
+    [gnuplot_out_file, "D:/Doc/Artikel-Eck/ECE-Theorie/Paper403/Fig2.png"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Spacetime fluctuation radius of planet Mercury
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+dphi: 5.019e-7;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+epsilon: 0.205630;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a: 57909050e3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: a*(1-epsilon^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I_delta_phi/drdr;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I1: ev(I_delta_phi/drdr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+umin: (1-epsilon)/alpha;
+umax: (1+epsilon)/alpha;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Intres: quad_qags((I1),u,umin,umax);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dr: sqrt(dphi/first(abs(Intres)));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

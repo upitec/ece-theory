@@ -1,0 +1,136 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: false;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Mean values of Zitterbewegung
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr: 2/%pi*alpha*%lambda^2*log(1/(%pi*alpha));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr2: 4/(3*V)*(alpha*%lambda^2)^2*((a_0/%pi)^3-(h_bar/(m*c))^3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr3: 8*%pi/(6*V^3)*alpha^3*%lambda^6*((a_0/%pi)^6-(h_bar/(m*c))^6);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr2: 4/(3*V)*(alpha*%lambda^2)^2*((a_0/%pi)^3-(%lambda)^3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+drdr3: 8*%pi/(6*V^3)*alpha^3*%lambda^6*((a_0/%pi)^6-(%lambda)^6);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Numerical values
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+numer: true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+%lambda: 3.8616e-13;
+alpha: 0.007297351;
+a_0: 5.29177e-11;
+a_0pi: 1.6844e-11;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a_0/%pi;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Numerical values with V=4/3 pi a_0^3
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+V: 4/3*%pi*a_0^3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Numerical values with adopted volumes
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+1s state
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+V: 4/3*%pi*(3/2*a_0)^3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+2s state
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+V: 4/3*%pi*(6*a_0)^3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+3s state
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+V: 4/3*%pi*(27/2*a_0)^3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(drdr3);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

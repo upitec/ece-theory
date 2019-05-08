@@ -1,0 +1,225 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: section start ]
+Solutions of antisymm. eqs.
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: subsect start ]
+General solution
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+f: diff(y(x),x)+y(x)*p(x)=q(x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(f,y(x),x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f: diff(y(x),x)+y(x)*p(x)=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ode2(f,y(x),x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+omega_x,y for forward precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+r: sqrt(x^2+y^2+z^2);
+r1: [x,y,z];
+rd: [xd,yd,zd];
+omega: [omega_x, omega_y, omega_z];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+r from Lagrangian
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+rdda: M*G/(gamma*r^3)*(rd*(rd.r1)/c^2-r1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+r by definition with omega
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+rddb: -M*G*(r1/r^3+omega/r);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+compute omega_x,y,z
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+ox: factor(solve(rdda[1]=rddb[1], omega_x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+oy: factor(solve(rdda[2]=rddb[2], omega_y));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+oz: factor(solve(rdda[3]=rddb[3], omega_z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omxf: omega_x: rhs(first(ox));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omyf: omega_y: rhs(first(oy));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omzf: omega_z: rhs(first(oz));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+solve antisymm. eqs.
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_x: Q_x0*exp(integrate(omega_y,y));
+Q_x: Q_x0*exp(integrate(omega_z,z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_y: Q_y0*exp(integrate(omega_x,x));
+Q_y: Q_y0*exp(integrate(omega_z,z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_z: Q_z0*exp(integrate(omega_x,x));
+Q_z: Q_z0*exp(integrate(omega_y,y));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+omega_x,y for retrograde precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omxr: omega_x: x/(x^2+y^2+z^2)*(1/gamma^3-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omyr: omega_y: y/(x^2+y^2+z^2)*(1/gamma^3-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omzr: omega_z: z/(x^2+y^2+z^2)*(1/gamma^3-1);;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_x: Q_x0*exp(integrate(omega_y,y));
+Q_x: Q_x0*exp(integrate(omega_z,z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_y: Q_y0*exp(integrate(omega_x,x));
+Q_y: Q_y0*exp(integrate(omega_z,z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_z: Q_z0*exp(integrate(omega_x,x));
+Q_z: Q_z0*exp(integrate(omega_y,y));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+omega_x,y non-relativistic
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omxn: omega_x: -2*x/(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omyn: omega_y: -2*y/(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+omzn: omega_z: -2*z/(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_x: Q_x0*exp(integrate(omega_y,y));
+Q_x: Q_x0*exp(integrate(omega_z,z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_y: Q_y0*exp(integrate(omega_x,x));
+Q_y: Q_y0*exp(integrate(omega_z,z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Q_z: Q_z0*exp(integrate(omega_x,x));
+Q_z: Q_z0*exp(integrate(omega_y,y));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Eq.(70)
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+div(a) := diff(a[1],x) + diff(a[2],y) + diff(a[3],z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+phi:-M*G/sqrt(x^2+y^2+z^2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+forward precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: [omxf, omyf, omzf];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(div(omega*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+retrograde precession
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: [omxr, omyr, omzr];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(div(omega*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+non-relativistic
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+omega: [omxn, omyn, omzn];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(div(omega*phi));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
